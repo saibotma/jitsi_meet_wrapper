@@ -1,3 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="dev.saibotma.jitsi_meet_wrapper">
+    <application>
+        <activity
+            android:name="dev.saibotma.jitsi_meet_wrapper.JitsiMeetWrapperPluginActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize"
+            android:launchMode="singleTask"
+            android:resizeableActivity="true"
+            android:supportsPictureInPicture="true"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+    </application>
 </manifest>

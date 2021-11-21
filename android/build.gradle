@@ -18,6 +18,10 @@ rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
+        // Required by jitsi
+        maven {
+            url "https://github.com/jitsi/jitsi-maven-repository/raw/master/releases"
+        }
     }
 }
 
@@ -27,6 +31,7 @@ apply plugin: 'kotlin-android'
 android {
     compileSdkVersion 30
 
+    // Required by jitsi
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -47,4 +52,6 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    // From: https://github.com/jitsi/jitsi-maven-repository/tree/master/releases/org/jitsi/react/jitsi-meet-sdk
+    implementation ('org.jitsi.react:jitsi-meet-sdk:3.10.2') { transitive = true }
 }
