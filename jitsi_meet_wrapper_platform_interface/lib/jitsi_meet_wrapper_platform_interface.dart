@@ -10,16 +10,15 @@ export 'jitsi_meeting_options.dart';
 export 'jitsi_meeting_response.dart';
 
 abstract class JitsiMeetWrapperPlatformInterface extends PlatformInterface {
-  /// Constructs a JitsiMeetPlatform.
   JitsiMeetWrapperPlatformInterface() : super(token: _token);
 
   static final Object _token = Object();
 
   static JitsiMeetWrapperPlatformInterface _instance = MethodChannelJitsiMeetWrapper();
 
-  /// The default instance of [JitsiMeetPlatform] to use.
+  /// The default instance of [JitsiMeetWrapperPlatformInterface] to use.
   ///
-  /// Defaults to [MethodChannelJitsiMeet].
+  /// Defaults to [MethodChannelJitsiMeetWrapper].
   static JitsiMeetWrapperPlatformInterface get instance => _instance;
 
   static set instance(JitsiMeetWrapperPlatformInterface instance) {
@@ -27,9 +26,7 @@ abstract class JitsiMeetWrapperPlatformInterface extends PlatformInterface {
     _instance = instance;
   }
 
-  /// Joins a meeting based on the JitsiMeetingOptions passed in.
-  /// A JitsiMeetingListener can be attached to this meeting that
-  /// will automatically be removed when the meeting has ended
+  /// Joins a meeting based on the [JitsiMeetingOptions] passed in.
   Future<JitsiMeetingResponse> joinMeeting(JitsiMeetingOptions options) async {
     throw UnimplementedError('joinMeeting has not been implemented.');
   }
