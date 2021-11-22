@@ -81,6 +81,15 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  jitsi_meet_wrapper_platform_interface:
+    dependency: transitive
+    description:
+      path: jitsi_meet_wrapper_platform_interface
+      ref: main
+      resolved-ref: a0215e0ae21023639aa735782e180737837a388c
+      url: "https://github.com/saibotma/jitsi_meet_wrapper"
+    source: git
+    version: "0.0.1"
   lints:
     dependency: transitive
     description:

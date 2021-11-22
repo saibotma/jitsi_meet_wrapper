@@ -1,10 +1,13 @@
-library jitsi_meet_wrapper_platform_interface;
-
 import 'package:jitsi_meet_wrapper_platform_interface/method_channel_jitsi_meet_wrapper.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'jitsi_meeting_options.dart';
 import 'jitsi_meeting_response.dart';
+
+export 'feature_flag/feature_flag_enum.dart';
+export 'feature_flag/feature_flag_helper.dart';
+export 'jitsi_meeting_options.dart';
+export 'jitsi_meeting_response.dart';
 
 abstract class JitsiMeetWrapperPlatformInterface extends PlatformInterface {
   /// Constructs a JitsiMeetPlatform.
