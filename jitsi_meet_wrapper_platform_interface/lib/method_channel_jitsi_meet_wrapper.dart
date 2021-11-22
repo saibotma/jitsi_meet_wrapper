@@ -2,8 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 
-import 'feature_flag/feature_flag_enum.dart';
-import 'feature_flag/feature_flag_helper.dart';
+import 'feature_flag.dart';
 import 'jitsi_meet_wrapper_platform_interface.dart';
 import 'jitsi_meeting_options.dart';
 import 'jitsi_meeting_response.dart';
@@ -16,13 +15,13 @@ class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
   Future<JitsiMeetingResponse> joinMeeting(JitsiMeetingOptions options) async {
     Map<String, dynamic> _options = {
       'room': options.room.trim(),
-      'serverURL': options.serverUrl?.trim(),
-      'subject': options.subject,
+      'serverUrl': options.serverUrl?.trim(),
+      'subject': options.subject?.trim(),
       'token': options.token,
-      'audioMuted': options.audioMuted,
-      'audioOnly': options.audioOnly,
-      'videoMuted': options.videoMuted,
-      'featureFlags': _toFeatureFlagsWithStrings(options.featureFlags),
+      'isAudioMuted': options.isAudioMuted,
+      'isAudioOnly': options.isAudioOnly,
+      'isVideoMuted': options.isVideoMuted,
+      'featureFlags': _toFeatureFlagStrings(options.featureFlags),
       'userDisplayName': options.userDisplayName,
       'userEmail': options.userEmail,
       'iosAppBarRGBAColor': options.iosAppBarRGBAColor,
@@ -31,11 +30,7 @@ class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
     return await _channel
         .invokeMethod<String>('joinMeeting', _options)
         .then((message) => JitsiMeetingResponse(isSuccess: true, message: message))
-        .catchError(
-      (error) {
-        return JitsiMeetingResponse(isSuccess: true, message: error.toString(), error: error);
-      },
-    );
+        .catchError((error) => JitsiMeetingResponse(isSuccess: true, message: error.toString(), error: error));
   }
 
   @override
@@ -43,15 +38,49 @@ class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
     _channel.invokeMethod('closeMeeting');
   }
 
-  Map<String?, bool> _toFeatureFlagsWithStrings(
-    Map<FeatureFlagEnum, bool> featureFlags,
-  ) {
-    Map<String?, bool> featureFlagsWithStrings = const {};
-
-    featureFlags.forEach((key, value) {
-      featureFlagsWithStrings[FeatureFlagHelper.featureFlags[key]] = value;
-    });
-
+  Map<String, bool> _toFeatureFlagStrings(Map<FeatureFlag, bool> featureFlags) {
+    Map<String, bool> featureFlagsWithStrings = const {};
+    featureFlags.forEach((key, value) => featureFlagsWithStrings[_toFeatureFlagString(key)] = value);
     return featureFlagsWithStrings;
+  }
+
+  String _toFeatureFlagString(FeatureFlag featureFlag) {
+    // Constants from: https://github.com/jitsi/jitsi-meet/blob/master/react/features/base/flags/constants.js
+    switch (featureFlag) {
+      case FeatureFlag.isAddPeopleEnabled:
+        return 'add-people.enabled';
+      case FeatureFlag.isCalendarEnabled:
+        return 'calendar.enabled';
+      case FeatureFlag.isCallIntegrationEnabled:
+        return 'call-integration.enabled';
+      case FeatureFlag.isCloseCaptionsEnabled:
+        return 'close-captions.enabled';
+      case FeatureFlag.isChatEnabled:
+        return 'chat.enabled';
+      case FeatureFlag.isInviteEnabled:
+        return 'invite.enabled';
+      case FeatureFlag.isIosRecordingEnabled:
+        return 'ios.recording.enabled';
+      case FeatureFlag.isIosScreensharingEnabled:
+        return 'ios.screensharing.enabled';
+      case FeatureFlag.isLiveStreamingEnabled:
+        return 'live-streaming.enabled';
+      case FeatureFlag.isMeetingNameEnabled:
+        return 'meeting-name.enabled';
+      case FeatureFlag.isMeetingPasswordEnabled:
+        return 'meeting-password.enabled';
+      case FeatureFlag.isPipEnabled:
+        return 'pip.enabled';
+      case FeatureFlag.isRaiseHandEnabled:
+        return 'raise-hand.enabled';
+      case FeatureFlag.isRecordingEnabled:
+        return 'recording.enabled';
+      case FeatureFlag.isTitleViewEnabled:
+        return 'tile-view.enabled';
+      case FeatureFlag.isToolboxAlwaysVisible:
+        return 'toolbox.alwaysVisible';
+      case FeatureFlag.isWelcomePageEnabled:
+        return 'welcomepage.enabled';
+    }
   }
 }

@@ -4,8 +4,7 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import 'jitsi_meeting_options.dart';
 import 'jitsi_meeting_response.dart';
 
-export 'feature_flag/feature_flag_enum.dart';
-export 'feature_flag/feature_flag_helper.dart';
+export 'feature_flag.dart';
 export 'jitsi_meeting_options.dart';
 export 'jitsi_meeting_response.dart';
 

@@ -5,7 +5,7 @@ import 'package:jitsi_meet_wrapper_platform_interface/jitsi_meeting_options.dart
 import 'package:jitsi_meet_wrapper_platform_interface/jitsi_meeting_response.dart';
 
 export 'package:jitsi_meet_wrapper_platform_interface/jitsi_meet_wrapper_platform_interface.dart'
-    show JitsiMeetingOptions, JitsiMeetingResponse, FeatureFlagHelper, FeatureFlagEnum;
+    show JitsiMeetingOptions, JitsiMeetingResponse, FeatureFlagHelper, FeatureFlag;
 
 class JitsiMeetWrapper {
   /// Joins a meeting based on the JitsiMeetingOptions passed in.
