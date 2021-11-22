@@ -16,10 +16,8 @@ import io.flutter.plugin.common.MethodChannel.Result
 
 const val JITSI_PLUGIN_TAG = "JITSI_MEET_PLUGIN"
 const val JITSI_METHOD_CHANNEL = "jitsi_meet"
-const val JITSI_EVENT_CHANNEL = "jitsi_meet_events"
 const val JITSI_MEETING_CLOSE = "JITSI_MEETING_CLOSE"
 
-/** JitsiMeetWrapperPlugin */
 class JitsiMeetWrapperPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     /// The MethodChannel that will the communication between Flutter and native Android
     ///
@@ -43,12 +41,8 @@ class JitsiMeetWrapperPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         Log.d(JITSI_PLUGIN_TAG, "arguments: ${call.arguments}")
 
         when (call.method) {
-            "joinMeeting" -> {
-                joinMeeting(call, result)
-            }
-            "closeMeeting" -> {
-                closeMeeting(call, result)
-            }
+            "joinMeeting" -> joinMeeting(call, result)
+            "closeMeeting" -> closeMeeting(call, result)
             else -> result.notImplemented()
         }
     }

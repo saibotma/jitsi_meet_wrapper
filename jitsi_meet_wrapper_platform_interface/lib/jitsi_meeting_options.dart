@@ -3,7 +3,7 @@ import 'package:collection/collection.dart';
 import 'feature_flag.dart';
 
 class JitsiMeetingOptions {
-  final String room;
+  final String roomName;
   final String? serverUrl;
   final String? subject;
   final String? token;
@@ -17,7 +17,7 @@ class JitsiMeetingOptions {
   final Map<FeatureFlag, bool> featureFlags;
 
   JitsiMeetingOptions({
-    required this.room,
+    required this.roomName,
     this.serverUrl,
     this.subject,
     this.token,
@@ -33,7 +33,7 @@ class JitsiMeetingOptions {
 
   @override
   String toString() {
-    return 'JitsiMeetingOptions{room: $room, serverUrl: $serverUrl, subject: $subject, token: $token, isAudioMuted: $isAudioMuted, isAudioOnly: $isAudioOnly, isVideoMuted: $isVideoMuted, userDisplayName: $userDisplayName, userEmail: $userEmail, iosAppBarRGBAColor: $iosAppBarRGBAColor, userAvatarUrl: $userAvatarUrl, featureFlags: $featureFlags}';
+    return 'JitsiMeetingOptions{roomName: $roomName, serverUrl: $serverUrl, subject: $subject, token: $token, isAudioMuted: $isAudioMuted, isAudioOnly: $isAudioOnly, isVideoMuted: $isVideoMuted, userDisplayName: $userDisplayName, userEmail: $userEmail, iosAppBarRGBAColor: $iosAppBarRGBAColor, userAvatarUrl: $userAvatarUrl, featureFlags: $featureFlags}';
   }
 
   @override
@@ -41,7 +41,7 @@ class JitsiMeetingOptions {
       identical(this, other) ||
       other is JitsiMeetingOptions &&
           runtimeType == other.runtimeType &&
-          room == other.room &&
+          roomName == other.roomName &&
           serverUrl == other.serverUrl &&
           subject == other.subject &&
           token == other.token &&
@@ -56,7 +56,7 @@ class JitsiMeetingOptions {
 
   @override
   int get hashCode =>
-      room.hashCode ^
+      roomName.hashCode ^
       serverUrl.hashCode ^
       subject.hashCode ^
       token.hashCode ^

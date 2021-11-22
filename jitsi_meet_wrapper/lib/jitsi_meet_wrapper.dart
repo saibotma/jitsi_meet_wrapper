@@ -5,14 +5,14 @@ import 'package:jitsi_meet_wrapper_platform_interface/jitsi_meeting_options.dart
 import 'package:jitsi_meet_wrapper_platform_interface/jitsi_meeting_response.dart';
 
 export 'package:jitsi_meet_wrapper_platform_interface/jitsi_meet_wrapper_platform_interface.dart'
-    show JitsiMeetingOptions, JitsiMeetingResponse, FeatureFlagHelper, FeatureFlag;
+    show JitsiMeetingOptions, JitsiMeetingResponse, FeatureFlag;
 
 class JitsiMeetWrapper {
   /// Joins a meeting based on the JitsiMeetingOptions passed in.
   /// A JitsiMeetingListener can be attached to this meeting that will automatically
   /// be removed when the meeting has ended
   static Future<JitsiMeetingResponse> joinMeeting(JitsiMeetingOptions options) async {
-    assert(options.room.trim().isNotEmpty, "room is empty");
+    assert(options.roomName.trim().isNotEmpty, "room is empty");
 
     // Validate serverURL is absolute if it is not null or empty
     if (options.serverUrl?.isNotEmpty ?? false) {

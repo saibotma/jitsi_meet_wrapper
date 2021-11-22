@@ -14,7 +14,7 @@ class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
   @override
   Future<JitsiMeetingResponse> joinMeeting(JitsiMeetingOptions options) async {
     Map<String, dynamic> _options = {
-      'room': options.room.trim(),
+      'room': options.roomName.trim(),
       'serverUrl': options.serverUrl?.trim(),
       'subject': options.subject?.trim(),
       'token': options.token,
