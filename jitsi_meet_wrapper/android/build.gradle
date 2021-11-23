@@ -53,6 +53,8 @@ android {
 }
 
 dependencies {
+    compile "com.android.support:appcompat-v7:22.2.0"
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     // From: https://github.com/jitsi/jitsi-maven-repository/tree/master/releases/org/jitsi/react/jitsi-meet-sdk
     implementation ('org.jitsi.react:jitsi-meet-sdk:3.10.2') { transitive = true }
