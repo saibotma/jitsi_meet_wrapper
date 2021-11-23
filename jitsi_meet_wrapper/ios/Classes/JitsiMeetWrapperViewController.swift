@@ -38,6 +38,7 @@ class JitsiMeetWrapperViewController: UIViewController {
         cleanUp()
 
         let jitsiMeetView = JitsiMeetView()
+        jitsiMeetView.delegate = self
         self.jitsiMeetView = jitsiMeetView
 
         let options = JitsiMeetConferenceOptions.fromBuilder { (builder) in
@@ -79,5 +80,11 @@ class JitsiMeetWrapperViewController: UIViewController {
         jitsiMeetView?.removeFromSuperview()
         jitsiMeetView = nil
         pipViewCoordinator = nil
+    }
+}
+
+extension JitsiMeetWrapperViewController: JitsiMeetViewDelegate {
+    func conferenceTerminated(_ data: [AnyHashable : Any]!) {
+        cleanUp()
     }
 }
