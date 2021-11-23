@@ -18,6 +18,7 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin {
     }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        print("handling 🔥")
         if (call.method == "joinMeeting") {
             joinMeeting(call, result: result)
             return
@@ -25,6 +26,7 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin {
     }
 
     private func joinMeeting(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        print("joining meeting 🔥");
         jitsiViewController = JitsiMeetWrapperViewController.init()
         let arguments = call.arguments as! [String: Any]
 
