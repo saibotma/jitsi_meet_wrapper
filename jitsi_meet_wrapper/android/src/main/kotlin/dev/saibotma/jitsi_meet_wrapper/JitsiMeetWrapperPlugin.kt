@@ -42,7 +42,7 @@ class JitsiMeetWrapperPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
     }
 
     private fun joinMeeting(call: MethodCall, result: Result) {
-        val room = call.argument<String>("room")!!
+        val room = call.argument<String>("roomName")!!
         if (room.isBlank()) {
             result.error(
                     "400",
