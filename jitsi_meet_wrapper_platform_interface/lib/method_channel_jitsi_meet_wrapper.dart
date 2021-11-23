@@ -39,7 +39,7 @@ class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
   }
 
   Map<String, bool> _toFeatureFlagStrings(Map<FeatureFlag, bool> featureFlags) {
-    Map<String, bool> featureFlagsWithStrings = const {};
+    Map<String, bool> featureFlagsWithStrings = {};
     featureFlags.forEach((key, value) => featureFlagsWithStrings[_toFeatureFlagString(key)] = value);
     return featureFlagsWithStrings;
   }
