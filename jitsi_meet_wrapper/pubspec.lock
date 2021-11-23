@@ -72,7 +72,7 @@ packages:
     description:
       path: jitsi_meet_wrapper_platform_interface
       ref: main
-      resolved-ref: dfbec0f3b427bbe0c997bb1107d6cc335d53fba3
+      resolved-ref: deef7d0fea6ef0e41e1ca962a03660bd21ecdbe2
       url: "https://github.com/saibotma/jitsi_meet_wrapper"
     source: git
     version: "0.0.1"
@@ -104,6 +104,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0"
+  plugin_platform_interface:
+    dependency: transitive
+    description:
+      name: plugin_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.2"
   sky_engine:
     dependency: transitive
     description: flutter
