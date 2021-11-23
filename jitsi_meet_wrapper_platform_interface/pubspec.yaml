@@ -11,12 +11,12 @@ dependencies:
   collection: 1.15.0
   flutter:
     sdk: flutter
+  plugin_platform_interface: 2.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^1.0.0
-  plugin_platform_interface: 2.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
