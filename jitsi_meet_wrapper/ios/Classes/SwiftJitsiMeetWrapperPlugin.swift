@@ -79,6 +79,7 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin {
         let featureFlags = arguments["featureFlags"] as! Dictionary<String, Any>
         jitsiViewController?.featureFlags = featureFlags;
 
+        print("I am here 🔥")
         // TODO(saibotma): Build JitsiMeetConferenceOptions directly like in android implementation
         let navigationController = UINavigationController(rootViewController: (jitsiViewController)!)
         navigationController.setNavigationBarHidden(true, animated: false)
