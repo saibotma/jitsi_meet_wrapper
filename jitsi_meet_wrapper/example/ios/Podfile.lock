@@ -2,8 +2,8 @@ PODS:
   - Flutter (1.0.0)
   - jitsi_meet_wrapper (0.0.1):
     - Flutter
-    - JitsiMeetSDK (= 3.10.4)
-  - JitsiMeetSDK (3.10.4)
+    - JitsiMeetSDK (= 3.3.0)
+  - JitsiMeetSDK (3.3.0)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
@@ -21,8 +21,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
-  jitsi_meet_wrapper: bd3dd9ed6f51b4fcb6ecfacbf8044d146ef7f602
-  JitsiMeetSDK: 66a6524472740c047ccb1d30bee99cd09fe47276
+  jitsi_meet_wrapper: 91bf794dbe99fe314bf954e59eb3b3873c8c1c80
+  JitsiMeetSDK: 3b1d3757f2166b28cd03f907b47091db064302b3
 
 PODFILE CHECKSUM: 3d84747a486a79f2d3d801207145d66565b98265
 
