@@ -18,6 +18,7 @@ rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
+        jcenter()
         // Required by jitsi
         maven {
             url "https://github.com/jitsi/jitsi-maven-repository/raw/master/releases"
