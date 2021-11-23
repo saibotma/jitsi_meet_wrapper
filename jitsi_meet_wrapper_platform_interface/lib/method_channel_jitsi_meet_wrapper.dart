@@ -33,11 +33,6 @@ class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
         .catchError((error) => JitsiMeetingResponse(isSuccess: true, message: error.toString(), error: error));
   }
 
-  @override
-  closeMeeting() {
-    _channel.invokeMethod('closeMeeting');
-  }
-
   Map<String, bool> _toFeatureFlagStrings(Map<FeatureFlag, bool> featureFlags) {
     Map<String, bool> featureFlagsWithStrings = {};
     featureFlags.forEach((key, value) => featureFlagsWithStrings[_toFeatureFlagString(key)] = value);

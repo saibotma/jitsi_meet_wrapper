@@ -21,6 +21,4 @@ class JitsiMeetWrapper {
 
     return await JitsiMeetWrapperPlatformInterface.instance.joinMeeting(options);
   }
-
-  static closeMeeting() => JitsiMeetWrapperPlatformInterface.instance.closeMeeting();
 }

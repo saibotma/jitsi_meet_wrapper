@@ -1,7 +1,6 @@
 package dev.saibotma.jitsi_meet_wrapper
 
 import android.app.Activity
-import android.content.Intent
 import androidx.annotation.NonNull
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -16,28 +15,18 @@ import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
 import org.jitsi.meet.sdk.JitsiMeetUserInfo
 import java.net.URL
 
-const val JITSI_PLUGIN_TAG = "JITSI_MEET_PLUGIN"
-const val JITSI_METHOD_CHANNEL = "jitsi_meet"
-const val JITSI_MEETING_CLOSE = "JITSI_MEETING_CLOSE"
-
 class JitsiMeetWrapperPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware {
-    /// The MethodChannel that will the communication between Flutter and native Android
-    ///
-    /// This local reference serves to register the plugin with the Flutter Engine and unregister it
-    /// when the Flutter Engine is detached from the Activity
     private lateinit var channel: MethodChannel
-
     private var activity: Activity? = null
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        channel = MethodChannel(flutterPluginBinding.binaryMessenger, JITSI_METHOD_CHANNEL)
+        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "jitsi_meet")
         channel.setMethodCallHandler(this)
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
         when (call.method) {
             "joinMeeting" -> joinMeeting(call, result)
-            "closeMeeting" -> closeMeeting(call, result)
             else -> result.notImplemented()
         }
     }
@@ -96,12 +85,6 @@ class JitsiMeetWrapperPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
 
         JitsiMeetActivity.launch(activity, options)
         result.success("Successfully joined room: $room")
-    }
-
-    private fun closeMeeting(call: MethodCall, result: Result) {
-        val intent = Intent(JITSI_MEETING_CLOSE)
-        activity?.sendBroadcast(intent)
-        result.success(null)
     }
 
     override fun onDetachedFromActivity() {

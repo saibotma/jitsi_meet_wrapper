@@ -29,8 +29,4 @@ abstract class JitsiMeetWrapperPlatformInterface extends PlatformInterface {
   Future<JitsiMeetingResponse> joinMeeting(JitsiMeetingOptions options) async {
     throw UnimplementedError('joinMeeting has not been implemented.');
   }
-
-  closeMeeting() {
-    throw UnimplementedError('joinMeeting has not been implemented.');
-  }
 }
