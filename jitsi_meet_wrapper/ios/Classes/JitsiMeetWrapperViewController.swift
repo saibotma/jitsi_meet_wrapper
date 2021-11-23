@@ -2,6 +2,7 @@ import UIKit
 import JitsiMeetSDK
 
 class JitsiMeetWrapperViewController: UIViewController {
+    // TODO(saibotma): Why is this needed?
     @IBOutlet weak var videoButton: UIButton?
 
     fileprivate var pipViewCoordinator: PiPViewCoordinator?
@@ -38,7 +39,7 @@ class JitsiMeetWrapperViewController: UIViewController {
 
         let jitsiMeetView = JitsiMeetView()
         self.jitsiMeetView = jitsiMeetView
-        
+
         let options = JitsiMeetConferenceOptions.fromBuilder { (builder) in
             // TODO(saibotma): Why is this true and not set by flutter?
             builder.welcomePageEnabled = true
