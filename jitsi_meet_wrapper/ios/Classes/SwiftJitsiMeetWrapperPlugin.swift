@@ -83,11 +83,10 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin {
         let featureFlags = arguments["featureFlags"] as! Dictionary<String, Any>
         jitsiViewController?.featureFlags = featureFlags;
 
-
         // TODO(saibotma): Build JitsiMeetConferenceOptions directly like in android implementation
-        let navigationController = UINavigationController(rootViewController: (self.jitsiViewController)!)
+        let navigationController = UINavigationController(rootViewController: (jitsiViewController)!)
         navigationController.setNavigationBarHidden(true, animated: false)
-        navigationController.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+        navigationController.modalPresentationStyle = .fullScreen
         navigationController.navigationBar.barTintColor = UIColor.black
         flutterViewController.present(navigationController, animated: true)
         result(nil)

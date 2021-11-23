@@ -42,9 +42,9 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "dev.saibotma.jitsi_meet_wrapper_example"
-        minSdkVersion 16
+        // Required by jitsi
+        minSdkVersion 23
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
