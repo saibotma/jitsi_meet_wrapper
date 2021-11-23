@@ -15,7 +15,7 @@ import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
 import org.jitsi.meet.sdk.JitsiMeetUserInfo
 import java.net.URL
 
-class JitsiMeetWrapperPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware {
+class JitsiMeetWrapperPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private lateinit var channel: MethodChannel
     private var activity: Activity? = null
 
