@@ -19,14 +19,14 @@ const val JITSI_PLUGIN_TAG = "JITSI_MEET_PLUGIN"
 const val JITSI_METHOD_CHANNEL = "jitsi_meet"
 const val JITSI_MEETING_CLOSE = "JITSI_MEETING_CLOSE"
 
-class JitsiMeetWrapperPlugin(activity: Activity) : FlutterPlugin, MethodCallHandler, ActivityAware {
+class JitsiMeetWrapperPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware {
     /// The MethodChannel that will the communication between Flutter and native Android
     ///
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
     /// when the Flutter Engine is detached from the Activity
     private lateinit var channel: MethodChannel
 
-    private var activity: Activity? = activity
+    private var activity: Activity? = null
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, JITSI_METHOD_CHANNEL)
@@ -92,7 +92,6 @@ class JitsiMeetWrapperPlugin(activity: Activity) : FlutterPlugin, MethodCallHand
 
             build()
         }
-
 
         JitsiMeetWrapperPluginActivity.launchActivity(activity, options)
         result.success("Successfully joined room: $room")
