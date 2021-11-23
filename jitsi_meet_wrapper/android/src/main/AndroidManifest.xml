@@ -2,7 +2,7 @@
   package="dev.saibotma.jitsi_meet_wrapper">
     <application>
         <activity
-            android:name="dev.saibotma.jitsi_meet_wrapper.JitsiMeetWrapperPluginActivity"
+            android:name="org.jitsi.meet.sdk.JitsiMeetActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize"
             android:launchMode="singleTask"
             android:resizeableActivity="true"
