@@ -1,5 +1,6 @@
 import Flutter
 import UIKit
+import JitsiMeetSDK
 
 public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin {
     var flutterViewController: UIViewController
@@ -19,11 +20,6 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin {
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         if (call.method == "joinMeeting") {
             joinMeeting(call, result: result)
-            return
-        }
-
-        if (call.method == "closeMeeting") {
-            closeMeeting(call, result: result)
             return
         }
     }
@@ -90,9 +86,5 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin {
         navigationController.navigationBar.barTintColor = UIColor.black
         flutterViewController.present(navigationController, animated: true)
         result(nil)
-    }
-
-    private func closeMeeting(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        jitsiViewController?.closeJitsiMeeting();
     }
 }
