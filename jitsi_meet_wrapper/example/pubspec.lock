@@ -86,7 +86,7 @@ packages:
     description:
       path: jitsi_meet_wrapper_platform_interface
       ref: main
-      resolved-ref: "31411de5334086236b7edab7d0d700d0f7757aa7"
+      resolved-ref: e4591117a00b964a842f174dd7ed3ae9cbb6576d
       url: "https://github.com/saibotma/jitsi_meet_wrapper"
     source: git
     version: "0.0.1"

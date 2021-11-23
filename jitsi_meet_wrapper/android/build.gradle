@@ -47,7 +47,8 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 16
+        // Required by jitsi
+        minSdkVersion 23
     }
 }
 
