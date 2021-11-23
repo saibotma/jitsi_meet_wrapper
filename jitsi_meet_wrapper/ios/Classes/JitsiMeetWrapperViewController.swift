@@ -1,13 +1,13 @@
 import UIKit
 import JitsiMeetSDK
 
+// This is closely inspired by:
+// https://github.com/jitsi/jitsi-meet-sdk-samples/blob/18c35f7625b38233579ff34f761f4c126ba7e03a/ios/swift-pip/JitsiSDKTest/src/ViewController.swift
 class JitsiMeetWrapperViewController: UIViewController {
-    // TODO(saibotma): Why is this needed?
-    @IBOutlet weak var videoButton: UIButton?
-
     fileprivate var pipViewCoordinator: PiPViewCoordinator?
     fileprivate var jitsiMeetView: JitsiMeetView?
 
+    // TODO: Pass in ready build options object..
     var roomName: String? = nil
     var serverUrl: URL? = nil
     var subject: String? = nil
@@ -19,6 +19,7 @@ class JitsiMeetWrapperViewController: UIViewController {
     var jistiMeetUserInfo = JitsiMeetUserInfo()
 
     override func viewDidLoad() {
+        // TODO(saibotma): Is this really required?
         view.backgroundColor = .black
         super.viewDidLoad()
     }
@@ -30,6 +31,7 @@ class JitsiMeetWrapperViewController: UIViewController {
     override func viewWillTransition(to size: CGSize,
                                      with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
+
         let rect = CGRect(origin: CGPoint.zero, size: size)
         pipViewCoordinator?.resetBounds(bounds: rect)
     }
@@ -84,7 +86,17 @@ class JitsiMeetWrapperViewController: UIViewController {
 }
 
 extension JitsiMeetWrapperViewController: JitsiMeetViewDelegate {
-    func conferenceTerminated(_ data: [AnyHashable : Any]!) {
-        cleanUp()
+    func conferenceTerminated(_ data: [AnyHashable: Any]!) {
+        DispatchQueue.main.async {
+            self.pipViewCoordinator?.hide() { _ in
+                self.cleanUp()
+            }
+        }
+    }
+
+    func enterPicture(inPicture data: [AnyHashable: Any]!) {
+        DispatchQueue.main.async {
+            self.pipViewCoordinator?.enterPictureInPicture()
+        }
     }
 }
