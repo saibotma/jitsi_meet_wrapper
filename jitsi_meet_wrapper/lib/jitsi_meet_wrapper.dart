@@ -14,7 +14,6 @@ class JitsiMeetWrapper {
   static Future<JitsiMeetingResponse> joinMeeting(JitsiMeetingOptions options) async {
     assert(options.roomName.trim().isNotEmpty, "room is empty");
 
-    // Validate serverURL is absolute if it is not null or empty
     if (options.serverUrl?.isNotEmpty ?? false) {
       assert(Uri.parse(options.serverUrl!).isAbsolute,
           "URL must be of the format <scheme>://<host>[/path], like https://someHost.com");

@@ -2,19 +2,17 @@ import Flutter
 import UIKit
 
 public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin {
-    var window: UIWindow?
-    var uiVC: UIViewController
-    var jitsiViewController: JitsiViewController?
+    var flutterViewController: UIViewController
+    var jitsiViewController: JitsiMeetWrapperViewController?
 
-    init(uiViewController: UIViewController) {
-        uiVC = uiViewController
+    init(flutterViewController: UIViewController) {
+        self.flutterViewController = flutterViewController
     }
 
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "jitsi_meet_wrapper", binaryMessenger: registrar.messenger())
-        let viewController: UIViewController =
-                (UIApplication.shared.delegate?.window??.rootViewController)!
-        let instance = SwiftJitsiMeetWrapperPlugin()
+        let flutterViewController: UIViewController = (UIApplication.shared.delegate?.window??.rootViewController)!
+        let instance = SwiftJitsiMeetWrapperPlugin(flutterViewController: flutterViewController)
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
 
@@ -31,79 +29,71 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin {
     }
 
     private func joinMeeting(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        jitsiViewController = JitsiViewController.init()
-        jitsiViewController?.eventSink = eventSink;
+        jitsiViewController = JitsiMeetWrapperViewController.init()
+        let arguments = call.arguments as! [String: Any]
 
-        guard let args = call.arguments else {
+        let roomName = arguments["roomName"] as! String
+        if (roomName.trimmingCharacters(in: .whitespaces).isEmpty) {
+            result(FlutterError.init(
+                    code: "400",
+                    message: "room is empty in arguments for method: joinMeeting",
+                    details: "room is empty in arguments for method: joinMeeting"
+            ))
             return
         }
+        jitsiViewController?.roomName = roomName;
 
-        if let myArgs = args as? [String: Any] {
-            if let roomName = myArgs["roomName"] as? String {
-                if let serverUrl = myArgs["serverUrl"] as? String {
-                    jitsiViewController?.serverUrl = URL(string: serverUrl);
-                }
-                let subject = myArgs["subject"] as? String
-                let token = myArgs["token"] as? String
-
-                jitsiViewController?.roomName = roomName;
-
-                if let isAudioMuted = myArgs["isAudioMuted"] as? Int {
-                    let isAudioMutedBool = isAudioMuted > 0 ? true : false
-                    jitsiViewController?.audioMuted = isAudioMutedBool;
-                }
-
-                // TODO(saibotma): Why int and not bool?
-                if let isAudioOnly = myArgs["isAudioOnly"] as? Int {
-                    let isAudioOnlyBool = isAudioOnly > 0 ? true : false
-                    jitsiViewController?.audioOnly = isAudioOnlyBool;
-                }
-
-                if let isVideoMuted = myArgs["isVideoMuted"] as? Int {
-                    let isVideoMutedBool = isVideoMuted > 0 ? true : false
-                    jitsiViewController?.videoMuted = isVideoMutedBool;
-                }
-
-                let displayName = myArgs["userDisplayName"] as? String
-                jitsiViewController?.jistiMeetUserInfo.displayName = displayName;
-
-                let email = myArgs["userEmail"] as? String
-                jitsiViewController?.jistiMeetUserInfo.email = email;
-
-                jitsiViewController?.subject = subject;
-                jitsiViewController?.token = token;
-
-                if let avatarURL = myArgs["userAvatarURL"] as? String {
-                    jitsiViewController?.jistiMeetUserInfo.avatar = URL(string: avatarURL);
-                }
-
-                if let featureFlags = myArgs["featureFlags"] as? Dictionary<String, Any> {
-                    jitsiViewController?.featureFlags = featureFlags;
-                }
-
-            } else {
-                result(FlutterError.init(code: "400", message: "room is null in arguments for method: (joinMeeting)", details: "room is null in arguments for method: (joinMeeting)"))
-            }
-        } else {
-            result(FlutterError.init(code: "400", message: "arguments are null for method: (joinMeeting)", details: "arguments are null for method: (joinMeeting)"))
+        // Otherwise uses default public jitsi meet URL
+        if let serverUrl = arguments["serverUrl"] as? String {
+            jitsiViewController?.serverUrl = URL(string: serverUrl);
         }
 
+        let subject = arguments["subject"] as? String
+        jitsiViewController?.subject = subject;
+
+        let token = arguments["token"] as? String
+        jitsiViewController?.token = token;
+
+        if let isAudioMuted = arguments["isAudioMuted"] as? Int {
+            let isAudioMutedBool = isAudioMuted > 0 ? true : false
+            jitsiViewController?.audioMuted = isAudioMutedBool;
+        }
+
+        // TODO(saibotma): Why int and not bool?
+        if let isAudioOnly = arguments["isAudioOnly"] as? Int {
+            let isAudioOnlyBool = isAudioOnly > 0 ? true : false
+            jitsiViewController?.audioOnly = isAudioOnlyBool;
+        }
+
+        if let isVideoMuted = arguments["isVideoMuted"] as? Int {
+            let isVideoMutedBool = isVideoMuted > 0 ? true : false
+            jitsiViewController?.videoMuted = isVideoMutedBool;
+        }
+
+        let displayName = arguments["userDisplayName"] as? String
+        jitsiViewController?.jistiMeetUserInfo.displayName = displayName;
+
+        let email = arguments["userEmail"] as? String
+        jitsiViewController?.jistiMeetUserInfo.email = email;
+
+        if let avatarUrl = arguments["userAvatarUrl"] as? String {
+            jitsiViewController?.jistiMeetUserInfo.avatar = URL(string: avatarUrl);
+        }
+
+        let featureFlags = arguments["featureFlags"] as! Dictionary<String, Any>
+        jitsiViewController?.featureFlags = featureFlags;
+
+
+        // TODO(saibotma): Build JitsiMeetConferenceOptions directly like in android implementation
         let navigationController = UINavigationController(rootViewController: (self.jitsiViewController)!)
         navigationController.setNavigationBarHidden(true, animated: false)
-        navigationController.modalPresentationStyle = .fullScreen
+        navigationController.modalPresentationStyle = UIModalPresentationStyle.fullScreen
         navigationController.navigationBar.barTintColor = UIColor.black
-        uiVC.present(navigationController, animated: true)
+        flutterViewController.present(navigationController, animated: true)
         result(nil)
     }
 
     private func closeMeeting(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        var dictClosingServerInfo: Dictionary = Dictionary<AnyHashable, Any>()
-        let serverURL: String = jitsiViewController?.serverUrl?.absoluteString ?? ""
-        let roomName: String = jitsiViewController?.roomName ?? ""
-
-        dictClosingServerInfo["url"] = "\(serverURL)/\(roomName)";
-
         jitsiViewController?.closeJitsiMeeting();
-        jitsiViewController?.conferenceTerminated(dictClosingServerInfo);
     }
 }

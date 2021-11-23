@@ -2,34 +2,31 @@ package dev.saibotma.jitsi_meet_wrapper
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import androidx.annotation.NonNull
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
-import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
+import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
+import org.jitsi.meet.sdk.JitsiMeetUserInfo
+import java.net.URL
 
 const val JITSI_PLUGIN_TAG = "JITSI_MEET_PLUGIN"
 const val JITSI_METHOD_CHANNEL = "jitsi_meet"
 const val JITSI_MEETING_CLOSE = "JITSI_MEETING_CLOSE"
 
-class JitsiMeetWrapperPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
+class JitsiMeetWrapperPlugin(activity: Activity) : FlutterPlugin, MethodCallHandler, ActivityAware {
     /// The MethodChannel that will the communication between Flutter and native Android
     ///
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
     /// when the Flutter Engine is detached from the Activity
     private lateinit var channel: MethodChannel
 
-    private var activity: Activity? = null
-
-    constructor(activity: Activity) : this() {
-        this.activity = activity
-    }
+    private var activity: Activity? = activity
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, JITSI_METHOD_CHANNEL)
@@ -37,9 +34,6 @@ class JitsiMeetWrapperPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-        Log.d(JITSI_PLUGIN_TAG, "method: ${call.method}")
-        Log.d(JITSI_PLUGIN_TAG, "arguments: ${call.arguments}")
-
         when (call.method) {
             "joinMeeting" -> joinMeeting(call, result)
             "closeMeeting" -> closeMeeting(call, result)
@@ -48,59 +42,57 @@ class JitsiMeetWrapperPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     private fun joinMeeting(call: MethodCall, result: Result) {
-        val room = call.argument<String>("room")
-        if (room.isNullOrBlank()) {
-            result.error("400",
+        val room = call.argument<String>("room")!!
+        if (room.isBlank()) {
+            result.error(
+                    "400",
                     "room can not be null or empty",
-                    "room can not be null or empty")
+                    "room can not be null or empty"
+            )
             return
         }
 
-        Log.d(JITSI_PLUGIN_TAG, "Joining Room: $room")
+        val serverUrlString = call.argument<String>("serverUrl") ?: "https://meet.jit.si"
+        val serverUrl = URL(serverUrlString)
 
-        val userInfo = JitsiMeetUserInfo()
-        userInfo.displayName = call.argument("userDisplayName")
-        userInfo.email = call.argument("userEmail")
-        if (call.argument<String?>("userAvatarURL") != null) {
-            userInfo.avatar = URL(call.argument("userAvatarURL"))
+        val subject: String? = call.argument("subject")
+        val token: String? = call.argument("token")
+        val isAudioMuted: Boolean = call.argument("isAudioMuted")!!
+        val isAudioOnly: Boolean = call.argument("isAudioOnly")!!
+        val isVideoMuted: Boolean = call.argument("isVideoMuted")!!
+
+        val userInfo = JitsiMeetUserInfo().apply {
+            displayName = call.argument("userDisplayName")
+            email = call.argument("userEmail")
+            val userAvatarUrlString: String? = call.argument("userAvatarUrl")
+            avatar = if (userAvatarUrlString != null) URL(userAvatarUrlString) else null
         }
 
-        var serverURLString = call.argument<String>("serverURL")
-        if (serverURLString == null) {
-            serverURLString = "https://meet.jit.si";
-        }
-        val serverURL = URL(serverURLString)
-        Log.d(JITSI_PLUGIN_TAG, "Server URL: $serverURL, $serverURLString")
+        val options = JitsiMeetConferenceOptions.Builder().run {
+            setRoom(room)
+            setServerURL(serverUrl)
+            setSubject(subject)
+            setToken(token)
+            setAudioMuted(isAudioMuted)
+            setAudioOnly(isAudioOnly)
+            setVideoMuted(isVideoMuted)
+            setUserInfo(userInfo)
 
-        val optionsBuilder = JitsiMeetConferenceOptions.Builder()
-
-        // Set meeting options
-        optionsBuilder
-                .setServerURL(serverURL)
-                .setRoom(room)
-                .setSubject(call.argument("subject"))
-                .setToken(call.argument("token"))
-                .setAudioMuted(call.argument("audioMuted") ?: false)
-                .setAudioOnly(call.argument("audioOnly") ?: false)
-                .setVideoMuted(call.argument("videoMuted") ?: false)
-                .setUserInfo(userInfo)
-
-        // Add feature flags into options, reading given Map
-        if (call.argument<HashMap<String, Any>?>("featureFlags") != null) {
-            val featureFlags = call.argument<HashMap<String, Any>>("featureFlags")
-            featureFlags!!.forEach { (key, value) ->
+            val featureFlags = call.argument<HashMap<String, Any>?>("featureFlags")!!
+            featureFlags.forEach { (key, value) ->
+                // TODO(saibotma): Streamline with iOS implementation.
                 if (value is Boolean) {
-                    val boolVal = value.toString().toBoolean()
-                    optionsBuilder.setFeatureFlag(key, boolVal)
+                    val boolValue = value.toString().toBoolean()
+                    setFeatureFlag(key, boolValue)
                 } else {
-                    val intVal = value.toString().toInt()
-                    optionsBuilder.setFeatureFlag(key, intVal)
+                    val intValue = value.toString().toInt()
+                    setFeatureFlag(key, intValue)
                 }
             }
+
+            build()
         }
 
-        // Build with meeting options and feature flags
-        val options = optionsBuilder.build()
 
         JitsiMeetWrapperPluginActivity.launchActivity(activity, options)
         result.success("Successfully joined room: $room")

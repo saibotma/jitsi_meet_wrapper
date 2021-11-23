@@ -7,12 +7,11 @@ class JitsiMeetingOptions {
   final String? serverUrl;
   final String? subject;
   final String? token;
-  final bool? isAudioMuted;
-  final bool? isAudioOnly;
-  final bool? isVideoMuted;
+  final bool isAudioMuted;
+  final bool isAudioOnly;
+  final bool isVideoMuted;
   final String? userDisplayName;
   final String? userEmail;
-  final String? iosAppBarRGBAColor;
   final String? userAvatarUrl;
   final Map<FeatureFlag, bool> featureFlags;
 
@@ -21,19 +20,18 @@ class JitsiMeetingOptions {
     this.serverUrl,
     this.subject,
     this.token,
-    this.isAudioMuted,
-    this.isAudioOnly,
-    this.isVideoMuted,
+    this.isAudioMuted = false,
+    this.isAudioOnly = false,
+    this.isVideoMuted = false,
     this.userDisplayName,
     this.userEmail,
-    this.iosAppBarRGBAColor,
     this.userAvatarUrl,
     this.featureFlags = const {},
   });
 
   @override
   String toString() {
-    return 'JitsiMeetingOptions{roomName: $roomName, serverUrl: $serverUrl, subject: $subject, token: $token, isAudioMuted: $isAudioMuted, isAudioOnly: $isAudioOnly, isVideoMuted: $isVideoMuted, userDisplayName: $userDisplayName, userEmail: $userEmail, iosAppBarRGBAColor: $iosAppBarRGBAColor, userAvatarUrl: $userAvatarUrl, featureFlags: $featureFlags}';
+    return 'JitsiMeetingOptions{roomName: $roomName, serverUrl: $serverUrl, subject: $subject, token: $token, isAudioMuted: $isAudioMuted, isAudioOnly: $isAudioOnly, isVideoMuted: $isVideoMuted, userDisplayName: $userDisplayName, userEmail: $userEmail, userAvatarUrl: $userAvatarUrl, featureFlags: $featureFlags}';
   }
 
   @override
@@ -50,7 +48,6 @@ class JitsiMeetingOptions {
           isVideoMuted == other.isVideoMuted &&
           userDisplayName == other.userDisplayName &&
           userEmail == other.userEmail &&
-          iosAppBarRGBAColor == other.iosAppBarRGBAColor &&
           userAvatarUrl == other.userAvatarUrl &&
           const MapEquality().equals(featureFlags, other.featureFlags);
 
@@ -65,7 +62,6 @@ class JitsiMeetingOptions {
       isVideoMuted.hashCode ^
       userDisplayName.hashCode ^
       userEmail.hashCode ^
-      iosAppBarRGBAColor.hashCode ^
       userAvatarUrl.hashCode ^
       const MapEquality().hash(featureFlags);
 }

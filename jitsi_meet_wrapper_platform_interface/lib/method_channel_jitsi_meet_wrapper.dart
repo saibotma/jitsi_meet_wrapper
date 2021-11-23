@@ -14,17 +14,17 @@ class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
   @override
   Future<JitsiMeetingResponse> joinMeeting(JitsiMeetingOptions options) async {
     Map<String, dynamic> _options = {
-      'room': options.roomName.trim(),
+      'roomName': options.roomName.trim(),
       'serverUrl': options.serverUrl?.trim(),
       'subject': options.subject?.trim(),
       'token': options.token,
       'isAudioMuted': options.isAudioMuted,
       'isAudioOnly': options.isAudioOnly,
       'isVideoMuted': options.isVideoMuted,
-      'featureFlags': _toFeatureFlagStrings(options.featureFlags),
       'userDisplayName': options.userDisplayName,
       'userEmail': options.userEmail,
-      'iosAppBarRGBAColor': options.iosAppBarRGBAColor,
+      'userAvatarUrl': options.userAvatarUrl,
+      'featureFlags': _toFeatureFlagStrings(options.featureFlags),
     };
 
     return await _channel

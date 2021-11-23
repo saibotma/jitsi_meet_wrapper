@@ -17,17 +17,6 @@ class JitsiMeetWrapperViewController: UIViewController {
     var featureFlags: Dictionary<String, Any>? = Dictionary();
     var jistiMeetUserInfo = JitsiMeetUserInfo()
 
-    // TODO(saibotma): Remove this?
-    @objc func openButtonClicked(sender: UIButton) {
-        //openJitsiMeetWithOptions();
-    }
-
-    // TODO(saibotma): What is this used for?
-    @objc func closeButtonClicked(sender: UIButton) {
-        cleanUp();
-        dismiss(animated: true, completion: nil)
-    }
-
     override func viewDidLoad() {
         view.backgroundColor = .black
         super.viewDidLoad()
@@ -48,9 +37,8 @@ class JitsiMeetWrapperViewController: UIViewController {
         cleanUp()
 
         let jitsiMeetView = JitsiMeetView()
-
-        jitsiMeetView.delegate = self
         self.jitsiMeetView = jitsiMeetView
+        
         let options = JitsiMeetConferenceOptions.fromBuilder { (builder) in
             // TODO(saibotma): Why is this true and not set by flutter?
             builder.welcomePageEnabled = true
@@ -90,7 +78,5 @@ class JitsiMeetWrapperViewController: UIViewController {
         jitsiMeetView?.removeFromSuperview()
         jitsiMeetView = nil
         pipViewCoordinator = nil
-        // TODO(saibotma): Remove?
-        //self.dismiss(animated: true, completion: nil)
     }
 }
