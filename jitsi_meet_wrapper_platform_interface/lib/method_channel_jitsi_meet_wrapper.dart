@@ -33,9 +33,13 @@ class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
         .catchError((error) => JitsiMeetingResponse(isSuccess: true, message: error.toString(), error: error));
   }
 
-  Map<String, bool> _toFeatureFlagStrings(Map<FeatureFlag, bool> featureFlags) {
-    Map<String, bool> featureFlagsWithStrings = {};
-    featureFlags.forEach((key, value) => featureFlagsWithStrings[_toFeatureFlagString(key)] = value);
+  Map<String, Object> _toFeatureFlagStrings(Map<FeatureFlag, Object?> featureFlags) {
+    Map<String, Object> featureFlagsWithStrings = {};
+    featureFlags.forEach((key, value) {
+      if (value != null) {
+        featureFlagsWithStrings[_toFeatureFlagString(key)] = value;
+      }
+    });
     return featureFlagsWithStrings;
   }
 

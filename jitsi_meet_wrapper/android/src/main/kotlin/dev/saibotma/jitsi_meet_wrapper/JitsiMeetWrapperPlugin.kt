@@ -68,15 +68,20 @@ class JitsiMeetWrapperPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             setVideoMuted(isVideoMuted)
             setUserInfo(userInfo)
 
-            val featureFlags = call.argument<HashMap<String, Any>?>("featureFlags")!!
+            val featureFlags = call.argument<HashMap<String, Any>>("featureFlags")!!
             featureFlags.forEach { (key, value) ->
-                // TODO(saibotma): Streamline with iOS implementation.
-                if (value is Boolean) {
-                    val boolValue = value.toString().toBoolean()
-                    setFeatureFlag(key, boolValue)
-                } else {
-                    val intValue = value.toString().toInt()
-                    setFeatureFlag(key, intValue)
+                // Can only be bool, int or string according to
+                // the overloads of setFeatureFlag.
+                when (value) {
+                    is Boolean -> {
+                        val boolValue = value.toString().toBoolean()
+                        setFeatureFlag(key, boolValue)
+                    }
+                    is Int -> {
+                        val intValue = value.toString().toInt()
+                        setFeatureFlag(key, intValue)
+                    }
+                    else -> setFeatureFlag(key, value.toString())
                 }
             }
 

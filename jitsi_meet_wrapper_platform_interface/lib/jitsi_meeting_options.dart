@@ -13,7 +13,7 @@ class JitsiMeetingOptions {
   final String? userDisplayName;
   final String? userEmail;
   final String? userAvatarUrl;
-  final Map<FeatureFlag, bool> featureFlags;
+  final Map<FeatureFlag, Object?> featureFlags;
 
   JitsiMeetingOptions({
     required this.roomName,
