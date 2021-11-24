@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -129,22 +127,8 @@ class _MeetingState extends State<Meeting> {
   _joinMeeting() async {
     String? serverUrl = serverText.text.trim().isEmpty ? null : serverText.text;
 
-    // Enable or disable any feature flag here
-    // If feature flag are not provided, default values will be used
-    // Full list of feature flags (and defaults) available in the README
-    Map<FeatureFlag, bool> featureFlags = {
-      FeatureFlag.isWelcomePageEnabled: false,
-    };
-    if (!kIsWeb) {
-      // Here is an example, disabling features for each platform
-      if (Platform.isAndroid) {
-        // Disable ConnectionService usage on Android to avoid issues (see README)
-        featureFlags[FeatureFlag.isCallIntegrationEnabled] = false;
-      } else if (Platform.isIOS) {
-        // Disable PIP on iOS as it looks weird
-        featureFlags[FeatureFlag.isPipEnabled] = false;
-      }
-    }
+    Map<FeatureFlag, Object> featureFlags = {};
+
     // Define meetings options here
     var options = JitsiMeetingOptions(
       roomName: roomText.text,
