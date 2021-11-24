@@ -11,7 +11,6 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin {
     }
 
     public static func register(with registrar: FlutterPluginRegistrar) {
-        print("register 🔥")
         let channel = FlutterMethodChannel(name: "jitsi_meet_wrapper", binaryMessenger: registrar.messenger())
         let flutterViewController: UIViewController = (UIApplication.shared.delegate?.window??.rootViewController)!
         let instance = SwiftJitsiMeetWrapperPlugin(flutterViewController: flutterViewController)
@@ -19,7 +18,6 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin {
     }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        print("handling 🔥")
         if (call.method == "joinMeeting") {
             joinMeeting(call, result: result)
             return
@@ -27,7 +25,6 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin {
     }
 
     private func joinMeeting(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        print("joining meeting 🔥");
         jitsiViewController = JitsiMeetWrapperViewController.init()
         let arguments = call.arguments as! [String: Any]
 
@@ -82,7 +79,6 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin {
         let featureFlags = arguments["featureFlags"] as! Dictionary<String, Any>
         jitsiViewController?.featureFlags = featureFlags;
 
-        print("I am here 🔥")
         // TODO(saibotma): Build JitsiMeetConferenceOptions directly like in android implementation
         let navigationController = UINavigationController(rootViewController: (jitsiViewController)!)
         navigationController.setNavigationBarHidden(true, animated: false)
