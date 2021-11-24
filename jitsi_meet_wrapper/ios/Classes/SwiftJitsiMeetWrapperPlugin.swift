@@ -11,6 +11,7 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin {
     }
 
     public static func register(with registrar: FlutterPluginRegistrar) {
+        print("register 🔥")
         let channel = FlutterMethodChannel(name: "jitsi_meet_wrapper", binaryMessenger: registrar.messenger())
         let flutterViewController: UIViewController = (UIApplication.shared.delegate?.window??.rootViewController)!
         let instance = SwiftJitsiMeetWrapperPlugin(flutterViewController: flutterViewController)
