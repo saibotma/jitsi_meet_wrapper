@@ -1,14 +1,15 @@
 # jitsi_meet_wrapper
 
-Jitsi Meet Plugin for Flutter. Wrapping JitsiMeetSDK for
+Jitsi Meet Plugin for Flutter.<br>
+Wrapping JitsiMeetSDK for
 [Android](https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-android-sdk) and
 [iOS](https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-ios-sdk).
 
 This wrapper got built for [Appella](https://www.appella.app/) App. The goal is to keep it generic, however at the
 moment it only contains features needed in Appella.
 I am happy to review PRs that add additional functionality to this plugin however it is not
-guaranteed that I will have time to develop and add features that are not needed in Appella.
-Nevertheless please always create an issue and I will have a look.
+guaranteed that I will have time to develop and add features that are not needed in Appella.<br>
+Nevertheless please always create an issue and I will try have a look.
 
 ## Table of Contents
   - [Join A Meeting](#join-a-meeting)
@@ -33,9 +34,8 @@ for all the available options.
 ## Configuration
 
 Most recommendations below are based on the
-official documentation of the JitsiMeetSDK for [iOS](https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-ios-sdk)
-and [Android](https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-android-sdk).
-Taking a look at them is recommended, if you have any issues or need detailed information.
+official documentation of JitsiMeetSDK for [iOS](https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-ios-sdk)
+It is recommended to take a look at them, if you have any issues or need more detailed information.
 
 <a name="ios"></a>
 ### iOS
@@ -43,7 +43,7 @@ Note: The example app does not compile on simulator at the moment. (https://gith
 
 #### Podfile
 
-The platform needs to be set to `11.0` or newer and bitcode needs to be disabled.
+The platform needs to be set to `11.0` or newer and bitcode needs to be disabled.<br>
 The file should look similar to below:
 
 ```
@@ -59,11 +59,11 @@ end
 ```
 
 #### Info.plist
-Add `NSCameraUsageDescription` and `NSMicrophoneUsageDescription` to your `Info.plist`.
-In order for you app to properly work in the background, select the `audio` and `voip` background modes.
-Additionally it is recommended to set `UIViewControllerBasedStatusBarAppearance` to `NO`.
+Add `NSCameraUsageDescription` and `NSMicrophoneUsageDescription` to your `Info.plist`.<br>
+In order for you app to properly work in the background, select the `audio` and `voip` background modes.<br>
+Additionally it is recommended to set `UIViewControllerBasedStatusBarAppearance` to `NO`.<br>
 
-```text
+```xml
 <key>NSCameraUsageDescription</key>
 <string>$(PRODUCT_NAME) needs access to the camera for meetings.</string>
 <key>NSMicrophoneUsageDescription</key>
