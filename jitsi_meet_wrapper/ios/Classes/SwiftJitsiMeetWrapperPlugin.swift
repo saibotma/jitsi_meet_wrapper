@@ -50,20 +50,16 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin {
             let token = arguments["token"] as? String
             builder.token = token;
 
-            if let isAudioMuted = arguments["isAudioMuted"] as? Int {
-                let isAudioMutedBool = isAudioMuted > 0 ? true : false
-                builder.setAudioMuted(isAudioMutedBool);
+            if let isAudioMuted = arguments["isAudioMuted"] as? Bool {
+                builder.setAudioMuted(isAudioMuted);
             }
 
-            // TODO(saibotma): Why int and not bool?
-            if let isAudioOnly = arguments["isAudioOnly"] as? Int {
-                let isAudioOnlyBool = isAudioOnly > 0 ? true : false
-                builder.setAudioOnly(isAudioOnlyBool)
+            if let isAudioOnly = arguments["isAudioOnly"] as? Bool {
+                builder.setAudioOnly(isAudioOnly)
             }
 
-            if let isVideoMuted = arguments["isVideoMuted"] as? Int {
-                let isVideoMutedBool = isVideoMuted > 0 ? true : false
-                builder.setVideoMuted(isVideoMutedBool)
+            if let isVideoMuted = arguments["isVideoMuted"] as? Bool {
+                builder.setVideoMuted(isVideoMuted)
             }
 
             let displayName = arguments["userDisplayName"] as? String
