@@ -76,11 +76,9 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin {
 
         jitsiViewController = JitsiMeetWrapperViewController.init(options: options)
 
-        let navigationController = UINavigationController(rootViewController: (jitsiViewController)!)
-        navigationController.setNavigationBarHidden(true, animated: false)
-        navigationController.modalPresentationStyle = .fullScreen
-        navigationController.navigationBar.barTintColor = UIColor.black
-        flutterViewController.present(navigationController, animated: true)
+        // In order to make pip mode work.
+        jitsiViewController!.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        flutterViewController.present(jitsiViewController!, animated: true)
         result(nil)
     }
 }
