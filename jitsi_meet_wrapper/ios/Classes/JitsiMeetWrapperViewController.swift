@@ -18,12 +18,6 @@ class JitsiMeetWrapperViewController: UIViewController {
     var featureFlags: Dictionary<String, Any>? = Dictionary();
     var jistiMeetUserInfo = JitsiMeetUserInfo()
 
-    override func viewDidLoad() {
-        // TODO(saibotma): Is this really required?
-        //view.backgroundColor = .black
-        super.viewDidLoad()
-    }
-
     override func viewDidAppear(_ animated: Bool) {
         openJitsiMeet();
     }
@@ -74,10 +68,6 @@ class JitsiMeetWrapperViewController: UIViewController {
         pipViewCoordinator?.show()
     }
 
-    func closeJitsiMeeting() {
-        jitsiMeetView?.leave()
-    }
-
     fileprivate func cleanUp() {
         jitsiMeetView?.removeFromSuperview()
         jitsiMeetView = nil
@@ -88,7 +78,7 @@ class JitsiMeetWrapperViewController: UIViewController {
 extension JitsiMeetWrapperViewController: JitsiMeetViewDelegate {
     func conferenceTerminated(_ data: [AnyHashable: Any]!) {
         DispatchQueue.main.async {
-            self.pipViewCoordinator?.hide() { _ in
+            self.pipViewCoordinator?.hide { _ in
                 self.cleanUp()
                 self.dismiss(animated: true, completion: nil)
             }
