@@ -90,6 +90,7 @@ extension JitsiMeetWrapperViewController: JitsiMeetViewDelegate {
         DispatchQueue.main.async {
             self.pipViewCoordinator?.hide() { _ in
                 self.cleanUp()
+                self.dismiss(animated: true, completion: nil)
             }
         }
     }
