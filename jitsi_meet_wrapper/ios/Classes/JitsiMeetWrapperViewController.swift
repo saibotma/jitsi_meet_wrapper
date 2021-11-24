@@ -9,9 +9,16 @@ class JitsiMeetWrapperViewController: UIViewController {
 
     let options: JitsiMeetConferenceOptions
 
+    // https://stackoverflow.com/a/55208383/6172447
     init(options: JitsiMeetConferenceOptions) {
         self.options = options;
-        super.init()
+        // Need to pass in nibName and bundle otherwise an error occurs.
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    // https://stackoverflow.com/a/55208383/6172447
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) is not supported")
     }
 
     override func viewDidAppear(_ animated: Bool) {
