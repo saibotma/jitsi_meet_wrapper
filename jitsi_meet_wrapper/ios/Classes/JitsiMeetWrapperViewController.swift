@@ -20,7 +20,7 @@ class JitsiMeetWrapperViewController: UIViewController {
 
     override func viewDidLoad() {
         // TODO(saibotma): Is this really required?
-        view.backgroundColor = .black
+        //view.backgroundColor = .black
         super.viewDidLoad()
     }
 
