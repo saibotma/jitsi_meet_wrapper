@@ -25,61 +25,61 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin {
     }
 
     private func joinMeeting(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        jitsiViewController = JitsiMeetWrapperViewController.init()
         let arguments = call.arguments as! [String: Any]
 
-        let roomName = arguments["roomName"] as! String
-        if (roomName.trimmingCharacters(in: .whitespaces).isEmpty) {
-            result(FlutterError.init(
-                    code: "400",
-                    message: "room is empty in arguments for method: joinMeeting",
-                    details: "room is empty in arguments for method: joinMeeting"
-            ))
-            return
+        let options = JitsiMeetConferenceOptions.fromBuilder { (builder) in
+            let roomName = arguments["roomName"] as! String
+            if (roomName.trimmingCharacters(in: .whitespaces).isEmpty) {
+                result(FlutterError.init(
+                        code: "400",
+                        message: "room is empty in arguments for method: joinMeeting",
+                        details: "room is empty in arguments for method: joinMeeting"
+                ))
+                return
+            }
+            builder.room = roomName
+
+            // Otherwise uses default public jitsi meet URL
+            if let serverUrl = arguments["serverUrl"] as? String {
+                builder.serverURL = URL(string: serverUrl);
+            }
+
+            let subject = arguments["subject"] as? String
+            builder.setSubject(subject ?? "")
+
+            let token = arguments["token"] as? String
+            builder.token = token;
+
+            if let isAudioMuted = arguments["isAudioMuted"] as? Int {
+                let isAudioMutedBool = isAudioMuted > 0 ? true : false
+                builder.setAudioMuted(isAudioMutedBool);
+            }
+
+            // TODO(saibotma): Why int and not bool?
+            if let isAudioOnly = arguments["isAudioOnly"] as? Int {
+                let isAudioOnlyBool = isAudioOnly > 0 ? true : false
+                builder.setAudioOnly(isAudioOnlyBool)
+            }
+
+            if let isVideoMuted = arguments["isVideoMuted"] as? Int {
+                let isVideoMutedBool = isVideoMuted > 0 ? true : false
+                builder.setVideoMuted(isVideoMutedBool)
+            }
+
+            let displayName = arguments["userDisplayName"] as? String
+            let email = arguments["userEmail"] as? String
+            let avatarUrlString = arguments["userAvatarUrl"] as? String
+            let avatarUrl = avatarUrlString != nil ? URL(string: avatarUrlString!) : nil
+            builder.userInfo = JitsiMeetUserInfo(displayName: displayName, andEmail: email, andAvatar: avatarUrl)
+
+            let featureFlags = arguments["featureFlags"] as! Dictionary<String, Any>
+            featureFlags.forEach { key, value in
+                builder.setFeatureFlag(key, withValue: value);
+            }
         }
-        jitsiViewController?.roomName = roomName;
 
-        // Otherwise uses default public jitsi meet URL
-        if let serverUrl = arguments["serverUrl"] as? String {
-            jitsiViewController?.serverUrl = URL(string: serverUrl);
-        }
+        jitsiViewController = JitsiMeetWrapperViewController.init(options: options)
 
-        let subject = arguments["subject"] as? String
-        jitsiViewController?.subject = subject;
-
-        let token = arguments["token"] as? String
-        jitsiViewController?.token = token;
-
-        if let isAudioMuted = arguments["isAudioMuted"] as? Int {
-            let isAudioMutedBool = isAudioMuted > 0 ? true : false
-            jitsiViewController?.audioMuted = isAudioMutedBool;
-        }
-
-        // TODO(saibotma): Why int and not bool?
-        if let isAudioOnly = arguments["isAudioOnly"] as? Int {
-            let isAudioOnlyBool = isAudioOnly > 0 ? true : false
-            jitsiViewController?.audioOnly = isAudioOnlyBool;
-        }
-
-        if let isVideoMuted = arguments["isVideoMuted"] as? Int {
-            let isVideoMutedBool = isVideoMuted > 0 ? true : false
-            jitsiViewController?.videoMuted = isVideoMutedBool;
-        }
-
-        let displayName = arguments["userDisplayName"] as? String
-        jitsiViewController?.jistiMeetUserInfo.displayName = displayName;
-
-        let email = arguments["userEmail"] as? String
-        jitsiViewController?.jistiMeetUserInfo.email = email;
-
-        if let avatarUrl = arguments["userAvatarUrl"] as? String {
-            jitsiViewController?.jistiMeetUserInfo.avatar = URL(string: avatarUrl);
-        }
-
-        let featureFlags = arguments["featureFlags"] as! Dictionary<String, Any>
-        jitsiViewController?.featureFlags = featureFlags;
-
-        // TODO(saibotma): Build JitsiMeetConferenceOptions directly like in android implementation
         let navigationController = UINavigationController(rootViewController: (jitsiViewController)!)
         navigationController.setNavigationBarHidden(true, animated: false)
         navigationController.modalPresentationStyle = .fullScreen

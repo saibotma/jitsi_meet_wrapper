@@ -7,16 +7,12 @@ class JitsiMeetWrapperViewController: UIViewController {
     fileprivate var pipViewCoordinator: PiPViewCoordinator?
     fileprivate var jitsiMeetView: JitsiMeetView?
 
-    // TODO: Pass in ready build options object..
-    var roomName: String? = nil
-    var serverUrl: URL? = nil
-    var subject: String? = nil
-    var audioOnly: Bool? = false
-    var audioMuted: Bool? = false
-    var videoMuted: Bool? = false
-    var token: String? = nil
-    var featureFlags: Dictionary<String, Any>? = Dictionary();
-    var jistiMeetUserInfo = JitsiMeetUserInfo()
+    let options: JitsiMeetConferenceOptions
+
+    init(options: JitsiMeetConferenceOptions) {
+        self.options = options;
+        super.init()
+    }
 
     override func viewDidAppear(_ animated: Bool) {
         openJitsiMeet();
@@ -34,25 +30,9 @@ class JitsiMeetWrapperViewController: UIViewController {
         cleanUp()
 
         let jitsiMeetView = JitsiMeetView()
-        jitsiMeetView.delegate = self
         self.jitsiMeetView = jitsiMeetView
 
-        let options = JitsiMeetConferenceOptions.fromBuilder { (builder) in
-            builder.room = self.roomName
-            builder.serverURL = self.serverUrl
-            builder.setSubject(self.subject ?? "")
-            // TODO(saibotma): Fix typo
-            builder.userInfo = self.jistiMeetUserInfo
-            builder.setAudioOnly(self.audioOnly ?? false)
-            builder.setAudioMuted(self.audioMuted ?? false)
-            builder.setVideoMuted(self.videoMuted ?? false)
-            builder.token = self.token
-
-            self.featureFlags?.forEach { key, value in
-                builder.setFeatureFlag(key, withValue: value);
-            }
-        }
-
+        jitsiMeetView.delegate = self
         jitsiMeetView.join(options)
 
         // Enable jitsimeet view to be a view that can be displayed
