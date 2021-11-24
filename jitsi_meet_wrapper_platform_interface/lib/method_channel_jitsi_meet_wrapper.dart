@@ -70,12 +70,52 @@ class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
         return 'raise-hand.enabled';
       case FeatureFlag.isRecordingEnabled:
         return 'recording.enabled';
-      case FeatureFlag.isTitleViewEnabled:
+      case FeatureFlag.isTileViewEnabled:
         return 'tile-view.enabled';
       case FeatureFlag.isToolboxAlwaysVisible:
         return 'toolbox.alwaysVisible';
       case FeatureFlag.isWelcomePageEnabled:
         return 'welcomepage.enabled';
+      case FeatureFlag.isAudioFocusDisabled:
+        return 'audio-focus.disabled';
+      case FeatureFlag.isAudioMuteButtonEnabled:
+        return 'audio-mute.enabled';
+      case FeatureFlag.isAudioOnlyButtonEnabled:
+        return 'audio-only.enabled';
+      case FeatureFlag.isConferenceTimerEnabled:
+        return 'conference-timer.enabled';
+      case FeatureFlag.isFilmstripEnabled:
+        return 'filmstrip.enabled';
+      case FeatureFlag.isFullscreenEnabled:
+        return 'fullscreen.enabled';
+      case FeatureFlag.isHelpButtonEnabled:
+        return 'help.enabled';
+      case FeatureFlag.isAndroidScreensharingEnabled:
+        return 'android.screensharing.enabled';
+      case FeatureFlag.isKickoutEnabled:
+        return 'kick-out.enabled';
+      case FeatureFlag.isLobbyModeEnabled:
+        return 'lobby-mode.enabled';
+      case FeatureFlag.isNotificationsEnabled:
+        return 'notifications.enabled';
+      case FeatureFlag.isOverflowMenuEnabled:
+        return 'overflow-menu.enabled';
+      case FeatureFlag.isReactionsEnabled:
+        return 'reactions.enabled';
+      case FeatureFlag.isReplaceParticipantEnabled:
+        return 'replace.participant';
+      case FeatureFlag.resolution:
+        return 'resolution';
+      case FeatureFlag.areSecurityOptionsEnabled:
+        return 'security-options.enabled';
+      case FeatureFlag.isServerUrlChangeEnabled:
+        return 'server-url-change.enabled';
+      case FeatureFlag.isToolboxEnabled:
+        return 'toolbox.alwaysVisible';
+      case FeatureFlag.isVideoMuteButtonEnabled:
+        return 'video-mute.enabled';
+      case FeatureFlag.isVideoShareButtonEnabled:
+        return 'video-share.enabled';
     }
   }
 }
