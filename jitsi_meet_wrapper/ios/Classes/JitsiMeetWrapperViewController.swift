@@ -42,10 +42,14 @@ class JitsiMeetWrapperViewController: UIViewController {
         jitsiMeetView.delegate = self
         jitsiMeetView.join(options)
 
+        // Pip only works inside the app and not OS wide at the moment:
+        // https://github.com/jitsi/jitsi-meet/issues/3515#issuecomment-427846699
+        //
         // Enable jitsimeet view to be a view that can be displayed
         // on top of all the things, and let the coordinator to manage
         // the view state and interactions
         pipViewCoordinator = PiPViewCoordinator(withView: jitsiMeetView)
+        // TODO(saibotma): Find out what this is doing and explain it here.
         pipViewCoordinator?.configureAsStickyView(withParentView: view)
 
         // animate in
