@@ -7,7 +7,7 @@ import 'jitsi_meet_wrapper_platform_interface.dart';
 import 'jitsi_meeting_options.dart';
 import 'jitsi_meeting_response.dart';
 
-const MethodChannel _channel = MethodChannel('jitsi_meet');
+const MethodChannel _channel = MethodChannel('jitsi_meet_wrapper');
 
 /// An implementation of [JitsiMeetPlatform] that uses method channels.
 class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {

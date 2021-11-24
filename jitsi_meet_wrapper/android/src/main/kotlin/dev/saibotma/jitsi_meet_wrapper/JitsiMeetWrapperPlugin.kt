@@ -20,7 +20,7 @@ class JitsiMeetWrapperPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private var activity: Activity? = null
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "jitsi_meet")
+        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "jitsi_meet_wrapper")
         channel.setMethodCallHandler(this)
     }
 
