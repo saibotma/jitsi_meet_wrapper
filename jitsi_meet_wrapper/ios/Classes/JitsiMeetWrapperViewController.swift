@@ -38,8 +38,6 @@ class JitsiMeetWrapperViewController: UIViewController {
         self.jitsiMeetView = jitsiMeetView
 
         let options = JitsiMeetConferenceOptions.fromBuilder { (builder) in
-            // TODO(saibotma): Why is this true and not set by flutter?
-            builder.welcomePageEnabled = true
             builder.room = self.roomName
             builder.serverURL = self.serverUrl
             builder.setSubject(self.subject ?? "")
