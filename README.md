@@ -77,6 +77,32 @@ Additionally it is recommended to set `UIViewControllerBasedStatusBarAppearance`
 <false/>
 ```
 
+#### Screen sharing
+To enable screen sharing on iOS you have to add a "Broadcast Upload Extension" to YOUR app. That's why we can't add it to the plugin by default.
+Don't be afraid of implementing this, it is actually very easy.
+
+The steps presented below are a summary of the very detailed explanation in the [official docs](https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-ios-sdk#screen-sharing-integration), that are tested to work with this version of the plugin.
+- Add another target of the type "Broadcast Upload Extension" (BT) as shown in the screenshot.
+- Copy the files from `jitsi_meet_wrapper/example/ios/Broadcast Extension/` into the folder of your newly created BT.
+- Set the deployment target of BT to 14 or above.
+- Create an app group for BT and the "Runner" target (RT) and add both targets to this app group.
+- Replace `appGroupIdentifier` in `SampleHandler.swift` with your app group name.
+- Add the key value pairs `RTCAppGroupIdentifier` with the name of your app group and `RTCScreenSharingExtension` with the bundle identifier of BT to `Info.plist` of RT.
+- Don't forget to enable the feature flag `FeatureFlag.isIosScreensharingEnabled` when joining the meeting in Dart code.
+- Make sure that `voip` is set as `UIBackgroundModes` in `Info.plist` of RT.
+
+
+Most of the above steps have already been executed on the example app in this repository. However the app group was not created yet as this requires a development team to be set.
+You can however execute some simple steps in to make screen sharing work on the example app:
+- Add a development team.
+- Create an app group with the name `group.dev.saibotma.jitsi-meet-wrapper-example.appgroup`.
+- Add the app group to both the Runner and the Broadcast Extension target.
+- Add the feature flag `FeatureFlag.isIosScreensharingEnabled: true` in `_joinMeeting` in `main.dart` of the example app.
+- Run the app...
+
+Screen sharing is available for applications running on iOS 14 or newer. The deployment target of your app (Runner target) may be lower though. Those devices will just not be able to share their screen.
+
+
 <a name="android"></a>
 ### Android
 #### AndroidManifest.xml
