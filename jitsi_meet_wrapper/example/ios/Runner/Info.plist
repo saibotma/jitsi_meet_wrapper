@@ -28,7 +28,7 @@
 	<string>Uses the microphone for video conferencing.</string>
 	<key>RTCAppGroupIdentifier</key>
 	<string>group.dev.saibotma.jitsi-meet-wrapper-example.appgroup</string>
-	<key>RTCScreensharingExtension</key>
+	<key>RTCScreenSharingExtension</key>
 	<string>dev.saibotma.jitsi-meet-wrapper-example.broadcast-extension</string>
 	<key>UIBackgroundModes</key>
 	<array>
