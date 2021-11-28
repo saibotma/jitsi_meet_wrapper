@@ -5,7 +5,7 @@ import JitsiMeetSDK
 // https://github.com/jitsi/jitsi-meet-sdk-samples/blob/18c35f7625b38233579ff34f761f4c126ba7e03a/ios/swift-pip/JitsiSDKTest/src/ViewController.swift
 class JitsiMeetWrapperViewController: UIViewController {
     fileprivate var pipViewCoordinator: PiPViewCoordinator?
-    fileprivate var jitsiMeetView: JitsiMeetView?
+    fileprivate var jitsiMeetView: UIView?
 
     let options: JitsiMeetConferenceOptions
 
@@ -20,27 +20,29 @@ class JitsiMeetWrapperViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) is not supported")
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         openJitsiMeet();
     }
-
-    override func viewWillTransition(to size: CGSize,
-                                     with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-
-        let rect = CGRect(origin: CGPoint.zero, size: size)
-        pipViewCoordinator?.resetBounds(bounds: rect)
-    }
-
+    
     func openJitsiMeet() {
         cleanUp()
-
-        let jitsiMeetView = JitsiMeetView()
+        
+        let sourceJitsiMeetView = JitsiMeetView()
+        let jitsiMeetView = AbsorbPointersView()
         self.jitsiMeetView = jitsiMeetView
+        
+        jitsiMeetView.addSubview(sourceJitsiMeetView)
 
-        jitsiMeetView.delegate = self
-        jitsiMeetView.join(options)
+        // Make the jitsi view redraw when orientation changes.
+        // From: https://stackoverflow.com/a/45860445/6172447
+        sourceJitsiMeetView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        sourceJitsiMeetView.contentMode = .redraw
+        jitsiMeetView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        jitsiMeetView.contentMode = .redraw
+
+        sourceJitsiMeetView.delegate = self
+        sourceJitsiMeetView.join(options)
 
         // Pip only works inside the app and not OS wide at the moment:
         // https://github.com/jitsi/jitsi-meet/issues/3515#issuecomment-427846699
@@ -49,12 +51,19 @@ class JitsiMeetWrapperViewController: UIViewController {
         // on top of all the things, and let the coordinator to manage
         // the view state and interactions
         pipViewCoordinator = PiPViewCoordinator(withView: jitsiMeetView)
-        // TODO(saibotma): Find out what this is doing and explain it here.
         pipViewCoordinator?.configureAsStickyView(withParentView: view)
 
         // animate in
         jitsiMeetView.alpha = 0
         pipViewCoordinator?.show()
+    }
+
+    override func viewWillTransition(to size: CGSize,
+                                     with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+
+        let rect = CGRect(origin: CGPoint.zero, size: size)
+        pipViewCoordinator?.resetBounds(bounds: rect)
     }
 
     fileprivate func cleanUp() {
@@ -79,4 +88,11 @@ extension JitsiMeetWrapperViewController: JitsiMeetViewDelegate {
             self.pipViewCoordinator?.enterPictureInPicture()
         }
     }
+}
+
+class AbsorbPointersView : UIView {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {}
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {}
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {}
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {}
 }

@@ -77,7 +77,7 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin {
         jitsiViewController = JitsiMeetWrapperViewController.init(options: options)
 
         // In order to make pip mode work.
-        jitsiViewController!.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        jitsiViewController!.modalPresentationStyle = .overFullScreen
         flutterViewController.present(jitsiViewController!, animated: true)
         result(nil)
     }
