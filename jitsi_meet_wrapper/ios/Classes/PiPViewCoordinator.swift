@@ -202,7 +202,11 @@ public class CustomPiPViewCoordinator {
         // resize to suggested ratio and position to the bottom right
         let adjustedBounds = bounds.inset(by: dragBoundInsets)
         let size = CGSize(width: 150, height: 150)
-        let origin = getOriginFor(position: dragController.currentPosition ?? initialPositionInSuperView, inBounds: adjustedBounds, withSize: size)
+        let origin = getOriginFor(
+                position: dragController.currentPosition ?? initialPositionInSuperView,
+                inBounds: adjustedBounds,
+                withSize: size
+        )
         return CGRect(x: origin.x, y: origin.y, width: size.width, height: size.height)
     }
 
