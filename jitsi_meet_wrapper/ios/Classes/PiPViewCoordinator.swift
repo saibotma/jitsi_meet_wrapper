@@ -93,6 +93,7 @@ public class CustomPiPViewCoordinator {
     /// around screen, and add a button of top of the view to be able to exit mode
     public func enterPictureInPicture() {
         isInPiP = true
+        view.autoresizingMask = []
         animateViewChange()
         dragController.startDragListener(inView: view)
         dragController.insets = dragBoundInsets
@@ -109,6 +110,7 @@ public class CustomPiPViewCoordinator {
     /// exit pip button, and disable the drag gesture
     @objc public func exitPictureInPicture() {
         isInPiP = false
+        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         animateViewChange()
         dragController.stopDragListener()
 
@@ -128,10 +130,12 @@ public class CustomPiPViewCoordinator {
     /// screen size changes
     public func resetBounds(bounds: CGRect) {
         currentBounds = bounds
-        // TODO(saibotma): Check this
+
+        // Is required because otherwise the pip window is buggy when rotating the device.
+        // Just do this when in pip, because otherwise the jitsi view gets buggy.
         if (isInPiP) {
-        self.view.frame = self.changeViewRect()
-        self.view.setNeedsLayout()
+            view.frame = changeViewRect()
+            view.setNeedsLayout()
         }
     }
 
@@ -175,11 +179,9 @@ public class CustomPiPViewCoordinator {
         }
     }
 
-    // MARK: - Size calculation
     func animateViewChange() {
-        UIView.animate(withDuration: 2) {
+        UIView.animate(withDuration: 0.25) {
             self.view.frame = self.changeViewRect()
-            self.view.layoutIfNeeded()
         }
     }
 
