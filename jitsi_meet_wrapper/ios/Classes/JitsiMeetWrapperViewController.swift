@@ -32,6 +32,7 @@ class JitsiMeetWrapperViewController: UIViewController {
         // Need to wrap the jitsi view in another view that absorbs all the pointer events
         // because of a flutter bug: https://github.com/flutter/flutter/issues/14720
         let jitsiMeetView = AbsorbPointersView()
+        jitsiMeetView.backgroundColor = .black
         self.jitsiMeetView = jitsiMeetView
 
         jitsiMeetView.addSubview(sourceJitsiMeetView)
@@ -43,7 +44,6 @@ class JitsiMeetWrapperViewController: UIViewController {
         // Make the jitsi view redraw when orientation changes.
         // From: https://stackoverflow.com/a/45860445/6172447
         sourceJitsiMeetView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        jitsiMeetView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
         sourceJitsiMeetView.delegate = self
         sourceJitsiMeetView.join(options)

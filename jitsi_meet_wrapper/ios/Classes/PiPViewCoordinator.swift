@@ -4,7 +4,7 @@ import JitsiMeetSDK
 public typealias AnimationCompletion = (Bool) -> Void
 
 public protocol CustomPiPViewCoordinatorDelegate: class {
-    
+
     func exitPictureInPicture()
 }
 
@@ -23,9 +23,9 @@ public class CustomPiPViewCoordinator {
 
     /// Limits the boundaries of view position on screen when minimized
     public var dragBoundInsets: UIEdgeInsets = UIEdgeInsets(top: 25,
-                                                            left: 5,
-                                                            bottom: 5,
-                                                            right: 5) {
+            left: 5,
+            bottom: 5,
+            right: 5) {
         didSet {
             dragController.insets = dragBoundInsets
         }
@@ -36,7 +36,7 @@ public class CustomPiPViewCoordinator {
     // Unused. Remove on the next major release.
     @available(*, deprecated, message: "The PiP window size is now fixed to 150px.")
     public var c: CGFloat = 0.0
-    
+
     public weak var delegate: CustomPiPViewCoordinatorDelegate?
 
     private(set) var isInPiP: Bool = false // true if view is in PiP mode
@@ -50,6 +50,8 @@ public class CustomPiPViewCoordinator {
 
     public init(withView view: UIView) {
         self.view = view
+        // Required because otherwise the view will not rotate correctly.
+        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
 
     /// Configure the view to be always on top of all the contents
@@ -57,8 +59,10 @@ public class CustomPiPViewCoordinator {
     /// If a parentView is not provided it will try to use the main window
     public func configureAsStickyView(withParentView parentView: UIView? = nil) {
         guard
-            let parentView = parentView ?? UIApplication.shared.keyWindow
-            else { return }
+                let parentView = parentView ?? UIApplication.shared.keyWindow
+                else {
+            return
+        }
 
         parentView.addSubview(view)
         currentBounds = parentView.bounds
@@ -93,7 +97,9 @@ public class CustomPiPViewCoordinator {
     /// around screen, and add a button of top of the view to be able to exit mode
     public func enterPictureInPicture() {
         isInPiP = true
+        // Resizing is done by hand when in pip.
         view.autoresizingMask = []
+
         animateViewChange()
         dragController.startDragListener(inView: view)
         dragController.insets = dragBoundInsets
@@ -101,7 +107,7 @@ public class CustomPiPViewCoordinator {
         // add single tap gesture recognition for displaying exit PiP UI
         let exitSelector = #selector(toggleExitPiP)
         let tapGestureRecognizer = UITapGestureRecognizer(target: self,
-                                                          action: exitSelector)
+                action: exitSelector)
         self.tapGestureRecognizer = tapGestureRecognizer
         view.addGestureRecognizer(tapGestureRecognizer)
     }
@@ -110,7 +116,9 @@ public class CustomPiPViewCoordinator {
     /// exit pip button, and disable the drag gesture
     @objc public func exitPictureInPicture() {
         isInPiP = false
+        // Enable autoresizing again, which got disabled for pip.
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
         animateViewChange()
         dragController.stopDragListener()
 
@@ -122,7 +130,7 @@ public class CustomPiPViewCoordinator {
         let exitSelector = #selector(toggleExitPiP)
         tapGestureRecognizer?.removeTarget(self, action: exitSelector)
         tapGestureRecognizer = nil
-        
+
         delegate?.exitPictureInPicture()
     }
 
@@ -132,10 +140,9 @@ public class CustomPiPViewCoordinator {
         currentBounds = bounds
 
         // Is required because otherwise the pip window is buggy when rotating the device.
-        // Just do this when in pip, because otherwise the jitsi view gets buggy.
+        // When not in pip then autoresize will do the job.
         if (isInPiP) {
             view.frame = changeViewRect()
-            view.setNeedsLayout()
         }
     }
 
@@ -148,9 +155,9 @@ public class CustomPiPViewCoordinator {
     open func configureExitPiPButton(target: Any,
                                      action: Selector) -> UIButton {
         let buttonImage = UIImage.init(named: "image-resize",
-                                       // Need to get image from original coordinator code.
-                                       in: Bundle(for: PiPViewCoordinator.self),
-                                       compatibleWith: nil)
+                // Need to get image from original coordinator code.
+                in: Bundle(for: PiPViewCoordinator.self),
+                compatibleWith: nil)
         let button = UIButton(type: .custom)
         let size: CGSize = CGSize(width: 44, height: 44)
         button.setImage(buttonImage, for: .normal)
@@ -168,7 +175,7 @@ public class CustomPiPViewCoordinator {
             // show button
             let exitSelector = #selector(exitPictureInPicture)
             let button = configureExitPiPButton(target: self,
-                                                action: exitSelector)
+                    action: exitSelector)
             view.addSubview(button)
             exitPiPButton = button
 
@@ -203,10 +210,10 @@ public class CustomPiPViewCoordinator {
     private func animateTransition(animations: @escaping () -> Void,
                                    completion: AnimationCompletion?) {
         UIView.animate(withDuration: 0.1,
-                       delay: 0,
-                       options: .beginFromCurrentState,
-                       animations: animations,
-                       completion: completion)
+                delay: 0,
+                options: .beginFromCurrentState,
+                animations: animations,
+                completion: completion)
     }
 
 }
