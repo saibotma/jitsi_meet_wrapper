@@ -6,10 +6,10 @@ Wrapping JitsiMeetSDK for
 [iOS](https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-ios-sdk).
 
 This wrapper got built for [Appella](https://www.appella.app/) App. The goal is to keep it generic, however at the
-moment it only contains features needed in Appella.
-I am happy to review PRs that add additional functionality to this plugin however it is not
+moment, it only contains features needed in Appella.
+I am happy to review PRs that add additional functionality to this plugin, however it is not
 guaranteed that I will have time to develop and add features that are not needed in Appella.<br>
-Nevertheless please always create an issue and I will try have a look.
+Nevertheless, please always create an issue and I will try to have a look.
 
 ## Table of Contents
   - [Join A Meeting](#join-a-meeting)
@@ -20,7 +20,7 @@ Nevertheless please always create an issue and I will try have a look.
 <a name="join-a-meeting"></a>
 ## Join A Meeting
 
-To join a meeting you have to create meeting options and then launch the meeting:
+To join a meeting, you have to create meeting options and then launch the meeting:
 
 ```dart
 var options = JitsiMeetingOptions(roomName: "my-room");
@@ -60,8 +60,8 @@ end
 
 #### Info.plist
 Add `NSCameraUsageDescription` and `NSMicrophoneUsageDescription` to your `Info.plist`.<br>
-In order for you app to properly work in the background, select the `audio` and `voip` background modes.<br>
-Additionally it is recommended to set `UIViewControllerBasedStatusBarAppearance` to `NO`.<br>
+In order for your app to properly work in the background, select the `audio` and `voip` background modes.<br>
+Additionally, it is recommended to set `UIViewControllerBasedStatusBarAppearance` to `NO`.<br>
 
 ```xml
 <key>NSCameraUsageDescription</key>
@@ -76,6 +76,32 @@ Additionally it is recommended to set `UIViewControllerBasedStatusBarAppearance`
 <key>UIViewControllerBasedStatusBarAppearance</key>
 <false/>
 ```
+
+#### Screen sharing
+To enable screen sharing on iOS, you have to add a "Broadcast Upload Extension" to YOUR app. That's why we can't add it to the plugin by default.
+Don't be afraid of implementing this, it is actually very easy.
+
+The steps presented below are a summary of the very detailed explanation in the [official docs](https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-ios-sdk#screen-sharing-integration). They are tested to work with this version of the plugin.
+- Add another target of the type "Broadcast Upload Extension" (BT) as shown in the screenshot. ![screenshot 1](https://github.com/jitsi/handbook/blob/c105fe0782e272875b36dd763fa54f19dd91c9a7/docs/assets/iOS_screensharing_1.png)
+- Copy the files from `jitsi_meet_wrapper/example/ios/Broadcast Extension/` into the folder of your newly created BT.
+- Set the deployment target of BT to 14 or above.
+- Create an app group for BT and the "Runner" target (RT) and add both targets to this app group.
+- Replace `appGroupIdentifier` in `SampleHandler.swift` with your app group name.
+- Add the key value pairs `RTCAppGroupIdentifier` with the name of your app group and `RTCScreenSharingExtension` with the bundle identifier of BT to `Info.plist` of RT.
+- Don't forget to enable the feature flag `FeatureFlag.isIosScreensharingEnabled` when joining the meeting in Dart code.
+- Make sure that `voip` is set as `UIBackgroundModes` in `Info.plist` of RT.
+
+
+Most of the above steps have already been executed on the example app in this repository. However, the app group was not created yet, as this requires a development team to be set.
+You can however execute some simple steps in to make screen sharing work on the example app:
+- Add a development team.
+- Create an app group with the name `group.dev.saibotma.jitsi-meet-wrapper-example.appgroup`.
+- Add the app group to both the "Runner" and the "Broadcast Extension" target.
+- Add the feature flag `FeatureFlag.isIosScreensharingEnabled: true` in `_joinMeeting` in `main.dart` of the example app.
+- Run the app...
+
+Screen sharing is available for applications running on iOS 14 or newer. The deployment target of your app ("Runner" target) may be lower, though. Those devices will just not be able to share their screen.
+
 
 <a name="android"></a>
 ### Android
@@ -101,7 +127,7 @@ and `tools:replace="android:label"` to the application tag.
 ```
 
 #### build.gradle
-Update your minimum sdk version to `23` in `android/app/build.gradle`.
+Update your minimum SDK version to `23` in `android/app/build.gradle`.
 
 ```groovy
 android {
@@ -114,3 +140,4 @@ android {
     ...
 }
 ```
+
