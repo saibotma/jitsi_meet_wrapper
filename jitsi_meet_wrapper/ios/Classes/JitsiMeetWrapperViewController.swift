@@ -36,10 +36,6 @@ class JitsiMeetWrapperViewController: UIViewController {
         self.jitsiMeetView = jitsiMeetView
 
         jitsiMeetView.addSubview(sourceJitsiMeetView)
-        // Otherwise the enter/exit pip animation looks odd
-        // when pip window is bottom left, top left or top right,
-        // because the jitsi view content does not animate, but jumps to the new size immediately.
-        jitsiMeetView.clipsToBounds = true
 
         // Make the jitsi view redraw when orientation changes.
         // From: https://stackoverflow.com/a/45860445/6172447

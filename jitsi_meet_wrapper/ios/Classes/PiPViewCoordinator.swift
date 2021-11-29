@@ -3,6 +3,8 @@ import JitsiMeetSDK
 
 public typealias AnimationCompletion = (Bool) -> Void
 
+// A custom implementation is required atm.
+// See https://github.com/jitsi/jitsi-meet/pull/10475 for more information.
 public protocol CustomPiPViewCoordinatorDelegate: class {
 
     func exitPictureInPicture()
@@ -11,7 +13,7 @@ public protocol CustomPiPViewCoordinatorDelegate: class {
 /// Coordinates the view state of a specified view to allow
 /// to be presented in full screen or in a custom Picture in Picture mode.
 /// This object will also provide the drag and tap interactions of the view
-/// when is presented in Picure in Picture mode.
+/// when is presented in Picture in Picture mode.
 public class CustomPiPViewCoordinator {
 
     public enum Position {
@@ -31,7 +33,7 @@ public class CustomPiPViewCoordinator {
         }
     }
 
-    private let initialPositionInSuperView: Position = .lowerRightCorner
+    private let initialPositionInSuperView: CustomPiPViewCoordinator.Position = .lowerRightCorner
 
     // Unused. Remove on the next major release.
     @available(*, deprecated, message: "The PiP window size is now fixed to 150px.")
@@ -68,6 +70,10 @@ public class CustomPiPViewCoordinator {
         currentBounds = parentView.bounds
         view.frame = currentBounds
         view.layer.zPosition = CGFloat(Float.greatestFiniteMagnitude)
+        // Otherwise the enter/exit pip animation looks odd
+        // when pip window is bottom left, top left or top right,
+        // because the jitsi view content does not animate, but jumps to the new size immediately.
+        view.clipsToBounds = true
     }
 
     /// Show view with fade in animation
@@ -174,8 +180,10 @@ public class CustomPiPViewCoordinator {
         if exitPiPButton == nil {
             // show button
             let exitSelector = #selector(exitPictureInPicture)
-            let button = configureExitPiPButton(target: self,
-                    action: exitSelector)
+            let button = configureExitPiPButton(
+                    target: self,
+                    action: exitSelector
+            )
             view.addSubview(button)
             exitPiPButton = button
 
@@ -213,11 +221,13 @@ public class CustomPiPViewCoordinator {
     // MARK: - Animation helpers
     private func animateTransition(animations: @escaping () -> Void,
                                    completion: AnimationCompletion?) {
-        UIView.animate(withDuration: 0.1,
+        UIView.animate(
+                withDuration: 0.1,
                 delay: 0,
                 options: .beginFromCurrentState,
                 animations: animations,
-                completion: completion)
+                completion: completion
+        )
     }
 
 }

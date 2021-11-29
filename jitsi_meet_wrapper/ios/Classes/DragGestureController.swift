@@ -24,7 +24,9 @@ final class CustomDragGestureController {
     }
 
     @objc private func handlePan(gesture: UIPanGestureRecognizer) {
-        guard let view = view else { return }
+        guard let view = view else {
+            return
+        }
 
         let translation = gesture.translation(in: view.superview)
         let velocity = gesture.velocity(in: view.superview)
@@ -43,24 +45,29 @@ final class CustomDragGestureController {
             let currentPos = view.frame.origin
             let finalPos = calculateFinalPosition()
 
-            let distance = CGPoint(x: currentPos.x - finalPos.x,
-                                   y: currentPos.y - finalPos.y)
+            let distance = CGPoint(
+                    x: currentPos.x - finalPos.x,
+                    y: currentPos.y - finalPos.y
+            )
             let distanceMagnitude = magnitude(vector: distance)
             let velocityMagnitude = magnitude(vector: velocity)
             let animationDuration = 0.5
             let initialSpringVelocity =
-                velocityMagnitude / distanceMagnitude / CGFloat(animationDuration)
+                    velocityMagnitude / distanceMagnitude / CGFloat(animationDuration)
 
             frame.origin = CGPoint(x: finalPos.x, y: finalPos.y)
 
-            UIView.animate(withDuration: animationDuration,
-                           delay: 0,
-                           usingSpringWithDamping: 0.9,
-                           initialSpringVelocity: initialSpringVelocity,
-                           options: .curveLinear,
-                           animations: {
-                            view.frame = frame
-            }, completion: nil)
+            UIView.animate(
+                    withDuration: animationDuration,
+                    delay: 0,
+                    usingSpringWithDamping: 0.9,
+                    initialSpringVelocity: initialSpringVelocity,
+                    options: .curveLinear,
+                    animations: {
+                        view.frame = frame
+                    },
+                    completion: nil
+            )
 
         default:
             break
@@ -69,9 +76,11 @@ final class CustomDragGestureController {
 
     private func calculateFinalPosition() -> CGPoint {
         guard
-            let view = view,
-            let bounds = view.superview?.frame
-            else { return CGPoint.zero }
+                let view = view,
+                let bounds = view.superview?.frame
+                else {
+            return CGPoint.zero
+        }
 
         let currentSize = view.frame.size
         let adjustedBounds = bounds.inset(by: insets)
@@ -96,15 +105,15 @@ final class CustomDragGestureController {
         if (goLeft && goUp) {
             currentPosition = .upperLeftCorner
         }
-        
+
         if (!goLeft && goUp) {
             currentPosition = .upperRightCorner
         }
-        
+
         if (!goLeft && !goUp) {
             currentPosition = .lowerRightCorner
         }
-        
+
         if (goLeft && !goUp) {
             currentPosition = .lowerLeftCorner
         }
