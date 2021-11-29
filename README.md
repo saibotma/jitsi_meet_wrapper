@@ -16,6 +16,7 @@ Nevertheless, please always create an issue and I will try to have a look.
   - [Configuration](#configuration)
     - [iOS](#ios)
     - [Android](#android)
+  - [Known issues](#known-issues)
 
 <a name="join-a-meeting"></a>
 ## Join A Meeting
@@ -141,3 +142,6 @@ android {
 }
 ```
 
+<a name="known-issues"></a>
+### Known issues
+- Picture in Picture is not working during screen sharing (https://github.com/jitsi/jitsi-meet/issues/9099)
