@@ -12,6 +12,9 @@
       <excludeFolder url="file://$MODULE_DIR$/example/ios/.symlinks/plugins/jitsi_meet_wrapper/build" />
       <excludeFolder url="file://$MODULE_DIR$/example/ios/.symlinks/plugins/jitsi_meet_wrapper/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/example/ios/.symlinks/plugins/jitsi_meet_wrapper/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/example/ios/.symlinks/plugins/jitsi_meet_wrapper/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/example/ios/.symlinks/plugins/jitsi_meet_wrapper/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/example/ios/.symlinks/plugins/jitsi_meet_wrapper/example/.pub" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
