@@ -25,6 +25,7 @@ class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
       'userEmail': options.userEmail,
       'userAvatarUrl': options.userAvatarUrl,
       'featureFlags': _toFeatureFlagStrings(options.featureFlags),
+      'configOverrides': options.configOverrides,
     };
 
     return await _channel

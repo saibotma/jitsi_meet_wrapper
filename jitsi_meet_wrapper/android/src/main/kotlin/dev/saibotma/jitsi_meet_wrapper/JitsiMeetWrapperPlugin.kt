@@ -73,15 +73,21 @@ class JitsiMeetWrapperPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 // Can only be bool, int or string according to
                 // the overloads of setFeatureFlag.
                 when (value) {
-                    is Boolean -> {
-                        val boolValue = value.toString().toBoolean()
-                        setFeatureFlag(key, boolValue)
-                    }
-                    is Int -> {
-                        val intValue = value.toString().toInt()
-                        setFeatureFlag(key, intValue)
-                    }
+                    is Boolean -> setFeatureFlag(key, value)
+                    is Int -> setFeatureFlag(key, value)
                     else -> setFeatureFlag(key, value.toString())
+                }
+            }
+
+            val configOverrides = call.argument<HashMap<String, Any>>("configOverrides")!!
+            configOverrides.forEach { (key, value) ->
+                // Can only be bool, int, array of strings or string according to
+                // the overloads of setConfigOverride.
+                when (value) {
+                    is Boolean -> setConfigOverride(key, value)
+                    is Int -> setConfigOverride(key, value)
+                    is Array<*> -> setConfigOverride(key, value as Array<out String>)
+                    else -> setConfigOverride(key, value.toString())
                 }
             }
 

@@ -72,6 +72,11 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin {
             featureFlags.forEach { key, value in
                 builder.setFeatureFlag(key, withValue: value);
             }
+            
+            let configOverrides = arguments["configOverrides"] as! Dictionary<String, Any>
+            configOverrides.forEach { key, value in
+                builder.setConfigOverride(key, withValue: value);
+            }
         }
 
         jitsiViewController = JitsiMeetWrapperViewController.init(options: options)

@@ -14,6 +14,7 @@ class JitsiMeetingOptions {
   final String? userEmail;
   final String? userAvatarUrl;
   final Map<FeatureFlag, Object?> featureFlags;
+  final Map<String, Object?> configOverrides;
 
   JitsiMeetingOptions({
     required this.roomName,
@@ -27,11 +28,13 @@ class JitsiMeetingOptions {
     this.userEmail,
     this.userAvatarUrl,
     this.featureFlags = const {},
+    this.configOverrides = const {},
   });
+
 
   @override
   String toString() {
-    return 'JitsiMeetingOptions{roomName: $roomName, serverUrl: $serverUrl, subject: $subject, token: $token, isAudioMuted: $isAudioMuted, isAudioOnly: $isAudioOnly, isVideoMuted: $isVideoMuted, userDisplayName: $userDisplayName, userEmail: $userEmail, userAvatarUrl: $userAvatarUrl, featureFlags: $featureFlags}';
+    return 'JitsiMeetingOptions{roomName: $roomName, serverUrl: $serverUrl, subject: $subject, token: $token, isAudioMuted: $isAudioMuted, isAudioOnly: $isAudioOnly, isVideoMuted: $isVideoMuted, userDisplayName: $userDisplayName, userEmail: $userEmail, userAvatarUrl: $userAvatarUrl, featureFlags: $featureFlags, configOverrides: $configOverrides}';
   }
 
   @override
@@ -49,7 +52,8 @@ class JitsiMeetingOptions {
           userDisplayName == other.userDisplayName &&
           userEmail == other.userEmail &&
           userAvatarUrl == other.userAvatarUrl &&
-          const MapEquality().equals(featureFlags, other.featureFlags);
+          const MapEquality().equals(featureFlags, other.featureFlags) &&
+          const MapEquality().equals(configOverrides, other.configOverrides);
 
   @override
   int get hashCode =>
@@ -63,5 +67,6 @@ class JitsiMeetingOptions {
       userDisplayName.hashCode ^
       userEmail.hashCode ^
       userAvatarUrl.hashCode ^
-      const MapEquality().hash(featureFlags);
+      const MapEquality().hash(featureFlags) ^
+      const MapEquality().hash(configOverrides);
 }
