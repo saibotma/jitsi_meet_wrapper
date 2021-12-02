@@ -8,6 +8,7 @@ import 'jitsi_meeting_response.dart';
 export 'feature_flag.dart';
 export 'jitsi_meeting_options.dart';
 export 'jitsi_meeting_response.dart';
+export 'jitsi_meeting_listener.dart';
 
 abstract class JitsiMeetWrapperPlatformInterface extends PlatformInterface {
   JitsiMeetWrapperPlatformInterface() : super(token: _token);

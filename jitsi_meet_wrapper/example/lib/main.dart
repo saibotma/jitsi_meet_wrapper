@@ -10,7 +10,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(debugShowCheckedModeBanner: false, home: Meeting());
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Meeting(),
+    );
   }
 }
 
@@ -64,11 +67,20 @@ class _MeetingState extends State<Meeting> {
           const SizedBox(height: 16.0),
           _buildTextField(labelText: "Token", controller: tokenText),
           const SizedBox(height: 16.0),
-          _buildTextField(labelText: "User Display Name", controller: userDisplayNameText),
+          _buildTextField(
+            labelText: "User Display Name",
+            controller: userDisplayNameText,
+          ),
           const SizedBox(height: 16.0),
-          _buildTextField(labelText: "User Email", controller: userEmailText),
+          _buildTextField(
+            labelText: "User Email",
+            controller: userEmailText,
+          ),
           const SizedBox(height: 16.0),
-          _buildTextField(labelText: "User Avatar URL", controller: userAvatarUrlText),
+          _buildTextField(
+            labelText: "User Avatar URL",
+            controller: userAvatarUrlText,
+          ),
           const SizedBox(height: 16.0),
           CheckboxListTile(
             title: const Text("Audio Muted"),
@@ -97,7 +109,10 @@ class _MeetingState extends State<Meeting> {
                 "Join Meeting",
                 style: TextStyle(color: Colors.white),
               ),
-              style: ButtonStyle(backgroundColor: MaterialStateColor.resolveWith((states) => Colors.blue)),
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateColor.resolveWith((states) => Colors.blue),
+              ),
             ),
           ),
           const SizedBox(height: 48.0),
@@ -144,7 +159,16 @@ class _MeetingState extends State<Meeting> {
     );
 
     debugPrint("JitsiMeetingOptions: $options");
-    await JitsiMeetWrapper.joinMeeting(options);
+    await JitsiMeetWrapper.joinMeeting(
+      options: options,
+      listener: JitsiMeetingListener(
+        onConferenceWillJoin: (url) => print("onConferenceWillJoin: url: $url"),
+        onConferenceJoined: (url) => print("onConferenceJoined: url: $url"),
+        onConferenceTerminated: (url, error) {
+          print("onConferenceTerminated: url: $url, error: $error");
+        },
+      ),
+    );
   }
 
   Widget _buildTextField({
@@ -154,7 +178,10 @@ class _MeetingState extends State<Meeting> {
   }) {
     return TextField(
       controller: controller,
-      decoration: InputDecoration(border: const OutlineInputBorder(), labelText: labelText, hintText: hintText),
+      decoration: InputDecoration(
+          border: const OutlineInputBorder(),
+          labelText: labelText,
+          hintText: hintText),
     );
   }
 }

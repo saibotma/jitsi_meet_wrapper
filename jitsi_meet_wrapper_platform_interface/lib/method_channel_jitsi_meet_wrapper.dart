@@ -10,7 +10,7 @@ import 'jitsi_meeting_options.dart';
 import 'jitsi_meeting_response.dart';
 
 const MethodChannel _methodChannel = MethodChannel('jitsi_meet_wrapper');
-const EventChannel _eventChannel = EventChannel('jitsi_meet_wrapper');
+const EventChannel _eventChannel = EventChannel('jitsi_meet_wrapper_events');
 
 /// An implementation of [JitsiMeetPlatform] that uses method channels.
 class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
@@ -60,13 +60,13 @@ class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
       final data = message['data'];
       switch (message['event']) {
         case "conferenceWillJoin":
-          _listener?.onConferenceWillJoin?.call(data);
+          _listener?.onConferenceWillJoin?.call(data["url"]);
           break;
         case "conferenceJoined":
-          _listener?.onConferenceJoined?.call(data);
+          _listener?.onConferenceJoined?.call(data["url"]);
           break;
         case "conferenceTerminated":
-          _listener?.onConferenceTerminated?.call(data);
+          _listener?.onConferenceTerminated?.call(data["url"], data["error"]);
           _listener = null;
           break;
       }

@@ -16,9 +16,9 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin, FlutterStream
         let flutterViewController: UIViewController = (UIApplication.shared.delegate?.window??.rootViewController)!
         let instance = SwiftJitsiMeetWrapperPlugin(flutterViewController: flutterViewController)
         registrar.addMethodCallDelegate(instance, channel: channel)
-        
+
         // Setup event channel for conference events
-        let eventChannel = FlutterEventChannel(name: "jitsi_meet_wrapper", binaryMessenger: registrar.messenger())
+        let eventChannel = FlutterEventChannel(name: "jitsi_meet_wrapper_events", binaryMessenger: registrar.messenger())
         eventChannel.setStreamHandler(instance)
     }
 
@@ -77,7 +77,7 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin, FlutterStream
             featureFlags.forEach { key, value in
                 builder.setFeatureFlag(key, withValue: value);
             }
-            
+
             let configOverrides = arguments["configOverrides"] as! Dictionary<String, Any>
             configOverrides.forEach { key, value in
                 builder.setConfigOverride(key, withValue: value);
@@ -91,15 +91,15 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin, FlutterStream
         flutterViewController.present(jitsiViewController!, animated: true)
         result(nil)
     }
-    
-    // FlutterStreamHandler methods
-    
-        public func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
-            eventSink = events
-            return nil
-        }
 
-        public func onCancel(withArguments arguments: Any?) -> FlutterError? {
-            return nil
-        }
+    // FlutterStreamHandler methods
+
+    public func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
+        eventSink = events
+        return nil
+    }
+
+    public func onCancel(withArguments arguments: Any?) -> FlutterError? {
+        return nil
+    }
 }
