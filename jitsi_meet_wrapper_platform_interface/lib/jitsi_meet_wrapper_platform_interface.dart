@@ -1,3 +1,4 @@
+import 'package:jitsi_meet_wrapper_platform_interface/jitsi_meeting_listener.dart';
 import 'package:jitsi_meet_wrapper_platform_interface/method_channel_jitsi_meet_wrapper.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
@@ -26,7 +27,10 @@ abstract class JitsiMeetWrapperPlatformInterface extends PlatformInterface {
   }
 
   /// Joins a meeting based on the [JitsiMeetingOptions] passed in.
-  Future<JitsiMeetingResponse> joinMeeting(JitsiMeetingOptions options) async {
+  Future<JitsiMeetingResponse> joinMeeting({
+    required JitsiMeetingOptions options,
+    JitsiMeetingListener? listener,
+  }) async {
     throw UnimplementedError('joinMeeting has not been implemented.');
   }
 }

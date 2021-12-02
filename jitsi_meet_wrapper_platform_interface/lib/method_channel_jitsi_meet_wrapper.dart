@@ -1,18 +1,32 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:jitsi_meet_wrapper_platform_interface/jitsi_meeting_listener.dart';
 
 import 'feature_flag.dart';
 import 'jitsi_meet_wrapper_platform_interface.dart';
 import 'jitsi_meeting_options.dart';
 import 'jitsi_meeting_response.dart';
 
-const MethodChannel _channel = MethodChannel('jitsi_meet_wrapper');
+const MethodChannel _methodChannel = MethodChannel('jitsi_meet_wrapper');
+const EventChannel _eventChannel = EventChannel('jitsi_meet_wrapper');
 
 /// An implementation of [JitsiMeetPlatform] that uses method channels.
 class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
+  bool _eventChannelIsInitialized = false;
+  JitsiMeetingListener? _listener;
+
   @override
-  Future<JitsiMeetingResponse> joinMeeting(JitsiMeetingOptions options) async {
+  Future<JitsiMeetingResponse> joinMeeting({
+    required JitsiMeetingOptions options,
+    JitsiMeetingListener? listener,
+  }) async {
+    _listener = listener;
+    if (!_eventChannelIsInitialized) {
+      _initialize();
+    }
+
     Map<String, dynamic> _options = {
       'roomName': options.roomName.trim(),
       'serverUrl': options.serverUrl?.trim(),
@@ -28,13 +42,43 @@ class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
       'configOverrides': options.configOverrides,
     };
 
-    return await _channel
+    return await _methodChannel
         .invokeMethod<String>('joinMeeting', _options)
-        .then((message) => JitsiMeetingResponse(isSuccess: true, message: message))
-        .catchError((error) => JitsiMeetingResponse(isSuccess: true, message: error.toString(), error: error));
+        .then((message) {
+      return JitsiMeetingResponse(isSuccess: true, message: message);
+    }).catchError((error) {
+      return JitsiMeetingResponse(
+        isSuccess: true,
+        message: error.toString(),
+        error: error,
+      );
+    });
   }
 
-  Map<String, Object> _toFeatureFlagStrings(Map<FeatureFlag, Object?> featureFlags) {
+  void _initialize() {
+    _eventChannel.receiveBroadcastStream().listen((message) {
+      final data = message['data'];
+      switch (message['event']) {
+        case "conferenceWillJoin":
+          _listener?.onConferenceWillJoin?.call(data);
+          break;
+        case "conferenceJoined":
+          _listener?.onConferenceJoined?.call(data);
+          break;
+        case "conferenceTerminated":
+          _listener?.onConferenceTerminated?.call(data);
+          _listener = null;
+          break;
+      }
+    }).onError((error) {
+      debugPrint("Error receiving data from the event channel: $error");
+    });
+    _eventChannelIsInitialized = true;
+  }
+
+  Map<String, Object> _toFeatureFlagStrings(
+    Map<FeatureFlag, Object?> featureFlags,
+  ) {
     Map<String, Object> featureFlagsWithStrings = {};
     featureFlags.forEach((key, value) {
       if (value != null) {

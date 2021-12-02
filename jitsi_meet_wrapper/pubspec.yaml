@@ -12,10 +12,11 @@ dependencies:
   flutter:
     sdk: flutter
   jitsi_meet_wrapper_platform_interface:
-    git:
-      url: https://github.com/saibotma/jitsi_meet_wrapper
-      path: jitsi_meet_wrapper_platform_interface
-      ref: main
+    path: ../jitsi_meet_wrapper_platform_interface
+    #git:
+    #  url: https://github.com/saibotma/jitsi_meet_wrapper
+    #  path: jitsi_meet_wrapper_platform_interface
+    #  ref: main
 
 dev_dependencies:
   flutter_test:
