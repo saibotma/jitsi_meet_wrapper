@@ -68,7 +68,7 @@ class JitsiMeetWrapperPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             setVideoMuted(isVideoMuted)
             setUserInfo(userInfo)
 
-            val featureFlags = call.argument<HashMap<String, Any>>("featureFlags")!!
+            val featureFlags = call.argument<HashMap<String, Any?>>("featureFlags")!!
             featureFlags.forEach { (key, value) ->
                 // Can only be bool, int or string according to
                 // the overloads of setFeatureFlag.
@@ -79,7 +79,7 @@ class JitsiMeetWrapperPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 }
             }
 
-            val configOverrides = call.argument<HashMap<String, Any>>("configOverrides")!!
+            val configOverrides = call.argument<HashMap<String, Any?>>("configOverrides")!!
             configOverrides.forEach { (key, value) ->
                 // Can only be bool, int, array of strings or string according to
                 // the overloads of setConfigOverride.
