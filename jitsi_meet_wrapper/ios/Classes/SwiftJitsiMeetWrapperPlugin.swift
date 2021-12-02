@@ -2,9 +2,10 @@ import Flutter
 import UIKit
 import JitsiMeetSDK
 
-public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin {
+public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
     var flutterViewController: UIViewController
     var jitsiViewController: JitsiMeetWrapperViewController?
+    var eventSink: FlutterEventSink?
 
     init(flutterViewController: UIViewController) {
         self.flutterViewController = flutterViewController
@@ -15,6 +16,10 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin {
         let flutterViewController: UIViewController = (UIApplication.shared.delegate?.window??.rootViewController)!
         let instance = SwiftJitsiMeetWrapperPlugin(flutterViewController: flutterViewController)
         registrar.addMethodCallDelegate(instance, channel: channel)
+        
+        // Setup event channel for conference events
+        let eventChannel = FlutterEventChannel(name: "jitsi_meet_wrapper", binaryMessenger: registrar.messenger())
+        eventChannel.setStreamHandler(instance)
     }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -79,11 +84,22 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin {
             }
         }
 
-        jitsiViewController = JitsiMeetWrapperViewController.init(options: options)
+        jitsiViewController = JitsiMeetWrapperViewController.init(options: options, eventSink: eventSink!)
 
         // In order to make pip mode work.
         jitsiViewController!.modalPresentationStyle = .overFullScreen
         flutterViewController.present(jitsiViewController!, animated: true)
         result(nil)
     }
+    
+    // FlutterStreamHandler methods
+    
+        public func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
+            eventSink = events
+            return nil
+        }
+
+        public func onCancel(withArguments arguments: Any?) -> FlutterError? {
+            return nil
+        }
 }

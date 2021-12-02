@@ -70,11 +70,9 @@ packages:
   jitsi_meet_wrapper_platform_interface:
     dependency: "direct main"
     description:
-      path: jitsi_meet_wrapper_platform_interface
-      ref: main
-      resolved-ref: "45e0a26a87d2d41e4fcdfd343899f413be10accf"
-      url: "https://github.com/saibotma/jitsi_meet_wrapper"
-    source: git
+      path: "../jitsi_meet_wrapper_platform_interface"
+      relative: true
+    source: path
     version: "0.0.1"
   lints:
     dependency: transitive
