@@ -16,6 +16,7 @@ Nevertheless, please always create an issue and I will try to have a look.
   - [Configuration](#configuration)
     - [iOS](#ios)
     - [Android](#android)
+  - [Listening to meeting events](#listening-to-meeting-events)
   - [Known issues](#known-issues)
 
 <a name="join-a-meeting"></a>
@@ -82,7 +83,7 @@ Additionally, it is recommended to set `UIViewControllerBasedStatusBarAppearance
 To enable screen sharing on iOS, you have to add a "Broadcast Upload Extension" to YOUR app. That's why we can't add it to the plugin by default.
 Don't be afraid of implementing this, it is actually very easy.
 
-The steps presented below are a summary of the very detailed explanation in the [official docs](https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-ios-sdk#screen-sharing-integration). They are tested to work with this version of the plugin.
+The steps presented below are a summary of the very detailed explanation in the [official docs](https://github.com/jitsi/handbook/blob/75d38b5a3db9d44ff60feb7c72dd6f7d4a5ea83c/docs/dev-guide/ios-sdk.md#screen-sharing-integration). They are tested to work with this version of the plugin.
 - Add another target of the type "Broadcast Upload Extension" (BT) as shown in the screenshot. ![screenshot 1](https://github.com/jitsi/handbook/blob/c105fe0782e272875b36dd763fa54f19dd91c9a7/docs/assets/iOS_screensharing_1.png)
 - Copy the files from `jitsi_meet_wrapper/example/ios/Broadcast Extension/` into the folder of your newly created BT.
 - Set the deployment target of BT to 14 or above.
@@ -140,6 +141,36 @@ android {
     }
     ...
 }
+```
+
+<a name="listening-to-meeting-events"></a>
+## Listening to Meeting Events
+
+Supported events:
+
+| Name                   | Description  |
+| :--------------------- | :----------- |
+| onConferenceWillJoin   | Called before a conference is joined. |
+| onConferenceJoined     | Called when a conference was joined. |
+| onConferenceTerminated | Called when a conference was terminated either by user choice or due to a failure. |
+
+There are many more events ([Android](https://github.com/jitsi/handbook/blob/75d38b5a3db9d44ff60feb7c72dd6f7d4a5ea83c/docs/dev-guide/android-sdk.md#supported-events), [iOS](https://github.com/jitsi/handbook/blob/75d38b5a3db9d44ff60feb7c72dd6f7d4a5ea83c/docs/dev-guide/ios-sdk.md#jitsimeetviewdelegate)), however we don't support them currently. <br>
+It is straight forward to add them, so don't hesitate to submit a PR.
+
+### Per Meeting Events
+To listen to meeting events per meeting, pass in a `JitsiMeetingListener`
+to `joinMeeting`. The listener will automatically be removed when an
+`onConferenceTerminated` event is fired.
+
+```
+await JitsiMeetWrapper.joinMeeting(
+  options: options,
+  listener: JitsiMeetingListener(
+    onConferenceWillJoin: (url) => print("onConferenceWillJoin: url: $url"),
+    onConferenceJoined: (url) => print("onConferenceJoined: url: $url"),
+    onConferenceTerminated: (url, error) => print("onConferenceTerminated: url: $url, error: $error"),
+  ),
+);
 ```
 
 <a name="known-issues"></a>

@@ -8,10 +8,12 @@ class JitsiMeetWrapperViewController: UIViewController {
     fileprivate var jitsiMeetView: UIView?
 
     let options: JitsiMeetConferenceOptions
+    let eventSink: FlutterEventSink
 
     // https://stackoverflow.com/a/55208383/6172447
-    init(options: JitsiMeetConferenceOptions) {
+    init(options: JitsiMeetConferenceOptions, eventSink: @escaping FlutterEventSink) {
         self.options = options;
+        self.eventSink = eventSink;
         // Need to pass in nibName and bundle otherwise an error occurs.
         super.init(nibName: nil, bundle: nil)
     }
@@ -74,16 +76,25 @@ class JitsiMeetWrapperViewController: UIViewController {
 }
 
 extension JitsiMeetWrapperViewController: JitsiMeetViewDelegate {
-    func conferenceTerminated(_ data: [AnyHashable: Any]!) {
+    func conferenceWillJoin(_ data: [AnyHashable : Any]) {
+        self.eventSink(["event": "conferenceWillJoin", "data": data])
+    }
+    
+    func conferenceJoined(_ data: [AnyHashable : Any]) {
+        self.eventSink(["event": "conferenceJoined", "data": data])
+    }
+    
+    func conferenceTerminated(_ data: [AnyHashable: Any]) {
         DispatchQueue.main.async {
             self.pipViewCoordinator?.hide { _ in
                 self.cleanUp()
                 self.dismiss(animated: true, completion: nil)
             }
         }
+        self.eventSink(["event": "conferenceTerminated", "data": data])
     }
 
-    func enterPicture(inPicture data: [AnyHashable: Any]!) {
+    func enterPicture(inPicture data: [AnyHashable: Any]) {
         DispatchQueue.main.async {
             self.pipViewCoordinator?.enterPictureInPicture()
         }
