@@ -142,6 +142,35 @@ android {
 }
 ```
 
+## Listening to Meeting Events
+
+Supported events:
+
+| Name                   | Description  |
+| :--------------------- | :----------- |
+| onConferenceWillJoin   | Called before a conference is joined. |
+| onConferenceJoined     | Called when a conference was joined. |
+| onConferenceTerminated | Called when a conference was terminated either by user choice or due to a failure. |
+
+There are many more events ([Android](https://github.com/jitsi/handbook/blob/75d38b5a3db9d44ff60feb7c72dd6f7d4a5ea83c/docs/dev-guide/android-sdk.md, [iOS](https://github.com/jitsi/handbook/blob/75d38b5a3db9d44ff60feb7c72dd6f7d4a5ea83c/docs/dev-guide/ios-sdk.md), however we don't support them currently. <br>
+It is straight forward to add them, so don't hesitate to submit a PR.
+
+### Per Meeting Events
+To listen to meeting events per meeting, pass in a `JitsiMeetingListener`
+to `joinMeeting`. The listener will automatically be removed when an
+`onConferenceTerminated` event is fired.
+
+```
+await JitsiMeetWrapper.joinMeeting(
+  options: options,
+  listener: JitsiMeetingListener(
+    onConferenceWillJoin: (url) => print("onConferenceWillJoin: url: $url"),
+    onConferenceJoined: (url) => print("onConferenceJoined: url: $url"),
+    onConferenceTerminated: (url, error) => print("onConferenceTerminated: url: $url, error: $error"),
+  ),
+);
+```
+
 <a name="known-issues"></a>
 ### Known issues
 - Picture in Picture is not working during screen sharing (https://github.com/jitsi/jitsi-meet/issues/9099)
