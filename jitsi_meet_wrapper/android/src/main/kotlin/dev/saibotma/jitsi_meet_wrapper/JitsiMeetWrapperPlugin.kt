@@ -1,27 +1,45 @@
 package dev.saibotma.jitsi_meet_wrapper
 
 import android.app.Activity
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import androidx.annotation.NonNull
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
+import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-import org.jitsi.meet.sdk.JitsiMeetActivity
-import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
-import org.jitsi.meet.sdk.JitsiMeetUserInfo
+import org.jitsi.meet.sdk.*
 import java.net.URL
 
+// Got most of this from the example:
+// https://github.com/jitsi/jitsi-meet-sdk-samples/blob/18c35f7625b38233579ff34f761f4c126ba7e03a/android/kotlin/JitsiSDKTest/app/src/main/kotlin/net/jitsi/sdktest/MainActivity.kt
 class JitsiMeetWrapperPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
-    private lateinit var channel: MethodChannel
+    private lateinit var methodChannel: MethodChannel
+    private lateinit var eventChannel: EventChannel
+    private lateinit var eventStreamHandler: JitsiMeetWrapperEventStreamHandler
     private var activity: Activity? = null
 
+    private val broadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            onBroadcastReceived(intent)
+        }
+    }
+
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "jitsi_meet_wrapper")
-        channel.setMethodCallHandler(this)
+        methodChannel = MethodChannel(flutterPluginBinding.binaryMessenger, "jitsi_meet_wrapper")
+        methodChannel.setMethodCallHandler(this)
+
+        eventStreamHandler = JitsiMeetWrapperEventStreamHandler()
+        eventChannel = EventChannel(flutterPluginBinding.binaryMessenger, "jitsi_meet_wrapper_events")
+        eventChannel.setStreamHandler(eventStreamHandler)
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
@@ -32,6 +50,8 @@ class JitsiMeetWrapperPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     private fun joinMeeting(call: MethodCall, result: Result) {
+        registerForBroadcastMessages()
+
         val room = call.argument<String>("roomName")!!
         if (room.isBlank()) {
             result.error(
@@ -115,6 +135,40 @@ class JitsiMeetWrapperPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
-        channel.setMethodCallHandler(null)
+        LocalBroadcastManager.getInstance(activity!!.applicationContext).unregisterReceiver(broadcastReceiver)
+        methodChannel.setMethodCallHandler(null)
+        eventChannel.setStreamHandler(null)
+    }
+
+    private fun registerForBroadcastMessages() {
+        val intentFilter = IntentFilter()
+
+        with(intentFilter) {
+            addAction(BroadcastEvent.Type.CONFERENCE_WILL_JOIN.action)
+            addAction(BroadcastEvent.Type.CONFERENCE_JOINED.action)
+            addAction(BroadcastEvent.Type.CONFERENCE_TERMINATED.action)
+        }
+
+        LocalBroadcastManager.getInstance(activity!!.applicationContext)
+                .registerReceiver(broadcastReceiver, intentFilter)
+    }
+
+    private fun onBroadcastReceived(intent: Intent?) {
+        if (intent != null) {
+            val event = BroadcastEvent(intent)
+            val data = event.data
+            when (event.type) {
+                BroadcastEvent.Type.CONFERENCE_WILL_JOIN -> {
+                    eventStreamHandler.onConferenceWillJoin(data)
+                }
+                BroadcastEvent.Type.CONFERENCE_JOINED -> {
+                    eventStreamHandler.onConferenceJoined(data)
+                }
+                BroadcastEvent.Type.CONFERENCE_TERMINATED -> {
+                    eventStreamHandler.onConferenceTerminated(data)
+                }
+                else -> {}
+            }
+        }
     }
 }
