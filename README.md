@@ -82,7 +82,7 @@ Additionally, it is recommended to set `UIViewControllerBasedStatusBarAppearance
 To enable screen sharing on iOS, you have to add a "Broadcast Upload Extension" to YOUR app. That's why we can't add it to the plugin by default.
 Don't be afraid of implementing this, it is actually very easy.
 
-The steps presented below are a summary of the very detailed explanation in the [official docs](https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-ios-sdk#screen-sharing-integration). They are tested to work with this version of the plugin.
+The steps presented below are a summary of the very detailed explanation in the [official docs](https://github.com/jitsi/handbook/blob/75d38b5a3db9d44ff60feb7c72dd6f7d4a5ea83c/docs/dev-guide/ios-sdk.md#screen-sharing-integration). They are tested to work with this version of the plugin.
 - Add another target of the type "Broadcast Upload Extension" (BT) as shown in the screenshot. ![screenshot 1](https://github.com/jitsi/handbook/blob/c105fe0782e272875b36dd763fa54f19dd91c9a7/docs/assets/iOS_screensharing_1.png)
 - Copy the files from `jitsi_meet_wrapper/example/ios/Broadcast Extension/` into the folder of your newly created BT.
 - Set the deployment target of BT to 14 or above.
@@ -152,7 +152,7 @@ Supported events:
 | onConferenceJoined     | Called when a conference was joined. |
 | onConferenceTerminated | Called when a conference was terminated either by user choice or due to a failure. |
 
-There are many more events ([Android](https://github.com/jitsi/handbook/blob/75d38b5a3db9d44ff60feb7c72dd6f7d4a5ea83c/docs/dev-guide/android-sdk.md#supported-events), [iOS](https://github.com/jitsi/handbook/blob/75d38b5a3db9d44ff60feb7c72dd6f7d4a5ea83c/docs/dev-guide/ios-sdk.md#jitsimeetviewdelegate), however we don't support them currently. <br>
+There are many more events ([Android](https://github.com/jitsi/handbook/blob/75d38b5a3db9d44ff60feb7c72dd6f7d4a5ea83c/docs/dev-guide/android-sdk.md#supported-events), [iOS](https://github.com/jitsi/handbook/blob/75d38b5a3db9d44ff60feb7c72dd6f7d4a5ea83c/docs/dev-guide/ios-sdk.md#jitsimeetviewdelegate)), however we don't support them currently. <br>
 It is straight forward to add them, so don't hesitate to submit a PR.
 
 ### Per Meeting Events
