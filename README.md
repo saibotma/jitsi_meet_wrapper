@@ -152,7 +152,7 @@ Supported events:
 | onConferenceJoined     | Called when a conference was joined. |
 | onConferenceTerminated | Called when a conference was terminated either by user choice or due to a failure. |
 
-There are many more events ([Android](https://github.com/jitsi/handbook/blob/75d38b5a3db9d44ff60feb7c72dd6f7d4a5ea83c/docs/dev-guide/android-sdk.md, [iOS](https://github.com/jitsi/handbook/blob/75d38b5a3db9d44ff60feb7c72dd6f7d4a5ea83c/docs/dev-guide/ios-sdk.md), however we don't support them currently. <br>
+There are many more events ([Android](https://github.com/jitsi/handbook/blob/75d38b5a3db9d44ff60feb7c72dd6f7d4a5ea83c/docs/dev-guide/android-sdk.md#supported-events), [iOS](https://github.com/jitsi/handbook/blob/75d38b5a3db9d44ff60feb7c72dd6f7d4a5ea83c/docs/dev-guide/ios-sdk.md#jitsimeetviewdelegate), however we don't support them currently. <br>
 It is straight forward to add them, so don't hesitate to submit a PR.
 
 ### Per Meeting Events
