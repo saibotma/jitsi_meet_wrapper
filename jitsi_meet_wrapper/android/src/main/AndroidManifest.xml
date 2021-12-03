@@ -8,7 +8,8 @@
             android:resizeableActivity="true"
             android:supportsPictureInPicture="true"
             android:theme="@style/MeetingTheme"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            android:exported="false">
         </activity>
     </application>
 </manifest>
