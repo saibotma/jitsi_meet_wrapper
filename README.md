@@ -16,6 +16,7 @@ Nevertheless, please always create an issue and I will try to have a look.
   - [Configuration](#configuration)
     - [iOS](#ios)
     - [Android](#android)
+  - [Listening to meeting events](#listening-to-meeting-events)
   - [Known issues](#known-issues)
 
 <a name="join-a-meeting"></a>
@@ -142,6 +143,7 @@ android {
 }
 ```
 
+<a name="listening-to-meeting-events"></a>
 ## Listening to Meeting Events
 
 Supported events:
