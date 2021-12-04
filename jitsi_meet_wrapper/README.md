@@ -12,7 +12,7 @@ guaranteed that I will have time to develop and add features that are not needed
 Nevertheless, please always create an issue and I will try to have a look.
 
 ## Table of Contents
-  - [Join A Meeting](#join-a-meeting)
+  - [Join a meeting](#join-a-meeting)
   - [Configuration](#configuration)
     - [iOS](#ios)
     - [Android](#android)
@@ -20,7 +20,7 @@ Nevertheless, please always create an issue and I will try to have a look.
   - [Known issues](#known-issues)
 
 <a name="join-a-meeting"></a>
-## Join A Meeting
+## Join a meeting
 
 To join a meeting, you have to create meeting options and then launch the meeting:
 
