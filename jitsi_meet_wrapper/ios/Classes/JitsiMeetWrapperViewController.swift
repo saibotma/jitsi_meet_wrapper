@@ -76,6 +76,16 @@ class JitsiMeetWrapperViewController: UIViewController {
 }
 
 extension JitsiMeetWrapperViewController: JitsiMeetViewDelegate {
+    func ready(toClose data: [AnyHashable : Any]) {
+        DispatchQueue.main.async {
+            self.pipViewCoordinator?.hide { _ in
+                self.cleanUp()
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
+        self.eventSink(["event": "readyToClose"])
+    }
+    
     func conferenceWillJoin(_ data: [AnyHashable : Any]) {
         self.eventSink(["event": "conferenceWillJoin", "data": data])
     }
@@ -85,12 +95,6 @@ extension JitsiMeetWrapperViewController: JitsiMeetViewDelegate {
     }
     
     func conferenceTerminated(_ data: [AnyHashable: Any]) {
-        DispatchQueue.main.async {
-            self.pipViewCoordinator?.hide { _ in
-                self.cleanUp()
-                self.dismiss(animated: true, completion: nil)
-            }
-        }
         self.eventSink(["event": "conferenceTerminated", "data": data])
     }
 

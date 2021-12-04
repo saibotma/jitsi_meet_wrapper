@@ -4,7 +4,7 @@
         <!-- some config changes are required for PiP (https://developer.android.com/guide/topics/ui/picture-in-picture#single_playback) -->
         <!-- Need autoRemoveFromRecents, otherwise an extra task for the jitsi view will stay open -->
         <activity
-            android:name="org.jitsi.meet.sdk.JitsiMeetActivity"
+            android:name="dev.saibotma.jitsi_meet_wrapper.JitsiMeetWrapperActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize"
             android:resizeableActivity="true"
             android:supportsPictureInPicture="true"

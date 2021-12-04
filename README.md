@@ -45,11 +45,11 @@ Note: The example app does not compile on simulator at the moment. (https://gith
 
 #### Podfile
 
-The platform needs to be set to `11.0` or newer and bitcode needs to be disabled.<br>
+The platform (and also the deployment target) needs to be set to `11.0` or newer and bitcode needs to be disabled.<br>
 The file should look similar to below:
 
 ```
-platform :ios, '11.0'
+platform :ios, '12.0'
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|
@@ -159,8 +159,8 @@ It is straight forward to add them, so don't hesitate to submit a PR.
 
 ### Per Meeting Events
 To listen to meeting events per meeting, pass in a `JitsiMeetingListener`
-to `joinMeeting`. The listener will automatically be removed when an
-`onConferenceTerminated` event is fired.
+to `joinMeeting`. The listener will automatically be removed when the conference is over
+(which is not `onConferenceTerminated`).
 
 ```
 await JitsiMeetWrapper.joinMeeting(
