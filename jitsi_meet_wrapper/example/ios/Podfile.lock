@@ -2,8 +2,8 @@ PODS:
   - Flutter (1.0.0)
   - jitsi_meet_wrapper (0.0.1):
     - Flutter
-    - JitsiMeetSDK (= 3.10.4)
-  - JitsiMeetSDK (3.10.4)
+    - JitsiMeetSDK (= 4.0.0)
+  - JitsiMeetSDK (4.0.0)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
@@ -21,9 +21,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
-  jitsi_meet_wrapper: bd3dd9ed6f51b4fcb6ecfacbf8044d146ef7f602
-  JitsiMeetSDK: 66a6524472740c047ccb1d30bee99cd09fe47276
+  jitsi_meet_wrapper: d649e0e69941c15d05cd7c3c0c18641e3fa6b5c5
+  JitsiMeetSDK: 4820d8408fafcd5cbd1b15fdb6086a5d89a0d010
 
-PODFILE CHECKSUM: 3d84747a486a79f2d3d801207145d66565b98265
+PODFILE CHECKSUM: 816b008b6353631c9f1ba1db96a33591d278e419
 
 COCOAPODS: 1.11.2

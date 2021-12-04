@@ -3,7 +3,13 @@ package dev.saibotma.jitsi_meet_wrapper
 import io.flutter.plugin.common.EventChannel
 import java.io.Serializable
 
-class JitsiMeetWrapperEventStreamHandler : EventChannel.StreamHandler, Serializable {
+// Needs to be singleton as it is not possible to pass object references to activities
+// and JitsiMeetWrapperActivity needs access to it.
+class JitsiMeetWrapperEventStreamHandler private constructor() : EventChannel.StreamHandler {
+    companion object {
+        val instance = JitsiMeetWrapperEventStreamHandler()
+    }
+
     private var eventSink: EventChannel.EventSink? = null
 
     override fun onListen(arguments: Any?, eventSink: EventChannel.EventSink?) {
@@ -24,5 +30,9 @@ class JitsiMeetWrapperEventStreamHandler : EventChannel.StreamHandler, Serializa
 
     fun onConferenceTerminated(data: MutableMap<String, Any>?) {
         eventSink?.success(mapOf("event" to "conferenceTerminated", "data" to data))
+    }
+
+    fun onReadyToClose() {
+        eventSink?.success(mapOf("event" to "readyToClose"))
     }
 }

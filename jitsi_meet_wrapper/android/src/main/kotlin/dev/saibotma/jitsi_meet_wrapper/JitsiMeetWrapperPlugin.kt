@@ -24,20 +24,13 @@ import java.net.URL
 class JitsiMeetWrapperPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private lateinit var methodChannel: MethodChannel
     private lateinit var eventChannel: EventChannel
-    private lateinit var eventStreamHandler: JitsiMeetWrapperEventStreamHandler
+    private val eventStreamHandler = JitsiMeetWrapperEventStreamHandler.instance
     private var activity: Activity? = null
-
-    private val broadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            onBroadcastReceived(intent)
-        }
-    }
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         methodChannel = MethodChannel(flutterPluginBinding.binaryMessenger, "jitsi_meet_wrapper")
         methodChannel.setMethodCallHandler(this)
 
-        eventStreamHandler = JitsiMeetWrapperEventStreamHandler()
         eventChannel = EventChannel(flutterPluginBinding.binaryMessenger, "jitsi_meet_wrapper_events")
         eventChannel.setStreamHandler(eventStreamHandler)
     }
@@ -50,8 +43,6 @@ class JitsiMeetWrapperPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     private fun joinMeeting(call: MethodCall, result: Result) {
-        registerForBroadcastMessages()
-
         val room = call.argument<String>("roomName")!!
         if (room.isBlank()) {
             result.error(
@@ -114,7 +105,7 @@ class JitsiMeetWrapperPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             build()
         }
 
-        JitsiMeetActivity.launch(activity, options)
+        JitsiMeetWrapperActivity.launch(activity!!, options)
         result.success("Successfully joined room: $room")
     }
 
@@ -135,40 +126,7 @@ class JitsiMeetWrapperPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
-        LocalBroadcastManager.getInstance(activity!!.applicationContext).unregisterReceiver(broadcastReceiver)
         methodChannel.setMethodCallHandler(null)
         eventChannel.setStreamHandler(null)
-    }
-
-    private fun registerForBroadcastMessages() {
-        val intentFilter = IntentFilter()
-
-        with(intentFilter) {
-            addAction(BroadcastEvent.Type.CONFERENCE_WILL_JOIN.action)
-            addAction(BroadcastEvent.Type.CONFERENCE_JOINED.action)
-            addAction(BroadcastEvent.Type.CONFERENCE_TERMINATED.action)
-        }
-
-        LocalBroadcastManager.getInstance(activity!!.applicationContext)
-                .registerReceiver(broadcastReceiver, intentFilter)
-    }
-
-    private fun onBroadcastReceived(intent: Intent?) {
-        if (intent != null) {
-            val event = BroadcastEvent(intent)
-            val data = event.data
-            when (event.type) {
-                BroadcastEvent.Type.CONFERENCE_WILL_JOIN -> {
-                    eventStreamHandler.onConferenceWillJoin(data)
-                }
-                BroadcastEvent.Type.CONFERENCE_JOINED -> {
-                    eventStreamHandler.onConferenceJoined(data)
-                }
-                BroadcastEvent.Type.CONFERENCE_TERMINATED -> {
-                    eventStreamHandler.onConferenceTerminated(data)
-                }
-                else -> {}
-            }
-        }
     }
 }

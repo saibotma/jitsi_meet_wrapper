@@ -159,8 +159,8 @@ It is straight forward to add them, so don't hesitate to submit a PR.
 
 ### Per Meeting Events
 To listen to meeting events per meeting, pass in a `JitsiMeetingListener`
-to `joinMeeting`. The listener will automatically be removed when an
-`onConferenceTerminated` event is fired.
+to `joinMeeting`. The listener will automatically be removed when the conference is over
+(which is not `onConferenceTerminated`).
 
 ```
 await JitsiMeetWrapper.joinMeeting(

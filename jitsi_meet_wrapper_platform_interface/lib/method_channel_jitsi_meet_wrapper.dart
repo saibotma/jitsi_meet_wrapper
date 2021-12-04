@@ -67,6 +67,8 @@ class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
           break;
         case "conferenceTerminated":
           _listener?.onConferenceTerminated?.call(data["url"], data["error"]);
+          break;
+        case "readyToClose":
           _listener = null;
           break;
       }
