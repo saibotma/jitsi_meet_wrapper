@@ -146,7 +146,7 @@ class _MeetingState extends State<Meeting> {
 
     // Define meetings options here
     var options = JitsiMeetingOptions(
-      roomName: roomText.text,
+      roomNameOrUrl: roomText.text,
       serverUrl: serverUrl,
       subject: subjectText.text,
       token: tokenText.text,

@@ -30,6 +30,9 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin, FlutterStream
     }
 
     private func joinMeeting(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        // As a general rule: Don't set options when they are null as
+        // this could override (reset) configurations from the URL.
+
         let arguments = call.arguments as! [String: Any]
 
         let options = JitsiMeetConferenceOptions.fromBuilder { (builder) in
@@ -49,11 +52,13 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin, FlutterStream
                 builder.serverURL = URL(string: serverUrl);
             }
 
-            let subject = arguments["subject"] as? String
-            builder.setSubject(subject ?? "")
+            if let subject = arguments["subject"] as? String {
+                builder.setSubject(subject)
+            }
 
-            let token = arguments["token"] as? String
-            builder.token = token;
+            if let token = arguments["token"] as? String {
+                builder.token = token;
+            }
 
             if let isAudioMuted = arguments["isAudioMuted"] as? Bool {
                 builder.setAudioMuted(isAudioMuted);
@@ -70,16 +75,19 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin, FlutterStream
             let displayName = arguments["userDisplayName"] as? String
             let email = arguments["userEmail"] as? String
             let avatarUrlString = arguments["userAvatarUrl"] as? String
-            let avatarUrl = avatarUrlString != nil ? URL(string: avatarUrlString!) : nil
-            builder.userInfo = JitsiMeetUserInfo(displayName: displayName, andEmail: email, andAvatar: avatarUrl)
 
-            let featureFlags = arguments["featureFlags"] as! Dictionary<String, Any>
-            featureFlags.forEach { key, value in
+            if (displayName != nil || email != nil || avatarUrlString != nil) {
+                let avatarUrl = avatarUrlString != nil ? URL(string: avatarUrlString!) : nil
+                builder.userInfo = JitsiMeetUserInfo(displayName: displayName, andEmail: email, andAvatar: avatarUrl)
+            }
+
+            let featureFlags = arguments["featureFlags"] as? Dictionary<String, Any>
+            featureFlags?.forEach { key, value in
                 builder.setFeatureFlag(key, withValue: value);
             }
 
-            let configOverrides = arguments["configOverrides"] as! Dictionary<String, Any>
-            configOverrides.forEach { key, value in
+            let configOverrides = arguments["configOverrides"] as? Dictionary<String, Any>
+            configOverrides?.forEach { key, value in
                 builder.setConfigOverride(key, withValue: value);
             }
         }

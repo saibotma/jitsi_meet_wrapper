@@ -3,38 +3,38 @@ import 'package:collection/collection.dart';
 import 'feature_flag.dart';
 
 class JitsiMeetingOptions {
-  final String roomName;
+  final String roomNameOrUrl;
   final String? serverUrl;
   final String? subject;
   final String? token;
-  final bool isAudioMuted;
-  final bool isAudioOnly;
-  final bool isVideoMuted;
+  final bool? isAudioMuted;
+  final bool? isAudioOnly;
+  final bool? isVideoMuted;
   final String? userDisplayName;
   final String? userEmail;
   final String? userAvatarUrl;
-  final Map<FeatureFlag, Object?> featureFlags;
-  final Map<String, Object?> configOverrides;
+  final Map<FeatureFlag, Object?>? featureFlags;
+  final Map<String, Object?>? configOverrides;
 
   JitsiMeetingOptions({
-    required this.roomName,
+    required this.roomNameOrUrl,
     this.serverUrl,
     this.subject,
     this.token,
-    this.isAudioMuted = false,
-    this.isAudioOnly = false,
-    this.isVideoMuted = false,
+    this.isAudioMuted,
+    this.isAudioOnly,
+    this.isVideoMuted,
     this.userDisplayName,
     this.userEmail,
     this.userAvatarUrl,
-    this.featureFlags = const {},
-    this.configOverrides = const {},
+    this.featureFlags,
+    this.configOverrides,
   });
 
 
   @override
   String toString() {
-    return 'JitsiMeetingOptions{roomName: $roomName, serverUrl: $serverUrl, subject: $subject, token: $token, isAudioMuted: $isAudioMuted, isAudioOnly: $isAudioOnly, isVideoMuted: $isVideoMuted, userDisplayName: $userDisplayName, userEmail: $userEmail, userAvatarUrl: $userAvatarUrl, featureFlags: $featureFlags, configOverrides: $configOverrides}';
+    return 'JitsiMeetingOptions{roomNameOrUrl: $roomNameOrUrl, serverUrl: $serverUrl, subject: $subject, token: $token, isAudioMuted: $isAudioMuted, isAudioOnly: $isAudioOnly, isVideoMuted: $isVideoMuted, userDisplayName: $userDisplayName, userEmail: $userEmail, userAvatarUrl: $userAvatarUrl, featureFlags: $featureFlags, configOverrides: $configOverrides}';
   }
 
   @override
@@ -42,7 +42,7 @@ class JitsiMeetingOptions {
       identical(this, other) ||
       other is JitsiMeetingOptions &&
           runtimeType == other.runtimeType &&
-          roomName == other.roomName &&
+          roomNameOrUrl == other.roomNameOrUrl &&
           serverUrl == other.serverUrl &&
           subject == other.subject &&
           token == other.token &&
@@ -57,7 +57,7 @@ class JitsiMeetingOptions {
 
   @override
   int get hashCode =>
-      roomName.hashCode ^
+      roomNameOrUrl.hashCode ^
       serverUrl.hashCode ^
       subject.hashCode ^
       token.hashCode ^
