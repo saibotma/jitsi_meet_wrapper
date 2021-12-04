@@ -1,15 +1,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="dev.saibotma.jitsi_meet_wrapper">
     <application>
+        <!-- some config changes are required for PiP (https://developer.android.com/guide/topics/ui/picture-in-picture#single_playback) -->
+        <!-- Need autoRemoveFromRecents, otherwise an extra task for the jitsi view will stay open -->
         <activity
             android:name="org.jitsi.meet.sdk.JitsiMeetActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize"
-            android:launchMode="singleTask"
             android:resizeableActivity="true"
             android:supportsPictureInPicture="true"
             android:theme="@style/MeetingTheme"
             android:windowSoftInputMode="adjustResize"
-            android:exported="false">
+            android:exported="false"
+            android:autoRemoveFromRecents="true">
         </activity>
     </application>
 </manifest>
