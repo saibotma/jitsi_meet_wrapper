@@ -43,6 +43,9 @@ class JitsiMeetWrapperPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     private fun joinMeeting(call: MethodCall, result: Result) {
+        // As a general rule: Don't set options when they are null as
+        // this could override (reset) configurations from the URL.
+
         val room = call.argument<String>("roomName")!!
         if (room.isBlank()) {
             result.error(
@@ -53,34 +56,38 @@ class JitsiMeetWrapperPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             return
         }
 
-        val serverUrlString = call.argument<String>("serverUrl") ?: "https://meet.jit.si"
-        val serverUrl = URL(serverUrlString)
+        val serverUrlString: String? = call.argument("serverUrl")
+        val serverUrl = if (serverUrlString != null) URL(serverUrlString) else null
 
         val subject: String? = call.argument("subject")
         val token: String? = call.argument("token")
-        val isAudioMuted: Boolean = call.argument("isAudioMuted")!!
-        val isAudioOnly: Boolean = call.argument("isAudioOnly")!!
-        val isVideoMuted: Boolean = call.argument("isVideoMuted")!!
+        val isAudioMuted: Boolean? = call.argument("isAudioMuted")
+        val isAudioOnly: Boolean? = call.argument("isAudioOnly")
+        val isVideoMuted: Boolean? = call.argument("isVideoMuted")
 
+        val displayName: String? = call.argument("userDisplayName")
+        val email: String? = call.argument("userEmail")
+        val userAvatarUrlString: String? = call.argument("userAvatarUrl")
         val userInfo = JitsiMeetUserInfo().apply {
-            displayName = call.argument("userDisplayName")
-            email = call.argument("userEmail")
-            val userAvatarUrlString: String? = call.argument("userAvatarUrl")
-            avatar = if (userAvatarUrlString != null) URL(userAvatarUrlString) else null
+            if (displayName != null) this.displayName = displayName
+            if (email != null) this.email = email
+            if (userAvatarUrlString != null) avatar = URL(userAvatarUrlString)
         }
 
         val options = JitsiMeetConferenceOptions.Builder().run {
             setRoom(room)
-            setServerURL(serverUrl)
-            setSubject(subject)
-            setToken(token)
-            setAudioMuted(isAudioMuted)
-            setAudioOnly(isAudioOnly)
-            setVideoMuted(isVideoMuted)
-            setUserInfo(userInfo)
+            if (serverUrl != null) setServerURL(serverUrl)
+            if (subject != null) setSubject(subject)
+            if (token != null) setToken(token)
+            if (isAudioMuted != null) setAudioMuted(isAudioMuted)
+            if (isAudioOnly != null) setAudioOnly(isAudioOnly)
+            if (isVideoMuted != null) setVideoMuted(isVideoMuted)
+            if (displayName != null || email != null || userAvatarUrlString != null) {
+                setUserInfo(userInfo)
+            }
 
-            val featureFlags = call.argument<HashMap<String, Any?>>("featureFlags")!!
-            featureFlags.forEach { (key, value) ->
+            val featureFlags = call.argument<HashMap<String, Any?>>("featureFlags")
+            featureFlags?.forEach { (key, value) ->
                 // Can only be bool, int or string according to
                 // the overloads of setFeatureFlag.
                 when (value) {
@@ -90,8 +97,8 @@ class JitsiMeetWrapperPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 }
             }
 
-            val configOverrides = call.argument<HashMap<String, Any?>>("configOverrides")!!
-            configOverrides.forEach { (key, value) ->
+            val configOverrides = call.argument<HashMap<String, Any?>>("configOverrides")
+            configOverrides?.forEach { (key, value) ->
                 // Can only be bool, int, array of strings or string according to
                 // the overloads of setConfigOverride.
                 when (value) {

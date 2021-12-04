@@ -28,7 +28,7 @@ class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
     }
 
     Map<String, dynamic> _options = {
-      'roomName': options.roomName.trim(),
+      'roomName': options.roomNameOrUrl.trim(),
       'serverUrl': options.serverUrl?.trim(),
       'subject': options.subject?.trim(),
       'token': options.token,
@@ -78,9 +78,10 @@ class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
     _eventChannelIsInitialized = true;
   }
 
-  Map<String, Object> _toFeatureFlagStrings(
-    Map<FeatureFlag, Object?> featureFlags,
+  Map<String, Object>? _toFeatureFlagStrings(
+    Map<FeatureFlag, Object?>? featureFlags,
   ) {
+    if (featureFlags == null) return null;
     Map<String, Object> featureFlagsWithStrings = {};
     featureFlags.forEach((key, value) {
       if (value != null) {

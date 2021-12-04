@@ -16,7 +16,7 @@ class JitsiMeetWrapper {
     required JitsiMeetingOptions options,
     JitsiMeetingListener? listener,
   }) async {
-    assert(options.roomName.trim().isNotEmpty, "room is empty");
+    assert(options.roomNameOrUrl.trim().isNotEmpty, "room is empty");
 
     if (options.serverUrl?.isNotEmpty ?? false) {
       assert(Uri.parse(options.serverUrl!).isAbsolute,
