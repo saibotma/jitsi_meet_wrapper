@@ -25,6 +25,7 @@ class JitsiMeetWrapperViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.eventSink(["event": "opened"])
         // Open Jitsi in viewDidLoad as it should only be opened once per view controller.
         openJitsiMeet();
     }
@@ -75,6 +76,11 @@ class JitsiMeetWrapperViewController: UIViewController {
         jitsiMeetView = nil
         pipViewCoordinator = nil
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.eventSink(["event": "closed"])
+    }
 }
 
 extension JitsiMeetWrapperViewController: JitsiMeetViewDelegate {
@@ -85,7 +91,6 @@ extension JitsiMeetWrapperViewController: JitsiMeetViewDelegate {
                 self.dismiss(animated: true, completion: nil)
             }
         }
-        self.eventSink(["event": "readyToClose"])
     }
     
     func conferenceWillJoin(_ data: [AnyHashable : Any]) {
