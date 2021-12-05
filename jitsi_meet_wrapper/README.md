@@ -150,9 +150,11 @@ Supported events:
 
 | Name                   | Description  |
 | :--------------------- | :----------- |
+| onOpened   | Called after the native view got created. |
 | onConferenceWillJoin   | Called before a conference is joined. |
 | onConferenceJoined     | Called when a conference was joined. |
 | onConferenceTerminated | Called when a conference was terminated either by user choice or due to a failure. |
+| onClosed | Called after the native view got closed. |
 
 There are many more events ([Android](https://github.com/jitsi/handbook/blob/75d38b5a3db9d44ff60feb7c72dd6f7d4a5ea83c/docs/dev-guide/android-sdk.md#supported-events), [iOS](https://github.com/jitsi/handbook/blob/75d38b5a3db9d44ff60feb7c72dd6f7d4a5ea83c/docs/dev-guide/ios-sdk.md#jitsimeetviewdelegate)), however we don't support them currently. <br>
 It is straight forward to add them, so don't hesitate to submit a PR.
