@@ -3,6 +3,7 @@ package dev.saibotma.jitsi_meet_wrapper
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import org.jitsi.meet.sdk.JitsiMeetActivity
 import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
 import java.util.HashMap
@@ -23,6 +24,11 @@ class JitsiMeetWrapperActivity : JitsiMeetActivity() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        eventStreamHandler.onOpened()
+    }
+
     override fun onReadyToClose() {
         super.onReadyToClose()
         eventStreamHandler.onReadyToClose()
@@ -41,5 +47,10 @@ class JitsiMeetWrapperActivity : JitsiMeetActivity() {
     override fun onConferenceTerminated(extraData: HashMap<String, Any>?) {
         super.onConferenceTerminated(extraData)
         eventStreamHandler.onConferenceTerminated(extraData)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        eventStreamHandler.onClosed()
     }
 }

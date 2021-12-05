@@ -59,6 +59,9 @@ class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
     _eventChannel.receiveBroadcastStream().listen((message) {
       final data = message['data'];
       switch (message['event']) {
+        case "opened":
+          _listener?.onOpened?.call();
+          break;
         case "conferenceWillJoin":
           _listener?.onConferenceWillJoin?.call(data["url"]);
           break;
@@ -68,8 +71,8 @@ class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
         case "conferenceTerminated":
           _listener?.onConferenceTerminated?.call(data["url"], data["error"]);
           break;
-        case "readyToClose":
-          _listener?.onWillClose?.call();
+        case "closed":
+          _listener?.onClosed?.call();
           _listener = null;
           break;
       }
