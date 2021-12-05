@@ -162,11 +162,13 @@ class _MeetingState extends State<Meeting> {
     await JitsiMeetWrapper.joinMeeting(
       options: options,
       listener: JitsiMeetingListener(
+        onOpened: () => print("onOpened"),
         onConferenceWillJoin: (url) => print("onConferenceWillJoin: url: $url"),
         onConferenceJoined: (url) => print("onConferenceJoined: url: $url"),
         onConferenceTerminated: (url, error) {
           print("onConferenceTerminated: url: $url, error: $error");
         },
+        onClosed: () => print("onClosed"),
       ),
     );
   }
