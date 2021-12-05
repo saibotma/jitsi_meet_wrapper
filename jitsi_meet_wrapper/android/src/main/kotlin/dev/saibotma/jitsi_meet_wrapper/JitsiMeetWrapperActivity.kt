@@ -29,11 +29,6 @@ class JitsiMeetWrapperActivity : JitsiMeetActivity() {
         eventStreamHandler.onOpened()
     }
 
-    override fun onReadyToClose() {
-        super.onReadyToClose()
-        eventStreamHandler.onReadyToClose()
-    }
-
     override fun onConferenceWillJoin(extraData: HashMap<String, Any>?) {
         super.onConferenceWillJoin(extraData)
         eventStreamHandler.onConferenceWillJoin(extraData)

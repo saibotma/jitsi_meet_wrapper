@@ -32,10 +32,6 @@ class JitsiMeetWrapperEventStreamHandler private constructor() : EventChannel.St
         eventSink?.success(mapOf("event" to "conferenceTerminated", "data" to data))
     }
 
-    fun onReadyToClose() {
-        eventSink?.success(mapOf("event" to "readyToClose"))
-    }
-
     fun onOpened() {
         eventSink?.success(mapOf("event" to "opened"))
     }
