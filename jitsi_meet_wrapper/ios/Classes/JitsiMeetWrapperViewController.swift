@@ -23,7 +23,9 @@ class JitsiMeetWrapperViewController: UIViewController {
         fatalError("init(coder:) is not supported")
     }
 
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Open Jitsi in viewDidLoad as it should only be opened once per view controller.
         openJitsiMeet();
     }
 
