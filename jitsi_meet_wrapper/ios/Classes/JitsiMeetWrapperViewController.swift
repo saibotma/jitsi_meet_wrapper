@@ -26,7 +26,6 @@ class JitsiMeetWrapperViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.eventSink(["event": "opened"])
-        UIApplication.shared.isIdleTimerDisabled = true
         // Open Jitsi in viewDidLoad as it should only be opened once per view controller.
         openJitsiMeet();
     }
@@ -81,7 +80,6 @@ class JitsiMeetWrapperViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.eventSink(["event": "closed"])
-        UIApplication.shared.isIdleTimerDisabled = false
     }
 }
 
