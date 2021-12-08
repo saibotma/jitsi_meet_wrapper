@@ -5,7 +5,7 @@ public typealias AnimationCompletion = (Bool) -> Void
 
 // A custom implementation is required atm.
 // See https://github.com/jitsi/jitsi-meet/pull/10475 for more information.
-public protocol CustomPiPViewCoordinatorDelegate: class {
+public protocol CustomPiPViewCoordinatorDelegate: AnyObject {
 
     func exitPictureInPicture()
 }
