@@ -41,8 +41,6 @@ It is recommended to take a look at them, if you have any issues or need more de
 
 <a name="ios"></a>
 ### iOS
-Note: The example app does not compile on simulator at the moment. (https://github.com/saibotma/jitsi_meet_wrapper/issues/2)
-
 #### Podfile
 
 The platform (and also the deployment target) needs to be set to `11.0` or newer and bitcode needs to be disabled.<br>
@@ -178,4 +176,5 @@ await JitsiMeetWrapper.joinMeeting(
 <a name="known-issues"></a>
 ### Known issues
 - Picture in Picture is not working during screen sharing (https://github.com/jitsi/jitsi-meet/issues/9099)
+- An app using this plugin will not build for simulator when using `flutter run`. You have to run from Xcode as a workaround. (https://github.com/flutter/flutter/issues/94858)
 
