@@ -176,5 +176,5 @@ await JitsiMeetWrapper.joinMeeting(
 <a name="known-issues"></a>
 ### Known issues
 - Picture in Picture is not working during screen sharing (https://github.com/jitsi/jitsi-meet/issues/9099)
-- An app using this plugin will not build for simulator when using `flutter run`. You have to run from Xcode as a workaround. (https://github.com/flutter/flutter/issues/94858)
+- An app using this plugin will not build for simulator when using `flutter run` and Flutter s.t. version 2.8
 
