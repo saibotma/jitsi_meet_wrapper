@@ -2,6 +2,7 @@ name: jitsi_meet_wrapper
 description: A Flutter wrapper around the official JitsiMeetSDKs
 version: 0.0.1
 homepage: https://github.com/saibotma/jitsi_meet_wrapper/tree/main/jitsi_meet_wrapper
+repository: https://github.com/saibotma/jitsi_meet_wrapper/tree/main/jitsi_meet_wrapper
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -10,11 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  jitsi_meet_wrapper_platform_interface:
-    git:
-      url: https://github.com/saibotma/jitsi_meet_wrapper
-      path: jitsi_meet_wrapper_platform_interface
-      ref: main
+  jitsi_meet_wrapper_platform_interface: ^0.0.1
 
 dev_dependencies:
   flutter_test:
