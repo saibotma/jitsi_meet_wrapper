@@ -2,7 +2,7 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="dev.saibotma.jitsi_meet_wrapper_example">
     <application tools:replace="android:label"
-                 android:name="io.flutter.app.FlutterApplication"
+                 android:name="${applicationName}"
                  android:label="jitsi_meet_wrapper_example"
                  android:icon="@mipmap/ic_launcher">
         <activity android:name=".MainActivity"
