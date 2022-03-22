@@ -2,7 +2,7 @@ group 'dev.saibotma.jitsi_meet_wrapper'
 version '1.0-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.3.50'
+    ext.kotlin_version = '1.6.10'
     repositories {
         google()
         mavenCentral()
@@ -23,6 +23,8 @@ rootProject.allprojects {
         maven {
             url "https://github.com/jitsi/jitsi-maven-repository/raw/master/releases"
         }
+        // Required, otherwise a dependency of jisti sdk will not be found.
+        maven { url 'https://www.jitpack.io' }
     }
 }
 
@@ -30,9 +32,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    // Is not 31 as it it does not work on Android SDK 31 simulator
-    // and have no Android 31 device to test it.
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     // Required by jitsi
     compileOptions {
@@ -57,5 +57,5 @@ android {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     // From: https://github.com/jitsi/jitsi-maven-repository/tree/master/releases/org/jitsi/react/jitsi-meet-sdk
-    implementation ('org.jitsi.react:jitsi-meet-sdk:4.1.0') { transitive = true }
+    implementation ('org.jitsi.react:jitsi-meet-sdk:5.0.0') { transitive = true }
 }

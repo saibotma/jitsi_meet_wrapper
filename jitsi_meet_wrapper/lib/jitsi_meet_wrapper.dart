@@ -1,12 +1,13 @@
 import 'dart:async';
 
 import 'package:jitsi_meet_wrapper_platform_interface/jitsi_meet_wrapper_platform_interface.dart';
-import 'package:jitsi_meet_wrapper_platform_interface/jitsi_meeting_listener.dart';
-import 'package:jitsi_meet_wrapper_platform_interface/jitsi_meeting_options.dart';
-import 'package:jitsi_meet_wrapper_platform_interface/jitsi_meeting_response.dart';
 
 export 'package:jitsi_meet_wrapper_platform_interface/jitsi_meet_wrapper_platform_interface.dart'
-    show JitsiMeetingOptions, JitsiMeetingResponse, FeatureFlag, JitsiMeetingListener;
+    show
+        JitsiMeetingOptions,
+        JitsiMeetingResponse,
+        FeatureFlag,
+        JitsiMeetingListener;
 
 class JitsiMeetWrapper {
   /// Joins a meeting based on the JitsiMeetingOptions passed in.

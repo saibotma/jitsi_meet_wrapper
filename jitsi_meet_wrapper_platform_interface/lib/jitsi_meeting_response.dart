@@ -1,7 +1,7 @@
 class JitsiMeetingResponse {
   final bool isSuccess;
   final String? message;
-  final dynamic? error;
+  final dynamic error;
 
   JitsiMeetingResponse({
     required this.isSuccess,

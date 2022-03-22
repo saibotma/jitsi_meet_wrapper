@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:jitsi_meet_wrapper/jitsi_meet_wrapper.dart';
 
@@ -162,13 +160,13 @@ class _MeetingState extends State<Meeting> {
     await JitsiMeetWrapper.joinMeeting(
       options: options,
       listener: JitsiMeetingListener(
-        onOpened: () => print("onOpened"),
-        onConferenceWillJoin: (url) => print("onConferenceWillJoin: url: $url"),
-        onConferenceJoined: (url) => print("onConferenceJoined: url: $url"),
+        onOpened: () => debugPrint("onOpened"),
+        onConferenceWillJoin: (url) => debugPrint("onConferenceWillJoin: url: $url"),
+        onConferenceJoined: (url) => debugPrint("onConferenceJoined: url: $url"),
         onConferenceTerminated: (url, error) {
-          print("onConferenceTerminated: url: $url, error: $error");
+          debugPrint("onConferenceTerminated: url: $url, error: $error");
         },
-        onClosed: () => print("onClosed"),
+        onClosed: () => debugPrint("onClosed"),
       ),
     );
   }

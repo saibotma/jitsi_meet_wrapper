@@ -2,12 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:jitsi_meet_wrapper_platform_interface/jitsi_meeting_listener.dart';
 
-import 'feature_flag.dart';
 import 'jitsi_meet_wrapper_platform_interface.dart';
-import 'jitsi_meeting_options.dart';
-import 'jitsi_meeting_response.dart';
 
 const MethodChannel _methodChannel = MethodChannel('jitsi_meet_wrapper');
 const EventChannel _eventChannel = EventChannel('jitsi_meet_wrapper_events');
