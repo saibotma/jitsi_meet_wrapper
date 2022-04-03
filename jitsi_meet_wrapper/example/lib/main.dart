@@ -161,11 +161,46 @@ class _MeetingState extends State<Meeting> {
       options: options,
       listener: JitsiMeetingListener(
         onOpened: () => debugPrint("onOpened"),
-        onConferenceWillJoin: (url) => debugPrint("onConferenceWillJoin: url: $url"),
-        onConferenceJoined: (url) => debugPrint("onConferenceJoined: url: $url"),
+        onConferenceWillJoin: (url) {
+          debugPrint("onConferenceWillJoin: url: $url");
+        },
+        onConferenceJoined: (url) {
+          debugPrint("onConferenceJoined: url: $url");
+        },
         onConferenceTerminated: (url, error) {
           debugPrint("onConferenceTerminated: url: $url, error: $error");
         },
+        onAudioMutedChanged: (isMuted) {
+          debugPrint("onAudioMutedChanged: isMuted: $isMuted");
+        },
+        onVideoMutedChanged: (isMuted) {
+          debugPrint("onVideoMutedChanged: isMuted: $isMuted");
+        },
+        onParticipantJoined: (isLocal, email, name, participantId) {
+          debugPrint(
+            "onParticipantJoined: isLocal: $isLocal, email: $email, "
+            "name: $name, participantId: $participantId",
+          );
+        },
+        onParticipantLeft: (isLocal, email, name, participantId) {
+          debugPrint(
+            "onParticipantLeft: isLocal: $isLocal, email: $email, name: $name, "
+            "participantId: $participantId",
+          );
+        },
+        onParticipantsInfoRetrieved: (participantsInfo, requestId) {
+          debugPrint(
+            "onParticipantsInfoRetrieved: participantsInfo: $participantsInfo, "
+            "requestId: $requestId",
+          );
+        },
+        onChatMessageReceived: (senderId, message, isPrivate, timestamp) {
+          debugPrint(
+            "onChatMessageReceived: senderId: $senderId, message: $message, "
+            "isPrivate: $isPrivate, timestamp: $timestamp",
+          );
+        },
+        onChatToggled: (isOpen) => debugPrint("onChatToggled: isOpen: $isOpen"),
         onClosed: () => debugPrint("onClosed"),
       ),
     );
