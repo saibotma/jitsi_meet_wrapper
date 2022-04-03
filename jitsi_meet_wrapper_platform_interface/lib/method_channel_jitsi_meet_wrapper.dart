@@ -67,6 +67,45 @@ class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
         case "conferenceTerminated":
           _listener?.onConferenceTerminated?.call(data["url"], data["error"]);
           break;
+        case "audioMuted":
+          _listener?.onAudioMutedChanged?.call(data["muted"]);
+          break;
+        case "videoMuted":
+          _listener?.onVideoMutedChanged?.call(data["muted"]);
+          break;
+        case "participantJoined":
+          _listener?.onParticipantJoined?.call(
+            data["isLocal"],
+            data["email"],
+            data["name"],
+            data["participantId"],
+          );
+          break;
+        case "participantLeft":
+          _listener?.onParticipantLeft?.call(
+            data["isLocal"],
+            data["email"],
+            data["name"],
+            data["participantId"],
+          );
+          break;
+        case "participantsInfoRetrieved":
+          _listener?.onParticipantsInfoRetrieved?.call(
+            data["participantsInfo"],
+            data["requestId"],
+          );
+          break;
+        case "chatMessageReceived":
+          _listener?.onChatMessageReceived?.call(
+            data["senderId"],
+            data["message"],
+            data["isPrivate"],
+            data["timestamp"],
+          );
+          break;
+        case "chatToggled":
+          _listener?.onChatToggled?.call(data["isOpen"]);
+          break;
         case "closed":
           _listener?.onClosed?.call();
           _listener = null;
