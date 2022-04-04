@@ -176,10 +176,16 @@ class _MeetingState extends State<Meeting> {
         onVideoMutedChanged: (isMuted) {
           debugPrint("onVideoMutedChanged: isMuted: $isMuted");
         },
-        onParticipantJoined: (isLocal, email, name, participantId) {
+        onScreenShareToggled: (participantId, isSharing) {
+          debugPrint(
+            "onScreenShareToggled: participantId: $participantId, "
+            "isSharing: $isSharing",
+          );
+        },
+        onParticipantJoined: (isLocal, email, name, role, participantId) {
           debugPrint(
             "onParticipantJoined: isLocal: $isLocal, email: $email, "
-            "name: $name, participantId: $participantId",
+            "name: $name, role: $role, participantId: $participantId",
           );
         },
         onParticipantLeft: (isLocal, email, name, participantId) {

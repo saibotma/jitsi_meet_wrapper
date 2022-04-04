@@ -67,23 +67,28 @@ class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
         case "conferenceTerminated":
           _listener?.onConferenceTerminated?.call(data["url"], data["error"]);
           break;
-        case "audioMuted":
-          _listener?.onAudioMutedChanged?.call(data["muted"]);
+        case "audioMutedChanged":
+          _listener?.onAudioMutedChanged?.call(data["muted"] == "true");
           break;
-        case "videoMuted":
+        case "videoMutedChanged":
           _listener?.onVideoMutedChanged?.call(data["muted"]);
+          break;
+        case "screenShareToggled":
+          _listener?.onScreenShareToggled
+              ?.call(data["participantId"], data["sharing"] == "true");
           break;
         case "participantJoined":
           _listener?.onParticipantJoined?.call(
-            data["isLocal"],
+            data["isLocal"] == "true",
             data["email"],
             data["name"],
+            data["role"],
             data["participantId"],
           );
           break;
         case "participantLeft":
           _listener?.onParticipantLeft?.call(
-            data["isLocal"],
+            data["isLocal"] == "true",
             data["email"],
             data["name"],
             data["participantId"],
@@ -99,12 +104,13 @@ class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
           _listener?.onChatMessageReceived?.call(
             data["senderId"],
             data["message"],
-            data["isPrivate"],
+            data["isPrivate"] == "true",
+            // TODO(saibotma): Remove timestamp when it is not present on iOS
             data["timestamp"],
           );
           break;
         case "chatToggled":
-          _listener?.onChatToggled?.call(data["isOpen"]);
+          _listener?.onChatToggled?.call(data["isOpen"] == "true");
           break;
         case "closed":
           _listener?.onClosed?.call();

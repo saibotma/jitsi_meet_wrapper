@@ -25,12 +25,17 @@ class JitsiMeetingListener {
   // Android: https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-android-sdk#video_muted_changed
   final Function(bool isMuted)? onVideoMutedChanged;
 
+  // iOS: https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-ios-sdk#screensharetoggled
+  // Android: Missing... TODO(saibotma): Add link to documentation issue.
+  final Function(String participantId, bool isSharing)? onScreenShareToggled;
+
   // iOS: https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-ios-sdk/#participantjoined
   // Android: https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-android-sdk#participant_joined
   final Function(
     bool isLocal,
     String? email,
     String? name,
+    String? role,
     String? participantId,
   )? onParticipantJoined;
 
@@ -56,7 +61,7 @@ class JitsiMeetingListener {
     String senderId,
     String message,
     bool isPrivate,
-    DateTime timestamp,
+    DateTime? timestamp,
   )? onChatMessageReceived;
 
   // iOS: https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-ios-sdk/#chattoggled
@@ -73,6 +78,7 @@ class JitsiMeetingListener {
     this.onConferenceTerminated,
     this.onAudioMutedChanged,
     this.onVideoMutedChanged,
+    this.onScreenShareToggled,
     this.onParticipantJoined,
     this.onParticipantLeft,
     this.onParticipantsInfoRetrieved,

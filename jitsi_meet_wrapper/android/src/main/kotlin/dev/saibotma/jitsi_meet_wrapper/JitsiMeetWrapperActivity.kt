@@ -4,7 +4,9 @@ import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import org.jitsi.meet.sdk.BroadcastEvent
 import org.jitsi.meet.sdk.JitsiMeetActivity
 import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
@@ -33,7 +35,16 @@ class JitsiMeetWrapperActivity : JitsiMeetActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        registerForBroadcastMessages()
         eventStreamHandler.onOpened()
+    }
+
+    private fun registerForBroadcastMessages() {
+        val intentFilter = IntentFilter()
+        for (eventType in BroadcastEvent.Type.values()) {
+            intentFilter.addAction(eventType.action)
+        }
+        LocalBroadcastManager.getInstance(this).registerReceiver(this.broadcastReceiver, intentFilter)
     }
 
     private fun onBroadcastReceived(intent: Intent?) {
@@ -60,6 +71,7 @@ class JitsiMeetWrapperActivity : JitsiMeetActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(this.broadcastReceiver)
         eventStreamHandler.onClosed()
     }
 }
