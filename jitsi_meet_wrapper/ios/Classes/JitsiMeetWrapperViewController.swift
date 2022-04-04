@@ -93,10 +93,6 @@ extension JitsiMeetWrapperViewController: JitsiMeetViewDelegate {
         }
     }
     
-    func conferenceWillJoin(_ data: [AnyHashable : Any]) {
-        self.eventSink(["event": "conferenceWillJoin", "data": data])
-    }
-    
     func conferenceJoined(_ data: [AnyHashable : Any]) {
         self.eventSink(["event": "conferenceJoined", "data": data])
     }
@@ -104,11 +100,47 @@ extension JitsiMeetWrapperViewController: JitsiMeetViewDelegate {
     func conferenceTerminated(_ data: [AnyHashable: Any]) {
         self.eventSink(["event": "conferenceTerminated", "data": data])
     }
+    
+    func conferenceWillJoin(_ data: [AnyHashable : Any]) {
+        self.eventSink(["event": "conferenceWillJoin", "data": data])
+    }
 
     func enterPicture(inPicture data: [AnyHashable: Any]) {
         DispatchQueue.main.async {
             self.pipViewCoordinator?.enterPictureInPicture()
         }
+    }
+    
+    func participantJoined(_ data: [AnyHashable : Any]) {
+        self.eventSink(["event": "participantJoined", "data": data])
+    }
+    
+    func participantLeft(_ data: [AnyHashable : Any]) {
+        self.eventSink(["event": "participantLeft", "data": data])
+    }
+    
+    func audioMutedChanged(_ data: [AnyHashable : Any]) {
+        self.eventSink(["event": "audioMutedChanged", "data": data])
+    }
+    
+    func endpointTextMessageReceived(_ data: [AnyHashable : Any]) {
+        self.eventSink(["event": "endpointTextMessageReceived", "data": data])
+    }
+    
+    func screenShareToggled(_ data: [AnyHashable : Any]) {
+        self.eventSink(["event": "screenShareToggled", "data": data])
+    }
+    
+    func chatMessageReceived(_ data: [AnyHashable : Any]) {
+        self.eventSink(["event": "chatMessageReceived", "data": data])
+    }
+    
+    func chatToggled(_ data: [AnyHashable : Any]) {
+        self.eventSink(["event": "chatToggled", "data": data])
+    }
+    
+    func videoMutedChanged(_ data: [AnyHashable : Any]) {
+        self.eventSink(["event": "videoMutedChanged", "data": data])
     }
 }
 
