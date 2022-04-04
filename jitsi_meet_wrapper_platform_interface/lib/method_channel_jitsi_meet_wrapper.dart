@@ -67,6 +67,43 @@ class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
         case "conferenceTerminated":
           _listener?.onConferenceTerminated?.call(data["url"], data["error"]);
           break;
+        case "audioMutedChanged":
+          _listener?.onAudioMutedChanged?.call(parseBool(data["muted"]));
+          break;
+        case "videoMutedChanged":
+          _listener?.onVideoMutedChanged?.call(parseBool(data["muted"]));
+          break;
+        case "screenShareToggled":
+          _listener?.onScreenShareToggled
+              ?.call(data["participantId"], parseBool(data["sharing"]));
+          break;
+        case "participantJoined":
+          _listener?.onParticipantJoined?.call(
+            data["email"],
+            data["name"],
+            data["role"],
+            data["participantId"],
+          );
+          break;
+        case "participantLeft":
+          _listener?.onParticipantLeft?.call(data["participantId"]);
+          break;
+        case "participantsInfoRetrieved":
+          _listener?.onParticipantsInfoRetrieved?.call(
+            data["participantsInfo"],
+            data["requestId"],
+          );
+          break;
+        case "chatMessageReceived":
+          _listener?.onChatMessageReceived?.call(
+            data["senderId"],
+            data["message"],
+            parseBool(data["isPrivate"]),
+          );
+          break;
+        case "chatToggled":
+          _listener?.onChatToggled?.call(parseBool(data["isOpen"]));
+          break;
         case "closed":
           _listener?.onClosed?.call();
           _listener = null;
@@ -170,4 +207,16 @@ class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
         return 'video-share.enabled';
     }
   }
+}
+
+// Required because Android SDK returns boolean values as Strings
+// and iOS SDK returns boolean values as Booleans.
+// (Making this an extension does not work, because of dynamic.)
+bool parseBool(dynamic value) {
+  if (value is bool) return value;
+  if (value is String) return value == 'true';
+  // Check whether value is not 0, because true values can be any value
+  // above 0 when coming from Jitsi.
+  if (value is num) return value != 0;
+  throw ArgumentError('Unsupported type: $value');
 }
