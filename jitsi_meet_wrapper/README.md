@@ -93,7 +93,7 @@ The steps presented below are a summary of the very detailed explanation in the 
 
 
 Most of the above steps have already been executed on the example app in this repository. However, the app group was not created yet, as this requires a development team to be set.
-You can however execute some simple steps in to make screen sharing work on the example app:
+You can execute some simple steps in to make screen sharing work on the example app:
 - Add a development team.
 - Create an app group with the name `group.dev.saibotma.jitsi-meet-wrapper-example.appgroup`.
 - Add the app group to both the "Runner" and the "Broadcast Extension" target.

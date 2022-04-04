@@ -26,13 +26,12 @@ class JitsiMeetingListener {
   final Function(bool isMuted)? onVideoMutedChanged;
 
   // iOS: https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-ios-sdk#screensharetoggled
-  // Android: Missing... TODO(saibotma): Add link to documentation issue.
+  // TODO(saibotma): Add Android docs when https://github.com/jitsi/handbook/pull/300 is merged.
   final Function(String participantId, bool isSharing)? onScreenShareToggled;
 
   // iOS: https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-ios-sdk/#participantjoined
   // Android: https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-android-sdk#participant_joined
   final Function(
-    bool isLocal,
     String? email,
     String? name,
     String? role,
@@ -41,12 +40,7 @@ class JitsiMeetingListener {
 
   // iOS: https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-ios-sdk/#participantleft
   // Android: https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-android-sdk#participant_left
-  final Function(
-    bool isLocal,
-    String? email,
-    String? name,
-    String? participantId,
-  )? onParticipantLeft;
+  final Function(String? participantId)? onParticipantLeft;
 
   // Only for Android
   // https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-android-sdk#participants_info_retrieved
@@ -61,7 +55,6 @@ class JitsiMeetingListener {
     String senderId,
     String message,
     bool isPrivate,
-    DateTime? timestamp,
   )? onChatMessageReceived;
 
   // iOS: https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-ios-sdk/#chattoggled
