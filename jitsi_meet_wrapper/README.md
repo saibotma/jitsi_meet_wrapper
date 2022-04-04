@@ -27,10 +27,8 @@ Nevertheless, please always create an issue and I will try to have a look.
 To join a meeting, you have to create meeting options and then launch the meeting:
 
 ```dart
-
 var options = JitsiMeetingOptions(roomName: "my-room");
-await
-JitsiMeetWrapper.joinMeeting(options);
+await JitsiMeetWrapper.joinMeeting(options);
 ```
 
 Take a look
@@ -73,15 +71,14 @@ In order for your app to properly work in the background, select the `audio` and
 Additionally, it is recommended to set `UIViewControllerBasedStatusBarAppearance` to `NO`.<br>
 
 ```xml
-
 <key>NSCameraUsageDescription</key>
 <string>$(PRODUCT_NAME) needs access to the camera for meetings.</string>
 <key>NSMicrophoneUsageDescription</key>
 <string>$(PRODUCT_NAME) needs access to the microphone for meetings.</string>
 <key>UIBackgroundModes</key>
 <array>
-<string>audio</string>
-<string>voip</string>
+	<string>audio</string>
+	<string>voip</string>
 </array>
 <key>UIViewControllerBasedStatusBarAppearance</key>
 <false/>
@@ -133,18 +130,17 @@ into
 application tag.
 
 ```xml
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools" <!-- Add this -->
-        package="your.package.name">
-<application tools:replace="android:label" <!-- Add this -->
-        android:name="your.app.name"
-        android:label="your app name"
-        android:icon="@mipmap/ic_launcher">
-        ...
-        </application>
-        ...
-        </manifest>
+          package="your.package.name">
+    <application tools:replace="android:label" <!-- Add this -->
+                 android:name="your.app.name"
+                 android:label="your app name"
+                 android:icon="@mipmap/ic_launcher">
+                 ...
+    </application>
+    ...
+</manifest>
 ```
 
 #### build.gradle
