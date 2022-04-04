@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  jitsi_meet_wrapper_platform_interface: ^0.0.1
+  jitsi_meet_wrapper_platform_interface: ^0.0.2
 
 dev_dependencies:
   flutter_test:
