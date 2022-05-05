@@ -49,7 +49,7 @@ It is recommended to take a look at them, if you have any issues or need more de
 
 #### Podfile
 
-The platform (and also the deployment target) needs to be set to `11.0` or newer and bitcode needs to be disabled.<br>
+The platform (and also the deployment target) needs to be set to `12.0` or newer and bitcode needs to be disabled.<br>
 The file should look similar to below:
 
 ```
