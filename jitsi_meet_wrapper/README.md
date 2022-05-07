@@ -159,6 +159,19 @@ android {
 }
 ```
 
+If you still want to compile your app for a SDK version lower than 23, you can add the following line to your `AndroidManifest.xml`:
+```xml
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          package="dev.saibotma.jitsi_meet_wrapper_example">
+
+    <!-- Add this the following line -->
+    <uses-sdk tools:overrideLibrary="dev.saibotma.jitsi_meet_wrapper, org.jitsi.meet.sdk, co.apptailor.googlesignin, com.calendarevents, com.reactnativecommunity.asyncstorage, com.reactnativecommunity.netinfo, com.rnimmersive, com.corbt.keepawake, com.BV.LinearGradient, com.horcrux.svg, com.oney.WebRTCModule, com.ocetnik.timer, com.kevinresol.react_native_default_preference, com.learnium.RNDeviceInfo, com.amplitude.reactnative, com.reactnativegooglesignin, com.reactnativecommunity.clipboard, com.swmansion.gesturehandler.react, org.linusu, org.reactnative.maskedview, com.reactnativepagerview, com.oblador.performance, com.swmansion.reanimated, com.th3rdwave.safeareacontext, com.swmansion.rnscreens, com.reactnativecommunity.slider, org.devio.rn.splashscreen, com.brentvatne.react, com.reactnativecommunity.webview"/>
+
+    <application tools:replace="android:label"
+```
+But keep in mind you when you call methods of this package with an unsupported SDK version, your app could crash. So you could check the SDK version of the device before calling any Jitsi methods. If a user has an unsupported SDK version, you could show a dialog that the Jitsi feature is not support for this device. This has the advantage that these users can still use other features of the app which don't require that minimum SDK version.
+
 #### ProGuard
 
 You might have to add some ProGuard rules if your app crashes when using this package. Follow the
