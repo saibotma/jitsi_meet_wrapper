@@ -170,7 +170,7 @@ If you still want to compile your app for a SDK version lower than 23, you can a
 
     <application tools:replace="android:label"
 ```
-But keep in mind you when you call methods of this package with an unsupported SDK version, your app could crash. So you could check the SDK version of the device before calling any Jitsi methods. If a user has an unsupported SDK version, you could show a dialog that the Jitsi feature is not support for this device. This has the advantage that these users can still use other features of the app which don't require that minimum SDK version.
+But keep in mind that when you call methods of this package with an unsupported SDK version, your app could crash. So you should check the SDK version of the device before calling any Jitsi methods. If a user has an unsupported SDK version, you could show a dialog that the Jitsi feature is not support for this device. This has the advantage that these users can still use other features of the app which don't require that minimum SDK version.
 
 #### ProGuard
 
