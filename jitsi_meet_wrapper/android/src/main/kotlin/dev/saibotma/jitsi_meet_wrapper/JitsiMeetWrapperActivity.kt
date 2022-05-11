@@ -75,8 +75,4 @@ class JitsiMeetWrapperActivity : JitsiMeetActivity() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(this.broadcastReceiver)
         eventStreamHandler.onClosed()
     }
-    fun setMuted(muted: Boolean) {
-        val muteBroadcastIntent: Intent = BroadcastIntentHelper.buildSetAudioMutedIntent(muted)
-        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(muteBroadcastIntent)
-    }
 }
