@@ -44,7 +44,27 @@ class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
       return JitsiMeetingResponse(isSuccess: true, message: message);
     }).catchError((error) {
       return JitsiMeetingResponse(
-        isSuccess: true,
+        isSuccess: false,
+        message: error.toString(),
+        error: error,
+      );
+    });
+  }
+
+  @override
+  Future<JitsiMeetingResponse> setMuted({
+    required bool muted,
+  }) async {
+    Map<String, dynamic> _options = {
+      'muted': muted,
+    };
+    return await _methodChannel
+        .invokeMethod<String>('setMuted', _options)
+        .then((message) {
+      return JitsiMeetingResponse(isSuccess: true, message: message);
+    }).catchError((error) {
+      return JitsiMeetingResponse(
+        isSuccess: false,
         message: error.toString(),
         error: error,
       );
@@ -206,6 +226,21 @@ class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
       case FeatureFlag.isVideoShareButtonEnabled:
         return 'video-share.enabled';
     }
+  }
+
+  @override
+  Future<JitsiMeetingResponse> closeMeeting() async {
+    return await _methodChannel
+        .invokeMethod<String>('closeMeeting')
+        .then((message) {
+      return JitsiMeetingResponse(isSuccess: true, message: message);
+    }).catchError((error) {
+      return JitsiMeetingResponse(
+        isSuccess: false,
+        message: error.toString(),
+        error: error,
+      );
+    });
   }
 }
 

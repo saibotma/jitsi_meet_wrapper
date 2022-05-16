@@ -367,4 +367,6 @@ hs_err_pid*
 
 !/gradle/wrapper/gradle-wrapper.jar
 
+jitsi_meet_wrapper/.idea/
+jitsi_meet_wrapper_platform_interface/.idea/
 # End of https://www.toptal.com/developers/gitignore/api/intellij,androidstudio,xcode,flutter,gradle,cocoapods

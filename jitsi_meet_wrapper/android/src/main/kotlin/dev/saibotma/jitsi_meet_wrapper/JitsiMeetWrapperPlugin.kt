@@ -38,6 +38,8 @@ class JitsiMeetWrapperPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
         when (call.method) {
             "joinMeeting" -> joinMeeting(call, result)
+            "setMuted" -> setMuted(call, result)
+            "closeMeeting" -> closeMeeting(call, result)
             else -> result.notImplemented()
         }
     }
@@ -114,6 +116,21 @@ class JitsiMeetWrapperPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
         JitsiMeetWrapperActivity.launch(activity!!, options)
         result.success("Successfully joined room: $room")
+    }
+    private fun setMuted(call: MethodCall, result: Result) {
+        val muted = call.argument<Boolean>("muted") ?: false
+
+        val muteBroadcastIntent: Intent = BroadcastIntentHelper.buildSetAudioMutedIntent(muted)
+        LocalBroadcastManager.getInstance(activity!!.applicationContext).sendBroadcast(muteBroadcastIntent)
+
+        result.success("Successfully muted: $muted")
+    }
+
+    private fun closeMeeting(call: MethodCall, result: Result) {
+        val hangupIntent: Intent = BroadcastIntentHelper.buildHangUpIntent()
+        LocalBroadcastManager.getInstance(activity!!.applicationContext).sendBroadcast(hangupIntent)
+
+        result.success("Successfully closed meeting")
     }
 
     override fun onDetachedFromActivity() {
