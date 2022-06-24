@@ -57,5 +57,5 @@ android {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     // From: https://github.com/jitsi/jitsi-maven-repository/tree/master/releases/org/jitsi/react/jitsi-meet-sdk
-    implementation ('org.jitsi.react:jitsi-meet-sdk:5.0.2') { transitive = true }
+    implementation ('org.jitsi.react:jitsi-meet-sdk:5.1.0') { transitive = true }
 }
