@@ -200,7 +200,7 @@ class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
       case FeatureFlag.isServerUrlChangeEnabled:
         return 'server-url-change.enabled';
       case FeatureFlag.isToolboxEnabled:
-        return 'toolbox.alwaysVisible';
+        return 'toolbox.enabled';
       case FeatureFlag.isVideoMuteButtonEnabled:
         return 'video-mute.enabled';
       case FeatureFlag.isVideoShareButtonEnabled:
