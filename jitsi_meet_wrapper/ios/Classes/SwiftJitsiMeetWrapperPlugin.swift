@@ -26,6 +26,12 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin, FlutterStream
         if (call.method == "joinMeeting") {
             joinMeeting(call, result: result)
             return
+        } else if (call.method == "setAudioMuted") {
+            setAudioMuted(call, result: result)
+            return
+        } else if (call.method == "hangUp") {
+            hangUp(call, result: result)
+            return
         }
     }
 
@@ -97,6 +103,18 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin, FlutterStream
         // In order to make pip mode work.
         jitsiViewController!.modalPresentationStyle = .overFullScreen
         flutterViewController.present(jitsiViewController!, animated: true)
+        result(nil)
+    }
+    
+    private func setAudioMuted(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        let arguments = call.arguments as! [String: Any]
+        let isMuted = arguments["isMuted"] as? Bool ?? false
+        jitsiViewController?.sourceJitsiMeetView?.setAudioMuted(isMuted)
+        result(nil)
+    }
+
+    private func hangUp(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        jitsiViewController?.sourceJitsiMeetView?.hangUp()
         result(nil)
     }
 
