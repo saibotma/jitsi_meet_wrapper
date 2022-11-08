@@ -6,6 +6,7 @@ import JitsiMeetSDK
 class JitsiMeetWrapperViewController: UIViewController {
     fileprivate var pipViewCoordinator: CustomPiPViewCoordinator?
     fileprivate var jitsiMeetView: UIView?
+    var sourceJitsiMeetView: JitsiMeetView?
 
     let options: JitsiMeetConferenceOptions
     let eventSink: FlutterEventSink
@@ -33,21 +34,21 @@ class JitsiMeetWrapperViewController: UIViewController {
     func openJitsiMeet() {
         cleanUp()
 
-        let sourceJitsiMeetView = JitsiMeetView()
+        sourceJitsiMeetView = JitsiMeetView()
         // Need to wrap the jitsi view in another view that absorbs all the pointer events
         // because of a flutter bug: https://github.com/flutter/flutter/issues/14720
         let jitsiMeetView = AbsorbPointersView()
         jitsiMeetView.backgroundColor = .black
         self.jitsiMeetView = jitsiMeetView
 
-        jitsiMeetView.addSubview(sourceJitsiMeetView)
+        jitsiMeetView.addSubview(sourceJitsiMeetView!)
 
         // Make the jitsi view redraw when orientation changes.
         // From: https://stackoverflow.com/a/45860445/6172447
-        sourceJitsiMeetView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        sourceJitsiMeetView!.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
-        sourceJitsiMeetView.delegate = self
-        sourceJitsiMeetView.join(options)
+        sourceJitsiMeetView!.delegate = self
+        sourceJitsiMeetView!.join(options)
 
         // Pip only works inside the app and not OS wide at the moment:
         // https://github.com/jitsi/jitsi-meet/issues/3515#issuecomment-427846699
@@ -75,6 +76,7 @@ class JitsiMeetWrapperViewController: UIViewController {
         jitsiMeetView?.removeFromSuperview()
         jitsiMeetView = nil
         pipViewCoordinator = nil
+        sourceJitsiMeetView = nil
     }
     
     override func viewDidDisappear(_ animated: Bool) {

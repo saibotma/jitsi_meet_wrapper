@@ -27,4 +27,13 @@ class JitsiMeetWrapper {
     return await JitsiMeetWrapperPlatformInterface.instance
         .joinMeeting(options: options, listener: listener);
   }
+
+  static Future<JitsiMeetingResponse> setAudioMuted(bool isMuted) async {
+    return await JitsiMeetWrapperPlatformInterface.instance
+        .setAudioMuted(isMuted);
+  }
+
+  static Future<JitsiMeetingResponse> hangUp() async {
+    return await JitsiMeetWrapperPlatformInterface.instance.hangUp();
+  }
 }

@@ -22,7 +22,7 @@ Nevertheless, please always create an issue and I will try to have a look.
 
 <a name="join-a-meeting"></a>
 
-## Join a meeting
+### Join a meeting
 
 To join a meeting, you have to create meeting options and then launch the meeting:
 
@@ -196,7 +196,7 @@ To listen to meeting events per meeting, pass in a `JitsiMeetingListener`
 to `joinMeeting`. The listener will automatically be removed when the conference is over
 (which is not `onConferenceTerminated`).
 
-```
+```dart
 await JitsiMeetWrapper.joinMeeting(
   options: options,
   listener: JitsiMeetingListener(
