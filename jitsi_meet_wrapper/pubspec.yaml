@@ -13,7 +13,10 @@ dependencies:
   flutter:
     sdk: flutter
   jitsi_meet_wrapper_platform_interface:
-    path: ../jitsi_meet_wrapper_platform_interface
+    git:
+      url: https://github.com/Gaurav-CareMonitor/jitsi_meet_wrapper.git
+      path: jitsi_meet_wrapper_platform_interface/
+
 
 dev_dependencies:
   flutter_test:
