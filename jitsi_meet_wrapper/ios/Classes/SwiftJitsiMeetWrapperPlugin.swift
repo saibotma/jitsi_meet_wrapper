@@ -32,6 +32,16 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin, FlutterStream
         } else if (call.method == "hangUp") {
             hangUp(call, result: result)
             return
+        } 
+        else if (call.method == "closeMeeting") {
+            var dictClosingServerInfo : Dictionary = Dictionary<AnyHashable,Any>()
+            // let serverURL : String = self.jitsiViewController?.serverUrl?.absoluteString ?? ""
+            // let roomName : String = self.jitsiViewController?.roomName ?? ""
+
+            // dictClosingServerInfo["url"] = "\(serverURL)/\(roomName)";
+
+            //self.jitsiViewController?.closeJitsiMeeting();
+            self.jitsiViewController?.conferenceTerminated(dictClosingServerInfo);
         }
     }
 

@@ -31,6 +31,10 @@ class JitsiMeetWrapperViewController: UIViewController {
         openJitsiMeet();
     }
 
+    // func closeJitsiMeeting(){
+    //     jitsiMeetView?.leave()
+    // }
+
     func openJitsiMeet() {
         cleanUp()
 
@@ -145,9 +149,7 @@ extension JitsiMeetWrapperViewController: JitsiMeetViewDelegate {
         self.eventSink(["event": "videoMutedChanged", "data": data])
     }
 
-    func conferenceTerminated(_ data: [AnyHashable : Any]!) {
-        self.eventSink(["event": "onConferenceTerminated", "data": data])
-    }
+  
 }
 
 // This is based on https://github.com/flutter/flutter/issues/35784#issuecomment-516274701.
