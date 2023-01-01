@@ -13,10 +13,11 @@ dependencies:
     sdk: flutter
   jitsi_meet_wrapper_platform_interface: ^0.0.3
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^1.0.0
+  flutter_lints: ^2.0.1
 
 flutter:
   # This section identifies this Flutter project as a plugin project.
