@@ -212,7 +212,6 @@ await JitsiMeetWrapper.joinMeeting(
 ### Known issues
 
 - Picture in Picture is not working during screen sharing. (https://github.com/jitsi/jitsi-meet/issues/9099)
-- An app using this plugin will not build for simulator when using `flutter run` and Flutter lower than version 2.8.
 - Camera orientation is (wrongly) portrait by default. (https://github.com/jitsi/jitsi-meet/issues/10596)
 - Screen dims during meeting when `wakelock` plugin is
   used. (https://github.com/creativecreatorormaybenot/wakelock/issues/154)
