@@ -1,6 +1,6 @@
 name: jitsi_meet_wrapper_platform_interface
 description: Platform interface for jitsi_meet_wrapper
-version: 0.0.3
+version: 0.0.4
 homepage: https://github.com/saibotma/jitsi_meet_wrapper/tree/main/jitsi_meet_wrapper_platform_interface
 repository: https://github.com/saibotma/jitsi_meet_wrapper/tree/main/jitsi_meet_wrapper_platform_interface
 
