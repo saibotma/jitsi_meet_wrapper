@@ -1,5 +1,12 @@
+## 0.0.4
+
+- Add option to `setAudioMuted` [#56](https://github.com/saibotma/jitsi_meet_wrapper/pull/56)
+- Add option to `hangUp` [#56](https://github.com/saibotma/jitsi_meet_wrapper/pull/56)
+
 ## 0.0.3
-- Remove `pubspec.lock` file [1aa6203c67ef7a63accf2c6be397c70ca8f5d2c4](https://github.com/saibotma/jitsi_meet_wrapper/commit/1aa6203c67ef7a63accf2c6be397c70ca8f5d2c4)
+
+- Remove `pubspec.lock`
+  file [1aa6203c67ef7a63accf2c6be397c70ca8f5d2c4](https://github.com/saibotma/jitsi_meet_wrapper/commit/1aa6203c67ef7a63accf2c6be397c70ca8f5d2c4)
 
 ## 0.0.2
 
