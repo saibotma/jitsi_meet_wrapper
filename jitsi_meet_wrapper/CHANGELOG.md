@@ -6,6 +6,7 @@
 - Bump SDK version to [7.0.1](https://github.com/jitsi/jitsi-meet-release-notes/blob/master/CHANGELOG-MOBILE-SDKS.md#701-2022-12-08)
 - Support Android 13 [#60](https://github.com/saibotma/jitsi_meet_wrapper/pull/60)
 - Bump Kotlin and Gradle versions [#60](https://github.com/saibotma/jitsi_meet_wrapper/pull/60)
+- Remove known issue that this plugin will not work on iOS simulator
 
 ## 0.0.5
 - Fix wrong min iOS version in documentation [#28](https://github.com/saibotma/jitsi_meet_wrapper/pull/28)
