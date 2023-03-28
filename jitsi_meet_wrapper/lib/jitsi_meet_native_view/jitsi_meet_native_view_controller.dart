@@ -1,4 +1,3 @@
-// WebView Controller class to set url etc
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:jitsi_meet_wrapper_platform_interface/jitsi_meet_wrapper_platform_interface.dart';
@@ -7,8 +6,8 @@ class JitsiMeetViewController {
   JitsiMeetViewController({
     required int id,
     JitsiMeetingListener? listener,
-  })  : _channel =
-            MethodChannel('plugins.jitsi_meet_wrapper/jitsi_meet_native_view_$id'),
+  })  : _channel = MethodChannel(
+            'plugins.jitsi_meet_wrapper/jitsi_meet_native_view_$id'),
         _listener = listener;
 
   final MethodChannel _channel;
