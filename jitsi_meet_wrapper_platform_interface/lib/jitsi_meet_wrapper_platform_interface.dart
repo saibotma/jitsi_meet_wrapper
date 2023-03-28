@@ -42,4 +42,10 @@ abstract class JitsiMeetWrapperPlatformInterface extends PlatformInterface {
   Future<JitsiMeetingResponse> hangUp() async {
     throw UnimplementedError('hangUp has not been implemented.');
   }
+
+  Future<void> attachListener(
+    JitsiMeetingListener listener,
+    ) async {
+    throw UnimplementedError('hangUp has not been implemented.');
+  }
 }

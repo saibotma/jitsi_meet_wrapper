@@ -11,7 +11,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  jitsi_meet_wrapper_platform_interface: ^0.0.4
+  # jitsi_meet_wrapper_platform_interface: ^0.0.4
+  jitsi_meet_wrapper_platform_interface:
+    # To be replaced with newer version of jitsi_meet_wrapper_platform_interface released
+    path: ../jitsi_meet_wrapper_platform_interface
 
 
 dev_dependencies:

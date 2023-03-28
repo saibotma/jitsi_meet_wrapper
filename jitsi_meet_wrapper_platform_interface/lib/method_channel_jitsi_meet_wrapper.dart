@@ -82,6 +82,16 @@ class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
     });
   }
 
+  @override
+  Future<void> attachListener(    
+    JitsiMeetingListener listener,
+    ) async {
+    _listener = listener;
+    if (!_eventChannelIsInitialized) {
+      _initialize();
+    }
+  }
+
   void _initialize() {
     _eventChannel.receiveBroadcastStream().listen((message) {
       final data = message['data'];
@@ -236,6 +246,8 @@ class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
         return 'video-mute.enabled';
       case FeatureFlag.isVideoShareButtonEnabled:
         return 'video-share.enabled';
+      case FeatureFlag.isPrejoinPageEnabled:
+        return 'prejoinpage.enabled';
     }
   }
 }

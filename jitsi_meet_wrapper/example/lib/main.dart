@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jitsi_meet_wrapper/jitsi_meet_wrapper.dart';
 
+import 'jitsi_meet_view.dart';
+
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -23,7 +25,7 @@ class Meeting extends StatefulWidget {
 }
 
 class _MeetingState extends State<Meeting> {
-  final serverText = TextEditingController();
+  final serverText = TextEditingController(text: "https://meet.jit.si");
   final roomText = TextEditingController(text: "jitsi-meet-wrapper-test-room");
   final subjectText = TextEditingController(text: "My Plugin Test Meeting");
   final tokenText = TextEditingController();
@@ -34,6 +36,54 @@ class _MeetingState extends State<Meeting> {
   bool isAudioMuted = true;
   bool isAudioOnly = false;
   bool isVideoMuted = true;
+
+  final listener = JitsiMeetingListener(
+    onOpened: () => debugPrint("onOpened"),
+    onConferenceWillJoin: (url) {
+      debugPrint("onConferenceWillJoin: url: $url");
+    },
+    onConferenceJoined: (url) {
+      debugPrint("onConferenceJoined: url: $url");
+    },
+    onConferenceTerminated: (url, error) {
+      debugPrint("onConferenceTerminated: url: $url, error: $error");
+    },
+    onAudioMutedChanged: (isMuted) {
+      debugPrint("onAudioMutedChanged: isMuted: $isMuted");
+    },
+    onVideoMutedChanged: (isMuted) {
+      debugPrint("onVideoMutedChanged: isMuted: $isMuted");
+    },
+    onScreenShareToggled: (participantId, isSharing) {
+      debugPrint(
+        "onScreenShareToggled: participantId: $participantId, "
+        "isSharing: $isSharing",
+      );
+    },
+    onParticipantJoined: (email, name, role, participantId) {
+      debugPrint(
+        "onParticipantJoined: email: $email, name: $name, role: $role, "
+        "participantId: $participantId",
+      );
+    },
+    onParticipantLeft: (participantId) {
+      debugPrint("onParticipantLeft: participantId: $participantId");
+    },
+    onParticipantsInfoRetrieved: (participantsInfo, requestId) {
+      debugPrint(
+        "onParticipantsInfoRetrieved: participantsInfo: $participantsInfo, "
+        "requestId: $requestId",
+      );
+    },
+    onChatMessageReceived: (senderId, message, isPrivate) {
+      debugPrint(
+        "onChatMessageReceived: senderId: $senderId, message: $message, "
+        "isPrivate: $isPrivate",
+      );
+    },
+    onChatToggled: (isOpen) => debugPrint("onChatToggled: isOpen: $isOpen"),
+    onClosed: () => debugPrint("onClosed"),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -113,6 +163,21 @@ class _MeetingState extends State<Meeting> {
               ),
             ),
           ),
+          SizedBox(
+            height: 64.0,
+            width: double.maxFinite,
+            child: ElevatedButton(
+              onPressed: () => _openJitsiMeetAsAWidget(context),
+              child: const Text(
+                "Use jitsi as a widget",
+                style: TextStyle(color: Colors.white),
+              ),
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateColor.resolveWith((states) => Colors.blue),
+              ),
+            ),
+          ),
           const SizedBox(height: 48.0),
         ],
       ),
@@ -159,52 +224,37 @@ class _MeetingState extends State<Meeting> {
     debugPrint("JitsiMeetingOptions: $options");
     await JitsiMeetWrapper.joinMeeting(
       options: options,
-      listener: JitsiMeetingListener(
-        onOpened: () => debugPrint("onOpened"),
-        onConferenceWillJoin: (url) {
-          debugPrint("onConferenceWillJoin: url: $url");
-        },
-        onConferenceJoined: (url) {
-          debugPrint("onConferenceJoined: url: $url");
-        },
-        onConferenceTerminated: (url, error) {
-          debugPrint("onConferenceTerminated: url: $url, error: $error");
-        },
-        onAudioMutedChanged: (isMuted) {
-          debugPrint("onAudioMutedChanged: isMuted: $isMuted");
-        },
-        onVideoMutedChanged: (isMuted) {
-          debugPrint("onVideoMutedChanged: isMuted: $isMuted");
-        },
-        onScreenShareToggled: (participantId, isSharing) {
-          debugPrint(
-            "onScreenShareToggled: participantId: $participantId, "
-            "isSharing: $isSharing",
+      listener: listener,
+    );
+  }
+
+  _openJitsiMeetAsAWidget(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) {
+          String? serverUrl =
+              serverText.text.trim().isEmpty ? null : serverText.text;
+
+          Map<FeatureFlag, Object> featureFlags = {};
+
+          // Define meetings options here
+          var options = JitsiMeetingOptions(
+            roomNameOrUrl: roomText.text,
+            serverUrl: serverUrl,
+            subject: subjectText.text,
+            token: tokenText.text,
+            isAudioMuted: isAudioMuted,
+            isAudioOnly: isAudioOnly,
+            isVideoMuted: isVideoMuted,
+            userDisplayName: userDisplayNameText.text,
+            userEmail: userEmailText.text,
+            featureFlags: featureFlags,
+          );
+          return JitsiMeetView(
+            options: options,
+            listener: listener,
           );
         },
-        onParticipantJoined: (email, name, role, participantId) {
-          debugPrint(
-            "onParticipantJoined: email: $email, name: $name, role: $role, "
-            "participantId: $participantId",
-          );
-        },
-        onParticipantLeft: (participantId) {
-          debugPrint("onParticipantLeft: participantId: $participantId");
-        },
-        onParticipantsInfoRetrieved: (participantsInfo, requestId) {
-          debugPrint(
-            "onParticipantsInfoRetrieved: participantsInfo: $participantsInfo, "
-            "requestId: $requestId",
-          );
-        },
-        onChatMessageReceived: (senderId, message, isPrivate) {
-          debugPrint(
-            "onChatMessageReceived: senderId: $senderId, message: $message, "
-            "isPrivate: $isPrivate",
-          );
-        },
-        onChatToggled: (isOpen) => debugPrint("onChatToggled: isOpen: $isOpen"),
-        onClosed: () => debugPrint("onClosed"),
       ),
     );
   }
