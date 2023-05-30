@@ -57,5 +57,8 @@ android {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     // From: https://github.com/jitsi/jitsi-maven-repository/tree/master/releases/org/jitsi/react/jitsi-meet-sdk
-    implementation ('org.jitsi.react:jitsi-meet-sdk:7.0.1') { transitive = true }
+    implementation ('org.jitsi.react:jitsi-meet-sdk:7.0.1') {
+    transitive = true 
+    exclude group: "io.github.webrtc-sdk", module: "android"
+    }
 }
