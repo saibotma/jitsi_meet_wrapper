@@ -1,3 +1,6 @@
+## 0.1.0
+- Breaking: Bump SDK version to 8.1.2; This requires Android `minSdkVersion` of 24 [7932c59](https://github.com/saibotma/jitsi_meet_wrapper/commit/7932c59efcd37d208173a8e18ea47984e299670d)
+
 ## 0.0.6
 - Clean up pubspec.yaml [#30](https://github.com/saibotma/jitsi_meet_wrapper/pull/30)
 - Fix feature flag String mapping of `FEatureFlag.isToolboxEnabled` [#45](https://github.com/saibotma/jitsi_meet_wrapper/pull/45)
