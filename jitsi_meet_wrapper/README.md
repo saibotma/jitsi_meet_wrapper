@@ -177,7 +177,7 @@ Keep in mind that when you call methods of this package with an unsupported SDK 
 
 #### ProGuard
 
-You might have to add some ProGuard rules if your app crashes when using this package. Follow the
+You might have to add some ProGuard rules if a release build of your app crashes when using this package. Follow the
 instructions [here](https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-android-sdk/#proguard-rules).
 
 <a name="listening-to-meeting-events"></a>
