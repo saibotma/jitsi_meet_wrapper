@@ -1,3 +1,6 @@
+## 0.1.1
+- Fix typo in readme [3297349](https://github.com/saibotma/jitsi_meet_wrapper/commit/3297349c665259946925b345de65180ef232ef92)
+
 ## 0.1.0
 - Breaking: Bump SDK version to 8.1.2; This requires Android `minSdkVersion` of 24 [7932c59](https://github.com/saibotma/jitsi_meet_wrapper/commit/7932c59efcd37d208173a8e18ea47984e299670d)
 
