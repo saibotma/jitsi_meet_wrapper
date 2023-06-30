@@ -1,3 +1,6 @@
+## 0.1.2
+- Add `isPrejoinPageEnabled` feature flag [aac9f2f](https://github.com/saibotma/jitsi_meet_wrapper/commit/aac9f2fa61e531499674dc1a1288784ae4752c0b)
+
 ## 0.1.1
 - Fix typo in readme [3297349](https://github.com/saibotma/jitsi_meet_wrapper/commit/3297349c665259946925b345de65180ef232ef92)
 
