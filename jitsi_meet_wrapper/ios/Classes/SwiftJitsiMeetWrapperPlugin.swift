@@ -12,6 +12,8 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin, FlutterStream
     }
 
     public static func register(with registrar: FlutterPluginRegistrar) {
+        let factory = JitsiViewFactory(messenger: registrar.messenger())
+        registrar.register(factory, withId: "plugins.jitsi_meet_wrapper:jitsi_meet_native_view")
         let channel = FlutterMethodChannel(name: "jitsi_meet_wrapper", binaryMessenger: registrar.messenger())
         let flutterViewController: UIViewController = (UIApplication.shared.delegate?.window??.rootViewController)!
         let instance = SwiftJitsiMeetWrapperPlugin(flutterViewController: flutterViewController)
@@ -122,10 +124,18 @@ public class SwiftJitsiMeetWrapperPlugin: NSObject, FlutterPlugin, FlutterStream
 
     public func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
         eventSink = events
+        EventManager.shared.eventSink = eventSink
         return nil
     }
 
     public func onCancel(withArguments arguments: Any?) -> FlutterError? {
+        EventManager.shared.eventSink = eventSink
         return nil
     }
+}
+
+class EventManager{
+    static let shared = EventManager()
+    var eventSink : FlutterEventSink?
+    init(){}
 }
