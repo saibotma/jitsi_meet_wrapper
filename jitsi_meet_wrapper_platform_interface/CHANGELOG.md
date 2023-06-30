@@ -1,3 +1,6 @@
+## 0.0.5
+- Add `isPrejoinPageEnabled` feature flag [aac9f2f](https://github.com/saibotma/jitsi_meet_wrapper/commit/aac9f2fa61e531499674dc1a1288784ae4752c0b)
+
 ## 0.0.4
 
 - Add option to `setAudioMuted` [#56](https://github.com/saibotma/jitsi_meet_wrapper/pull/56)
