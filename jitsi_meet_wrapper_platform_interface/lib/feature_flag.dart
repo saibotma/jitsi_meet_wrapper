@@ -104,6 +104,10 @@ enum FeatureFlag {
   /// Default: auto-detected.
   isPipEnabled,
 
+  /// Flag indicating if the prejoin page should be enabled.
+  /// Default: enabled (true).
+  isPrejoinPageEnabled,
+
   /// Flag indicating if raise hand feature should be enabled.
   /// Default: enabled.
   isRaiseHandEnabled,

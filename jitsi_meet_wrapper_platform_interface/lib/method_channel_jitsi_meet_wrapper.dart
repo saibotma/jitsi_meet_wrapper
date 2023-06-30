@@ -186,6 +186,8 @@ class MethodChannelJitsiMeetWrapper extends JitsiMeetWrapperPlatformInterface {
         return 'meeting-password.enabled';
       case FeatureFlag.isPipEnabled:
         return 'pip.enabled';
+      case FeatureFlag.isPrejoinPageEnabled:
+        return 'prejoinpage.enabled';
       case FeatureFlag.isRaiseHandEnabled:
         return 'raise-hand.enabled';
       case FeatureFlag.isRecordingEnabled:
