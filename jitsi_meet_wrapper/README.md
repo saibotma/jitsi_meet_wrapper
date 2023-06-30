@@ -40,49 +40,14 @@ for all the available options.
 ## Configuration
 
 Most recommendations below are based on the official documentation of JitsiMeetSDK
-for [iOS](https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-ios-sdk)
+for [iOS](https://github.com/jitsi/handbook/blob/98db64d86462d9f37505548fd7eb3fdd1ed889ea/docs/dev-guide/ios-sdk.md) and [Android](https://github.com/jitsi/handbook/blob/98db64d86462d9f37505548fd7eb3fdd1ed889ea/docs/dev-guide/android-sdk.md)
 It is recommended to take a look at them, if you have any issues or need more detailed information.
 
 <a name="ios"></a>
 
 ### iOS
 
-#### Podfile
-
-The platform (and also the deployment target) needs to be set to `12.0` or newer and bitcode needs to be disabled.<br>
-The file should look similar to below:
-
-```
-platform :ios, '12.0'
-
-post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |config|
-      config.build_settings['ENABLE_BITCODE'] = 'NO'
-    end
-  end
-end
-```
-
-#### Info.plist
-
-Add `NSCameraUsageDescription` and `NSMicrophoneUsageDescription` to your `Info.plist`.<br>
-In order for your app to properly work in the background, select the `audio` and `voip` background modes.<br>
-Additionally, it is recommended to set `UIViewControllerBasedStatusBarAppearance` to `NO`.<br>
-
-```xml
-<key>NSCameraUsageDescription</key>
-<string>$(PRODUCT_NAME) needs access to the camera for meetings.</string>
-<key>NSMicrophoneUsageDescription</key>
-<string>$(PRODUCT_NAME) needs access to the microphone for meetings.</string>
-<key>UIBackgroundModes</key>
-<array>
-	<string>audio</string>
-	<string>voip</string>
-</array>
-<key>UIViewControllerBasedStatusBarAppearance</key>
-<false/>
-```
+Follow the [official documentation].(https://github.com/jitsi/handbook/blob/98db64d86462d9f37505548fd7eb3fdd1ed889ea/docs/dev-guide/ios-sdk.md#using-cocoapods).
 
 #### Screen sharing
 
@@ -145,20 +110,21 @@ application tag.
 
 #### build.gradle
 
-Update your minimum SDK version to `23` in `android/app/build.gradle`.
+Update your minimum SDK version to `24` in `android/app/build.gradle`.
 
 ```groovy
 android {
     ...
     defaultConfig {
         ...
-        minSdkVersion 23 // Change this
+        minSdkVersion 24 // Change this
         ...
     }
     ...
 }
 ```
 
+This is untested with the newest release, but did work in 0.0.6.
 If you still want to compile your app for a SDK version lower than 23, you can add the following line to your `AndroidManifest.xml`:
 ```xml
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"

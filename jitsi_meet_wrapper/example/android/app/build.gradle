@@ -44,7 +44,7 @@ android {
     defaultConfig {
         applicationId "dev.saibotma.jitsi_meet_wrapper_example"
         // Required by jitsi
-        minSdkVersion 23
+        minSdkVersion 24
         targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
