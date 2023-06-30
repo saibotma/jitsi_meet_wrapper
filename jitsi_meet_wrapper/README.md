@@ -47,7 +47,7 @@ It is recommended to take a look at them, if you have any issues or need more de
 
 ### iOS
 
-Follow the [official documentation].(https://github.com/jitsi/handbook/blob/98db64d86462d9f37505548fd7eb3fdd1ed889ea/docs/dev-guide/ios-sdk.md#using-cocoapods).
+Follow the [official documentation](https://github.com/jitsi/handbook/blob/98db64d86462d9f37505548fd7eb3fdd1ed889ea/docs/dev-guide/ios-sdk.md#using-cocoapods).
 
 #### Screen sharing
 
