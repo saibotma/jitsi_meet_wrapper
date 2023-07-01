@@ -66,7 +66,7 @@ the [official docs](https://github.com/jitsi/handbook/blob/75d38b5a3db9d44ff60fe
 - Replace `appGroupIdentifier` in `SampleHandler.swift` with your app group name.
 - Add the key value pairs `RTCAppGroupIdentifier` with the name of your app group and `RTCScreenSharingExtension` with
   the bundle identifier of BT to `Info.plist` of RT.
-- Don't forget to enable the feature flag `FeatureFlag.isIosScreensharingEnabled` when joining the meeting in Dart code.
+- Don't forget to enable the feature flag `ios.screensharing.enabled` when joining the meeting in Dart code.
 - Make sure that `voip` is set as `UIBackgroundModes` in `Info.plist` of RT.
 
 Most of the above steps have already been executed on the example app in this repository. However, the app group was not
@@ -76,7 +76,7 @@ work on the example app:
 - Add a development team.
 - Create an app group with the name `group.dev.saibotma.jitsi-meet-wrapper-example.appgroup`.
 - Add the app group to both the "Runner" and the "Broadcast Extension" target.
-- Add the feature flag `FeatureFlag.isIosScreensharingEnabled: true` in `_joinMeeting` in `main.dart` of the example
+- Add the feature flag `ios.screensharing.enabled: true` in `_joinMeeting` in `main.dart` of the example
   app.
 - Run the app...
 
