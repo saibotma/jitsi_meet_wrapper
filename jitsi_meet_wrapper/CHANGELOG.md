@@ -1,3 +1,7 @@
+## 0.2.0
+- **Breaking:** Remove `FeatureFlag` enum to reduce maintenance effort; Feature flags can still be set by using the native feature flag name as explained in the documentation of `JitsiMeetingOptions.featureFlags` [9718c87](https://github.com/saibotma/jitsi_meet_wrapper/commit/9718c879dd099b9de3f049aca6c3df19b58d618b)
+- Fix bug that would open a second activity when tapping the Android background notification [c9d04dc](https://github.com/saibotma/jitsi_meet_wrapper/commit/c9d04dcc72a2dc6c5d01e7139e375ef9b0f571d5)
+
 ## 0.1.2
 - Add `isPrejoinPageEnabled` feature flag [aac9f2f](https://github.com/saibotma/jitsi_meet_wrapper/commit/aac9f2fa61e531499674dc1a1288784ae4752c0b)
 
@@ -5,7 +9,7 @@
 - Fix typo in readme [3297349](https://github.com/saibotma/jitsi_meet_wrapper/commit/3297349c665259946925b345de65180ef232ef92)
 
 ## 0.1.0
-- Breaking: Bump SDK version to 8.1.2; This requires Android `minSdkVersion` of 24 [7932c59](https://github.com/saibotma/jitsi_meet_wrapper/commit/7932c59efcd37d208173a8e18ea47984e299670d)
+- **Breaking:** Bump SDK version to 8.1.2; This requires Android `minSdkVersion` of 24 [7932c59](https://github.com/saibotma/jitsi_meet_wrapper/commit/7932c59efcd37d208173a8e18ea47984e299670d)
 
 ## 0.0.6
 - Clean up pubspec.yaml [#30](https://github.com/saibotma/jitsi_meet_wrapper/pull/30)
