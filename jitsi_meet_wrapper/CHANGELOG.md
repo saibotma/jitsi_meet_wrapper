@@ -1,3 +1,6 @@
+## 0.2.0+1
+- Remove custom PiP implementation on iOS [b61dd6c](https://github.com/saibotma/jitsi_meet_wrapper/commit/b61dd6c1a0d34967ec5f8f14f79915dadfb27561)
+
 ## 0.2.0
 - **Breaking:** Remove `FeatureFlag` enum to reduce maintenance effort; Feature flags can still be set by using the native feature flag name as explained in the documentation of `JitsiMeetingOptions.featureFlags` [9718c87](https://github.com/saibotma/jitsi_meet_wrapper/commit/9718c879dd099b9de3f049aca6c3df19b58d618b)
 - Fix bug that would open a second activity when tapping the Android background notification [c9d04dc](https://github.com/saibotma/jitsi_meet_wrapper/commit/c9d04dcc72a2dc6c5d01e7139e375ef9b0f571d5)
