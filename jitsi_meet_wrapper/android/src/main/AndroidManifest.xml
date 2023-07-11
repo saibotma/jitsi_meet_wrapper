@@ -1,16 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="dev.saibotma.jitsi_meet_wrapper">
     <application>
-        <!-- some config changes are required for PiP (https://developer.android.com/guide/topics/ui/picture-in-picture#single_playback) -->
-        <!-- Need autoRemoveFromRecents, otherwise an extra task for the jitsi view will stay open -->
+        <!-- launchMode="singleTask" is required, because the Jitsi Activity should launch in a new task so that the flutter activity is still usable; See also https://developer.android.com/develop/ui/views/picture-in-picture#single_playback -->
+        <!-- autoRemoveFromRecents="true" is required, because otherwise the new task of the JitsiMeetWrapperActivity will not close on hang up -->
         <activity
             android:name="dev.saibotma.jitsi_meet_wrapper.JitsiMeetWrapperActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+            android:launchMode="singleTask"
+            android:theme="@style/JitsiMeetActivityStyle"
             android:resizeableActivity="true"
             android:supportsPictureInPicture="true"
-            android:theme="@style/MeetingTheme"
             android:windowSoftInputMode="adjustResize"
-            android:exported="false"
             android:autoRemoveFromRecents="true">
         </activity>
     </application>

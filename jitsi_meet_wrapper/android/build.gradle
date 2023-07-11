@@ -50,15 +50,16 @@ android {
 
     defaultConfig {
         // Required by jitsi
-        minSdkVersion 23
+        minSdkVersion 24
     }
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     // From: https://github.com/jitsi/jitsi-maven-repository/tree/master/releases/org/jitsi/react/jitsi-meet-sdk
-    implementation ('org.jitsi.react:jitsi-meet-sdk:7.0.1') {
+    implementation ('org.jitsi.react:jitsi-meet-sdk:8.1.2') {
     transitive = true 
-    exclude group: "io.github.webrtc-sdk", module: "android"
+    exclude group: 'com.facebook.react', module: 'react-native-webrtc'
     }
+    // Changelog: https://github.com/jitsi/jitsi-meet-release-notes/blob/master/CHANGELOG-MOBILE-SDKS.md
 }

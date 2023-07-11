@@ -4,7 +4,7 @@ import JitsiMeetSDK
 // This is closely inspired by:
 // https://github.com/jitsi/jitsi-meet-sdk-samples/blob/18c35f7625b38233579ff34f761f4c126ba7e03a/ios/swift-pip/JitsiSDKTest/src/ViewController.swift
 class JitsiMeetWrapperViewController: UIViewController {
-    fileprivate var pipViewCoordinator: CustomPiPViewCoordinator?
+    fileprivate var pipViewCoordinator: PiPViewCoordinator?
     fileprivate var jitsiMeetView: UIView?
     var sourceJitsiMeetView: JitsiMeetView?
 
@@ -56,7 +56,7 @@ class JitsiMeetWrapperViewController: UIViewController {
         // Enable jitsimeet view to be a view that can be displayed
         // on top of all the things, and let the coordinator to manage
         // the view state and interactions
-        pipViewCoordinator = CustomPiPViewCoordinator(withView: jitsiMeetView)
+        pipViewCoordinator = PiPViewCoordinator(withView: jitsiMeetView)
         pipViewCoordinator?.configureAsStickyView(withParentView: view)
 
         // animate in

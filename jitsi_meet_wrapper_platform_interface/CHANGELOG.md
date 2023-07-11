@@ -1,3 +1,9 @@
+## 0.1.0
+- **Breaking:** Remove `FeatureFlag` enum to reduce maintenance effort; Feature flags can still be set by using the native feature flag name as explained in the documentation of `JitsiMeetingOptions.featureFlags` [9718c87](https://github.com/saibotma/jitsi_meet_wrapper/commit/9718c879dd099b9de3f049aca6c3df19b58d618b)
+
+## 0.0.5
+- Add `isPrejoinPageEnabled` feature flag [aac9f2f](https://github.com/saibotma/jitsi_meet_wrapper/commit/aac9f2fa61e531499674dc1a1288784ae4752c0b)
+
 ## 0.0.4
 
 - Add option to `setAudioMuted` [#56](https://github.com/saibotma/jitsi_meet_wrapper/pull/56)

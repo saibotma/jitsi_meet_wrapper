@@ -1,7 +1,5 @@
 import 'package:collection/collection.dart';
 
-import 'feature_flag.dart';
-
 class JitsiMeetingOptions {
   final String roomNameOrUrl;
   final String? serverUrl;
@@ -13,7 +11,14 @@ class JitsiMeetingOptions {
   final String? userDisplayName;
   final String? userEmail;
   final String? userAvatarUrl;
-  final Map<FeatureFlag, Object?>? featureFlags;
+
+  /// Flags that toggle specific features.
+  ///
+  /// All supported flags can be found in the SDK source code:
+  /// https://github.com/jitsi/jitsi-meet/blob/master/react/features/base/flags/constants.ts
+  ///
+  /// Key is the name of the feature flag and value is its value.
+  final Map<String, Object?>? featureFlags;
   final Map<String, Object?>? configOverrides;
 
   JitsiMeetingOptions({
@@ -30,7 +35,6 @@ class JitsiMeetingOptions {
     this.featureFlags,
     this.configOverrides,
   });
-
 
   @override
   String toString() {

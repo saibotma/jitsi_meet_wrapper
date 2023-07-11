@@ -5,7 +5,6 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import 'jitsi_meeting_options.dart';
 import 'jitsi_meeting_response.dart';
 
-export 'feature_flag.dart';
 export 'jitsi_meeting_options.dart';
 export 'jitsi_meeting_response.dart';
 export 'jitsi_meeting_listener.dart';
@@ -15,7 +14,8 @@ abstract class JitsiMeetWrapperPlatformInterface extends PlatformInterface {
 
   static final Object _token = Object();
 
-  static JitsiMeetWrapperPlatformInterface _instance = MethodChannelJitsiMeetWrapper();
+  static JitsiMeetWrapperPlatformInterface _instance =
+      MethodChannelJitsiMeetWrapper();
 
   /// The default instance of [JitsiMeetWrapperPlatformInterface] to use.
   ///
