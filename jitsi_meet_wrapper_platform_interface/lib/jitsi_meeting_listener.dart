@@ -45,7 +45,7 @@ class JitsiMeetingListener {
   // Only for Android
   // https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-android-sdk#participants_info_retrieved
   final Function(
-    Map<String, dynamic> participantsInfo,
+    String participantsInfo,
     String requestId,
   )? onParticipantsInfoRetrieved;
 
