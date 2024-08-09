@@ -1,5 +1,8 @@
 # jitsi_meet_wrapper
 
+⚠️ **This package is discontinued, because an [official package](https://pub.dev/packages/jitsi_meet_flutter_sdk) is available.  
+Please use that instead.**
+
 Jitsi Meet Plugin for Flutter.<br>
 Wrapping JitsiMeetSDK for
 [Android](https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-android-sdk) and
