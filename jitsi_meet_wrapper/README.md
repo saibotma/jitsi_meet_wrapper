@@ -1,8 +1,5 @@
 # jitsi_meet_wrapper
 
-⚠️ **This package is discontinued, because an [official package](https://pub.dev/packages/jitsi_meet_flutter_sdk) is available.  
-Please use that instead.**
-
 Jitsi Meet Plugin for Flutter.<br>
 Wrapping JitsiMeetSDK for
 [Android](https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-android-sdk) and
@@ -16,6 +13,7 @@ Nevertheless, please always create an issue and I will try to have a look.
 
 ## Table of Contents
 
+- [Disclaimer](#disclaimer)
 - [Join a meeting](#join-a-meeting)
 - [Configuration](#configuration)
     - [iOS](#ios)
@@ -24,6 +22,13 @@ Nevertheless, please always create an issue and I will try to have a look.
 - [Known issues](#known-issues)
 
 <a name="join-a-meeting"></a>
+
+### Disclaimer
+
+There exists an [official package](https://pub.dev/packages/jitsi_meet_flutter_sdk), which can be used as a drop in 
+replacement for this one.<br>
+We plan to discontinue this package in the future, when the following issues in the official one got resolved:
+- https://github.com/jitsi/jitsi-meet-flutter-sdk/issues/74
 
 ### Join a meeting
 
