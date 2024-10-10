@@ -64,7 +64,7 @@ class JitsiMeetWrapperActivity : JitsiMeetActivity() {
                 BroadcastEvent.Type.CHAT_MESSAGE_RECEIVED -> eventStreamHandler.onChatMessageReceived(data)
                 BroadcastEvent.Type.CHAT_TOGGLED -> eventStreamHandler.onChatToggled(data)
                 BroadcastEvent.Type.VIDEO_MUTED_CHANGED -> eventStreamHandler.onVideoMutedChanged(data)
-                BroadcastEvent.Type.READY_TO_CLOSE -> {}
+                else -> {}
             }
         }
     }
